@@ -6,12 +6,12 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
     <springProperty scope="context" name="ENV" source="spring.profiles.active"/>
-    <springProperty scope="context" name="LOGSTASH_DESTINATION" source="logstash.destination"/>
 
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%t]){faint} %clr(%logger{36}){cyan} %clr(:){faint} %m%n" />
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
     <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %logger{36}: %m%n"/>
     <property name="FILE_LOG_CHARSET" value="UTF-8"/>
+    <property name="LOGSTASH_DESTINATION" value="1.12.236.101:4560"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -25,9 +25,9 @@
             <pattern>${FILE_LOG_PATTERN}</pattern>
             <charset>${FILE_LOG_CHARSET}</charset>
         </encoder>
-        <File>${LOG_PATH}/${APP_NAME}_${ENV}_${LOG_FILE}.log</File>
+        <File>${LOG_PATH}/${LOG_FILE}-${ENV}.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_PATH}/${LOG_FILE}-%d{yyyyMMdd}-%i.log</FileNamePattern>
+            <FileNamePattern>${LOG_PATH}/${LOG_FILE}-${ENV}-%d{yyyyMMdd}-%i.log</FileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>90</maxHistory>
         </rollingPolicy>
@@ -49,6 +49,7 @@
                             "thread": "%thread",
                             "class": "%logger{50}",
                             "message": "%message",
+                            "stack_trace": "%exception",
                             "time":"%d{yyyy-MM-dd HH:mm:ss.SSS}"
                         }
                     </pattern>

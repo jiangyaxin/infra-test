@@ -6,7 +6,7 @@ spring:
     name: experience-jpa
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&useUnicode=true
+      url: jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&useUnicode=true
       username: root
       password: 123456
 
@@ -80,8 +80,6 @@ logging:
     path: ./logs
   level:
     root: INFO
-logstash:
-    destination: "1.12.236.101:4560"
 
 
 
