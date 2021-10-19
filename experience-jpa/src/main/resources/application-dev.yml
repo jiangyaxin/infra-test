@@ -81,6 +81,8 @@ logging:
   level:
     root: INFO
 
+logstash:
+  destination: "1.12.236.101:4560"
 
 
 
