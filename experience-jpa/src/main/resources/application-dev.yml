@@ -77,12 +77,9 @@ spring:
 logging:
   file:
     name: ${spring.application.name}
-    path: ./logs
+    path: ./target/logs
   level:
     root: INFO
 
 logstash:
   destination: "1.12.236.101:4560"
-
-
-
