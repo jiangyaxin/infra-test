@@ -17,8 +17,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>experience-jpa</module>
-        <module>experience</module>
+        <module>infra</module>
+        <module>infra-jpa</module>
+        <module>feature</module>
     </modules>
 
     <properties>
@@ -35,13 +36,19 @@
         <dependencies>
             <dependency>
                 <groupId>com.jyx</groupId>
-                <artifactId>experience</artifactId>
+                <artifactId>infra</artifactId>
                 <version>${spring-test-experience-version}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.jyx</groupId>
-                <artifactId>experience-jpa</artifactId>
+                <artifactId>infra-jpa</artifactId>
+                <version>${spring-test-experience-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx.feature</groupId>
+                <artifactId>test-jpa</artifactId>
                 <version>${spring-test-experience-version}</version>
             </dependency>
 
