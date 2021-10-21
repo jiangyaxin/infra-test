@@ -1,10 +1,7 @@
 package com.jyx.feature.test.jpa.domain.entity;
 
 import com.jyx.infra.jpa.id.Identity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,6 +11,7 @@ import javax.persistence.*;
  */
 @Data
 @Builder
+@ToString(exclude = {"lightGroup"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

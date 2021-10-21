@@ -4,6 +4,7 @@ import com.jyx.infra.id.buffer.BufferPaddingExecutor;
 import com.jyx.infra.id.buffer.RingBuffer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.DisposableBean;
+import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,10 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator impl
     }
 
     protected List<Long> nextIdsForOneSecond(long currentSecond) {
+        // 秒数达到最大值
+        Assert.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
+                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s",currentSecond));
+
         // 数组长度 = max sequence + 1
         int listSize = (int) fmt.maxSequence + 1;
         List<Long> idList = new ArrayList<>(listSize);

@@ -4,6 +4,7 @@ import com.jyx.feature.test.jpa.domain.entity.Channel;
 import com.jyx.feature.test.jpa.domain.entity.LightGroup;
 import com.jyx.feature.test.jpa.domain.repository.ChannelJpaRepo;
 import com.jyx.feature.test.jpa.domain.repository.LightGroupJpaRepo;
+import org.assertj.core.api.Assertions;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +39,8 @@ public class LightGroupTest {
                     channel1,channel2
                 ))
                 .build();
-        channelJpaRepo.save(channel1);
-        channelJpaRepo.save(channel2);
+//        channelJpaRepo.save(channel1);
+//        channelJpaRepo.save(channel2);
         lightGroupJpaRepo.save(lightGroup);
     }
 
@@ -51,5 +52,10 @@ public class LightGroupTest {
             List<Channel> channelList = lightGroup.getChannelList();
             Assert.isTrue(channelList.size() > 0 , "channelList > 0");
         });
+    }
+
+    @Test
+    void testDeleteLightGroup() {
+        int delete = lightGroupJpaRepo.deleteByChannelListNumber(3);
     }
 }

@@ -1,10 +1,7 @@
 package com.jyx.feature.test.jpa.domain.entity;
 
 import com.jyx.infra.jpa.id.Identity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,6 +13,7 @@ import java.util.List;
 
 @Data
 @Builder
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -33,7 +31,8 @@ public class LightGroup extends Identity{
 
     private Integer flowDirection;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
     @JoinColumn(name = "light_group_id")
     private List<Channel> channelList;
+
 }
