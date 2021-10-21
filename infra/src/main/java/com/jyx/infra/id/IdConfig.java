@@ -3,9 +3,9 @@ package com.jyx.infra.id;
 import com.jyx.infra.context.AppContext;
 import com.jyx.infra.context.ClusterContext;
 import com.jyx.infra.context.SpringContextHolder;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.util.Assert;
 
 /**
@@ -16,7 +16,7 @@ import org.springframework.util.Assert;
 public class IdConfig {
 
     @Bean
-    @ConditionalOnBean(AppContext.class)
+    @DependsOn("appContext")
     SnowflakeIdAllocator<Long> idAllocator(){
         AppContext appContext = SpringContextHolder.getBean(AppContext.class);
         ClusterContext clusterContext = appContext.getCluster();
