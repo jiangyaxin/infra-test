@@ -44,6 +44,5 @@ public interface LightGroupJpaRepo extends JpaRepository<LightGroup,Long> {
      */
 //    @EntityGraph("fetchChannelList")
     @Transactional(rollbackFor = Exception.class)
-    @Modifying
     int deleteByChannelListNumber(Integer channelNumber);
 }
