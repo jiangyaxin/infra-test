@@ -1,4 +1,4 @@
-package com.jyx.infra.jpa.id;
+package com.jyx.infra.jpa.domain.id;
 
 import com.jyx.infra.id.IdAllocator;
 import lombok.Getter;

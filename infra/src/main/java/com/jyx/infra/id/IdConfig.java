@@ -17,8 +17,7 @@ public class IdConfig {
 
     @Bean
     @ConditionalOnBean(AppContext.class)
-    SnowflakeIdAllocator<Long> idAllocator(){
-        AppContext appContext = SpringContextHolder.getBean(AppContext.class);
+    SnowflakeIdAllocator<Long> idAllocator(AppContext appContext){
         ClusterContext clusterContext = appContext.getCluster();
         Assert.notNull(clusterContext,"app.cluster properties is null");
 

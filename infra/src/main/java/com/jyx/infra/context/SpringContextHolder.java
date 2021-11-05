@@ -34,4 +34,8 @@ public class SpringContextHolder implements ApplicationContextAware, DisposableB
     public static <T> T getBean(Class<T> requiredType) {
         return applicationContext.getBean(requiredType);
     }
+
+    public static String getYmlProperty(String name){
+        return applicationContext.getEnvironment().getProperty(name);
+    }
 }

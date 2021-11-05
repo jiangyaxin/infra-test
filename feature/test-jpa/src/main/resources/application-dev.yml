@@ -4,8 +4,19 @@ server:
 spring:
   application:
     name: experience-jpa
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
   datasource:
     druid:
+      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
+#      driver-class-name: net.sf.log4jdbc.DriverSpy
+      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
+#      url: jdbc:log4jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&useUnicode=true
       url: jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&useUnicode=true
       username: root
       password: 21qaz@!QAZ
@@ -73,13 +84,6 @@ spring:
         login-password: 123456
         # deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝。
         allow: 127.0.0.1
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: none
-    properties:
-      hibernate:
-        format_sql: true
 
 logging:
   file:
@@ -87,6 +91,10 @@ logging:
     path: ./target/logs
   level:
     root: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    # jdbc 日志打印
+    jdbc:
+      sqlonly: DEBUG
 
 logstash:
   destination: "1.12.236.101:4560"

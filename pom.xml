@@ -20,6 +20,7 @@
         <module>infra</module>
         <module>infra-jpa</module>
         <module>feature</module>
+        <module>infra-web</module>
     </modules>
 
     <properties>
@@ -30,6 +31,8 @@
         <logstash-logback-encoder-version>6.6</logstash-logback-encoder-version>
         <mysql-connector-version>8.0.26</mysql-connector-version>
         <lombok-version>1.18.22</lombok-version>
+        <log4jdbc.version>1.2</log4jdbc.version>
+        <guava.version>31.0.1-jre</guava.version>
     </properties>
 
     <dependencyManagement>
@@ -75,6 +78,19 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok-version}</version>
                 <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.googlecode.log4jdbc</groupId>
+                <artifactId>log4jdbc</artifactId>
+                <version>${log4jdbc.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
             </dependency>
 
         </dependencies>

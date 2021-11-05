@@ -1,6 +1,8 @@
 package com.jyx.feature.test.jpa.domain.entity;
 
-import com.jyx.infra.jpa.id.Identity;
+import com.jyx.feature.test.jpa.domain.entity.listener.LightGroupListener;
+import com.jyx.infra.jpa.domain.audit.Auditable;
+import com.jyx.infra.jpa.domain.id.Identity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -13,7 +15,7 @@ import java.util.List;
 
 @Data
 @Builder
-@ToString
+@ToString(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -21,7 +23,8 @@ import java.util.List;
 @NamedEntityGraph(name = "fetchChannelList", attributeNodes = {
         @NamedAttributeNode("channelList")
 })
-public class LightGroup extends Identity{
+@EntityListeners(LightGroupListener.class)
+public class LightGroup extends Auditable {
 
     private Integer number;
 
