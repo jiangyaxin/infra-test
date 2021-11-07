@@ -1,12 +1,10 @@
-package com.jyx.feature.test.jpa.domain.repository;
+package com.jyx.feature.test.jpa.repository;
 
 import com.jyx.feature.test.jpa.domain.entity.LightGroup;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -17,7 +15,6 @@ import java.util.List;
  * @author JYX
  * @since 2021/10/20 17:50
  */
-@Repository
 public interface LightGroupJpaRepo extends JpaRepository<LightGroup,Long>, JpaSpecificationExecutor<LightGroup> {
 
     /**
@@ -30,6 +27,9 @@ public interface LightGroupJpaRepo extends JpaRepository<LightGroup,Long>, JpaSp
      */
 //    @EntityGraph("fetchChannelList")
     List<LightGroup> findByChannelListNumber(Integer channelNumber);
+
+    @EntityGraph("fetchChannelList")
+    List<LightGroup> findByChannelListNumberIn(List<Integer> channelNumberList);
 
     /**
      * 如果添加 @EntityGraph("fetchChannelList") 注解，删除 通道编号等于2的灯组，级联删除left-join编号等于2的通道，只删除查到的数据,未能删除属于该灯组但是通道编号不为2的通道

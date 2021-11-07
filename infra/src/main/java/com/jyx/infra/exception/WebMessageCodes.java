@@ -1,6 +1,4 @@
-package com.jyx.infra.web.exception.handler;
-
-import com.jyx.infra.exception.MessageCode;
+package com.jyx.infra.exception;
 
 /**
  * @author JYX
@@ -9,6 +7,9 @@ import com.jyx.infra.exception.MessageCode;
 public interface WebMessageCodes {
 
     MessageCode SERVER_ERROR_CODE = MessageCode.of(50000, "系统错误,请联系管理员!");
+    MessageCode ENUM_CONVERT_ERROR_CODE = MessageCode.of(50001, "枚举转换错误!");
 
     MessageCode WRONG_PARAMETER_CODE = MessageCode.of(40000, "参数错误!");
+
+    MessageCode OBJECT_LOCKING_CODE = MessageCode.of(40001, "数据被其他用户修改，请刷新页面重新操作!");
 }

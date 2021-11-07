@@ -9,9 +9,20 @@ public class BusinessException extends AppException {
 
     private final MessageCode code;
 
-    public BusinessException(String message){
-        super(message);
-        this.code = null;
+    public static BusinessException of(MessageCode messageCode){
+        return new BusinessException(messageCode);
+    }
+
+    public static BusinessException of(MessageCode messageCode,String message){
+        return new BusinessException(messageCode,message);
+    }
+
+    public static BusinessException of(MessageCode messageCode,Throwable cause){
+        return new BusinessException(messageCode,cause);
+    }
+
+    public static BusinessException of(MessageCode messageCode,String message, Throwable cause){
+        return new BusinessException(messageCode,message,cause);
     }
 
     public BusinessException(MessageCode messageCode){

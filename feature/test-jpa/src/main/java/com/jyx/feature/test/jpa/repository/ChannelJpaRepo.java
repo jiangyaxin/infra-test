@@ -1,4 +1,4 @@
-package com.jyx.feature.test.jpa.domain.repository;
+package com.jyx.feature.test.jpa.repository;
 
 import com.jyx.feature.test.jpa.domain.entity.Channel;
 import org.springframework.data.jpa.repository.JpaRepository;

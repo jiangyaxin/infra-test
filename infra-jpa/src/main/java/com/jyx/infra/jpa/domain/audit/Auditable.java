@@ -1,10 +1,8 @@
 package com.jyx.infra.jpa.domain.audit;
 
 import com.jyx.infra.jpa.domain.id.Identity;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -20,10 +18,10 @@ import java.util.Date;
  * @author JYX
  * @since 2021/11/5 11:17
  */
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class Auditable extends Identity {
@@ -40,6 +38,9 @@ public class Auditable extends Identity {
     @LastModifiedDate
     private Date lastModifiedDate;
 
+    /**
+     * update时version一定要带上，否则认为时新增
+     */
     @Version
     private Long version;
 

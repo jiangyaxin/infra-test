@@ -9,6 +9,22 @@ public class SystemException extends AppException {
 
     private final MessageCode code;
 
+    public static SystemException of(MessageCode messageCode){
+        return new SystemException(messageCode);
+    }
+
+    public static SystemException of(MessageCode messageCode,String message){
+        return new SystemException(messageCode,message);
+    }
+
+    public static SystemException of(MessageCode messageCode,Throwable cause){
+        return new SystemException(messageCode,cause);
+    }
+
+    public static SystemException of(MessageCode messageCode,String message, Throwable cause){
+        return new SystemException(messageCode,message,cause);
+    }
+
     public SystemException(MessageCode messageCode){
         super();
         this.code = messageCode;

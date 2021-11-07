@@ -11,6 +11,11 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        jdbc:
+          time_zone: GMT+8
+        session_factory:
+          #配合@DynamicUpdate注解解决空值更新的问题
+          interceptor: com.jyx.infra.jpa.domain.interceptor.NotUpdateNullInterceptor
   datasource:
     druid:
       # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉

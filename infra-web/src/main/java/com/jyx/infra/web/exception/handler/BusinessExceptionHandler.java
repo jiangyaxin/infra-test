@@ -1,6 +1,7 @@
 package com.jyx.infra.web.exception.handler;
 
 import com.jyx.infra.exception.BusinessException;
+import com.jyx.infra.result.ErrorResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -19,7 +20,7 @@ import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.BUSINES
 public class BusinessExceptionHandler {
 
     @ExceptionHandler(value = BusinessException.class)
-    public ResponseEntity handle(BusinessException e) {
+    public ResponseEntity<ErrorResult> handle(BusinessException e) {
         return DefaultExceptionHandler.handleBadRequest(e, e.getCode());
     }
 }

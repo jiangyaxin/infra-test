@@ -1,10 +1,15 @@
 package com.jyx.feature.test.jpa;
 
 import com.google.common.collect.Lists;
+import com.jyx.feature.test.jpa.application.OperateLightGroupService;
+import com.jyx.feature.test.jpa.application.dto.ChannelDto;
+import com.jyx.feature.test.jpa.application.dto.LightGroupDto;
 import com.jyx.feature.test.jpa.domain.entity.Channel;
 import com.jyx.feature.test.jpa.domain.entity.LightGroup;
-import com.jyx.feature.test.jpa.domain.repository.ChannelJpaRepo;
-import com.jyx.feature.test.jpa.domain.repository.LightGroupJpaRepo;
+import com.jyx.feature.test.jpa.domain.repository.LightGroupRepo;
+import com.jyx.feature.test.jpa.domain.service.LightGroupService;
+import com.jyx.feature.test.jpa.repository.ChannelJpaRepo;
+import com.jyx.feature.test.jpa.repository.LightGroupJpaRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,12 @@ import org.springframework.util.Assert;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.JoinType;
 import java.util.List;
+
+import static com.jyx.feature.test.jpa.domain.entity.value.Direction.WEST_NORTH;
+import static com.jyx.feature.test.jpa.domain.entity.value.Direction.WEST_SOUTH;
+import static com.jyx.feature.test.jpa.domain.entity.value.FlowDirection.LEFT_STRAIGHT_RIGHT;
+import static com.jyx.feature.test.jpa.domain.entity.value.FlowDirection.TURN_ROUND_LEFT_STRAIGHT_RIGHT;
+import static com.jyx.feature.test.jpa.domain.entity.value.LightGroupType.VEHICLE;
 
 /**
  * @author JYX
@@ -32,15 +43,72 @@ public class LightGroupTest {
     @Autowired
     ChannelJpaRepo channelJpaRepo;
 
+    @Autowired
+    LightGroupRepo lightGroupRepo;
+
+    @Autowired
+    LightGroupService lightGroupService;
+
+    @Autowired
+    OperateLightGroupService operateLightGroupService;
+
+    @Test
+    void testSaveLightGroupListByApplicationService() {
+        ChannelDto channel1 = ChannelDto.builder().number(3).build();
+        ChannelDto channel2 = ChannelDto.builder().number(4).build();
+        LightGroupDto lightGroup = LightGroupDto.builder()
+                .number(2)
+                .type(VEHICLE)
+                .direction(WEST_SOUTH)
+                .flowDirection(TURN_ROUND_LEFT_STRAIGHT_RIGHT)
+                .channelList(Lists.newArrayList(
+                        channel1,channel2
+                ))
+                .build();
+        operateLightGroupService.create(Lists.newArrayList(lightGroup));
+    }
+
+    @Test
+    void testSaveLightGroupListByService() {
+        Channel channel1 = Channel.builder().number(3).build();
+        Channel channel2 = Channel.builder().number(4).build();
+        LightGroup lightGroup = LightGroup.builder()
+                .number(2)
+                .type(VEHICLE)
+                .direction(WEST_NORTH)
+                .flowDirection(LEFT_STRAIGHT_RIGHT)
+                .channelList(Lists.newArrayList(
+                        channel1,channel2
+                ))
+                .build();
+        lightGroupService.save(Lists.newArrayList(lightGroup));
+    }
+
+    @Test
+    void testSaveLightGroupListByRepo() {
+        Channel channel1 = Channel.builder().number(3).build();
+        Channel channel2 = Channel.builder().number(4).build();
+        LightGroup lightGroup = LightGroup.builder()
+                .number(2)
+                .type(VEHICLE)
+                .direction(WEST_NORTH)
+                .flowDirection(LEFT_STRAIGHT_RIGHT)
+                .channelList(Lists.newArrayList(
+                        channel1,channel2
+                ))
+                .build();
+        lightGroupRepo.save(Lists.newArrayList(lightGroup));
+    }
+
     @Test
     void testSaveLightGroup() {
         Channel channel1 = Channel.builder().number(3).build();
         Channel channel2 = Channel.builder().number(4).build();
         LightGroup lightGroup = LightGroup.builder()
                 .number(2)
-                .type(1)
-                .direction(1)
-                .flowDirection(1)
+                .type(VEHICLE)
+                .direction(WEST_NORTH)
+                .flowDirection(LEFT_STRAIGHT_RIGHT)
                 .channelList(Lists.newArrayList(
                     channel1,channel2
                 ))

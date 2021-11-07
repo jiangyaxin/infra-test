@@ -8,7 +8,11 @@ package com.jyx.infra.exception;
  */
 public class AppException extends RuntimeException {
 
-    protected AppException() {
+    public static AppException of(String message){
+        return new AppException(message);
+    }
+
+    public AppException() {
         super();
     }
 

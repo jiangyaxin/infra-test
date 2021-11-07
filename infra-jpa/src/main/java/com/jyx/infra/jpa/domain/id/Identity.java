@@ -1,9 +1,7 @@
 package com.jyx.infra.jpa.domain.id;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.GeneratedValue;
@@ -15,9 +13,10 @@ import javax.persistence.MappedSuperclass;
  * @since 2021/10/20 17:24
  */
 @Getter
-@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @ToString
-@RequiredArgsConstructor
 @MappedSuperclass
 public class Identity {
 
@@ -25,5 +24,4 @@ public class Identity {
     @GeneratedValue(generator = "id.gen")
     @GenericGenerator(name = "id.gen", strategy = "com.jyx.infra.jpa.domain.id.SnowflakeIdGenerator")
     private Long id;
-
 }

@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static com.jyx.infra.context.AppConstant.MODULE;
+import static com.jyx.infra.exception.WebMessageCodes.SERVER_ERROR_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.DEFAULT_EXCEPTION_HANDLER_ORDER;
-import static com.jyx.infra.web.exception.handler.WebMessageCodes.SERVER_ERROR_CODE;
 
 /**
  * @author JYX
@@ -25,29 +25,29 @@ import static com.jyx.infra.web.exception.handler.WebMessageCodes.SERVER_ERROR_C
 public class DefaultExceptionHandler {
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity handleException(Exception e) {
+    public ResponseEntity<ErrorResult> handleException(Exception e) {
         return handleInternalServerError(e);
     }
 
-    public static ResponseEntity handleInternalServerError(Throwable cause) {
+    public static ResponseEntity<ErrorResult> handleInternalServerError(Throwable cause) {
         return handleInternalServerError(cause, SERVER_ERROR_CODE);
     }
 
-    public static ResponseEntity handleInternalServerError(Throwable cause, MessageCode messageCode) {
+    public static ResponseEntity<ErrorResult> handleInternalServerError(Throwable cause, MessageCode messageCode) {
         return handle(cause, messageCode, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    public static ResponseEntity handleBadRequest(Throwable cause, MessageCode messageCode) {
+    public static ResponseEntity<ErrorResult> handleBadRequest(Throwable cause, MessageCode messageCode) {
         return handle(cause, messageCode, HttpStatus.BAD_REQUEST);
     }
 
-    public static ResponseEntity handle(Throwable cause, MessageCode messageCode, HttpStatus status) {
+    public static ResponseEntity<ErrorResult> handle(Throwable cause, MessageCode messageCode, HttpStatus status) {
         logError(cause, messageCode);
         ErrorResult errorResult = new ErrorResult(messageCode, cause);
         return createErrorResponse(status, errorResult);
     }
 
-    private static  ResponseEntity createErrorResponse(HttpStatus status, ErrorResult errorResult) {
+    private static  ResponseEntity<ErrorResult> createErrorResponse(HttpStatus status, ErrorResult errorResult) {
         return ResponseEntity.status(status).body(errorResult);
     }
 
@@ -56,6 +56,6 @@ public class DefaultExceptionHandler {
             return;
         }
 
-        log.error(String.format("[%s-%s-%s]",MODULE,messageCode.getCode(),messageCode.getMessage()),cause);
+        log.error(String.format("[%s][%s-%s]",MODULE,messageCode.getCode(),messageCode.getMessage()),cause);
     }
 }
