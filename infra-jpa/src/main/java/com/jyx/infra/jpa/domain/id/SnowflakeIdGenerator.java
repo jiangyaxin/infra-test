@@ -1,9 +1,9 @@
 package com.jyx.infra.jpa.domain.id;
 
-import com.jyx.infra.context.SpringContextHolder;
 import com.jyx.infra.id.IdAllocator;
-import com.jyx.infra.id.SnowflakeIdAllocator;
 import lombok.extern.slf4j.Slf4j;
+
+import static com.jyx.infra.context.AppConstant.ID_ALLOCATOR;
 
 /**
  * @author JYX
@@ -14,6 +14,6 @@ public class SnowflakeIdGenerator extends AbstractLazyIdGenerator<Long>{
 
     @Override
     protected IdAllocator<Long> initGenerator() {
-        return SpringContextHolder.getBean(SnowflakeIdAllocator.class);
+        return ID_ALLOCATOR;
     }
 }

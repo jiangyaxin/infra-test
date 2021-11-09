@@ -18,7 +18,7 @@ import java.util.Date;
  * @author JYX
  * @since 2021/11/5 11:17
  */
-@Data
+@Getter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor

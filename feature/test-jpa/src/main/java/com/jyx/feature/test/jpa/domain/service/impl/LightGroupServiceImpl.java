@@ -1,6 +1,7 @@
 package com.jyx.feature.test.jpa.domain.service.impl;
 
 import com.jyx.feature.test.jpa.domain.entity.LightGroup;
+import com.jyx.feature.test.jpa.domain.event.LightGroupSaveEvent;
 import com.jyx.feature.test.jpa.domain.repository.LightGroupRepo;
 import com.jyx.feature.test.jpa.domain.service.LightGroupService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class LightGroupServiceImpl implements LightGroupService {
 
     @Override
     public List<LightGroup> save(List<LightGroup> lightGroupList) {
+        lightGroupList.forEach(lightGroup -> lightGroup.registerEvent(new LightGroupSaveEvent(lightGroup)));
         return lightGroupRepo.save(lightGroupList);
     }
 
