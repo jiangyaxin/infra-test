@@ -30,7 +30,7 @@
 
     <properties>
         <spring-cloud-dependencies.version>Hoxton.SR12</spring-cloud-dependencies.version>
-        <spring-cloud-alibaba-dependencies.version>2.2.5.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-cloud-alibaba-dependencies.version>2.2.6.RELEASE</spring-cloud-alibaba-dependencies.version>
 
         <spring-test-experience.version>1.0.0</spring-test-experience.version>
         <java.version>11</java.version>
