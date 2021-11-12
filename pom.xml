@@ -22,11 +22,8 @@
         <module>feature</module>
         <module>infra-web</module>
         <module>infra-bus</module>
+        <module>infra-bus-kafka</module>
     </modules>
-
-<!--    Spring Cloud Version |	Spring Cloud Alibaba Version |	Spring Boot Version-->
-<!--    2020.0	             |       2021.1	                 |  2.4.2.RELEASE-->
-<!--    Hoxton.SR8	         |     2.2.5.RELEASE	         |  2.3.2.RELEASE-->
 
     <properties>
         <spring-cloud-dependencies.version>Hoxton.SR12</spring-cloud-dependencies.version>
@@ -66,14 +63,20 @@
             </dependency>
 
             <dependency>
-                <groupId>com.jyx.feature</groupId>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-kafka</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx</groupId>
                 <artifactId>infra-bus</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.jyx.feature</groupId>
-                <artifactId>test-jpa</artifactId>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-bus-kafka</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 

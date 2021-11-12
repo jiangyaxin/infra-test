@@ -1,4 +1,4 @@
-package com.jyx.feature.test.jpa;
+package com.jyx.feature.test.kafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,10 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan("com.jyx")
-public class ExperienceJpaApplication {
+public class KafkaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ExperienceJpaApplication.class, args);
+        SpringApplication.run(KafkaApplication.class, args);
     }
 
 }

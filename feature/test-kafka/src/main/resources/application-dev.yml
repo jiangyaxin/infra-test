@@ -1,0 +1,66 @@
+server:
+  port: 30002
+
+spring:
+  application:
+    name: test-kafka
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers:
+            - 1.12.236.101:9001
+            - 1.12.236.101:9002
+            - 1.12.236.101:9003
+#          all,-1 等所有brokers收到结果 1 leader收到结果 0 不管有么有收到结果 默认：1
+          required-acks: 1
+        bindings:
+#          通道名,默认输入通道名,Sink.java
+          input:
+#            spring.cloud.stream.kafka.default.consumer.<property>=<value> 可以为所用通道设置值
+            consumer:
+              # 自动分配partition,不需要instance-count和instance-index,默认true,设置为false可以启用下面三个属性
+              auto-rebalance-enabled: true
+#              需要开启消费分区
+#              partitioned: true
+#              有多少个消费者实例
+#              instance-count: 1
+#              当前消费者实例的索引
+#              instance-index: 0
+#              自动提交偏移量，默认true,设置为false需要使用org.springframework.kafka.support.Acknowledgment在程序中手动提交
+              auto-commit-offset: true
+#              是否每一条数据都提交偏移量,与上个属性配合使用,默认false,表示处理完consumer.poll()一批数据后再提交，轮询返回的记录数由max.poll.records
+              ack-each-record: false
+#              是否将消费者的偏移量重置为startOffset提供的值。如果提供了KafkaRebalanceListener，则必须为 false；
+              reset-offsets: false
+#              start-offset 可以设置earliest 和 latest,如果group设置，则将设置为earliest。否则，它被设置latest
+#              设置为true时如果发生异常会将导致错误的消息发送到error.<destination>.<group>的topic,可以设置dlq-name 或者 DlqDestinationResolver的bean修改
+              enable-dlq: false
+#              dlq-partitions  error.<destination>.<group>分区数量.当 enable-dlq=true时生效，默认分区数量和原分区一样。当大于1，需要配置DlqPartitionFunction.
+#              触发事件的时间间隔，可以使用ApplicationListener<ListenerContainerIdleEvent>来处理
+              idle-event-interval: 30000
+#              destination-is-pattern topic使用正则表达式匹配
+#              poll超时时间,默认5秒
+              poll-timeout: 5000
+#          通道名,默认输出通道名,Source.java
+          output:
+#            spring.cloud.stream.kafka.default.producer.<property>=<value> 可以为所用通道设置值
+            producer:
+#              生产者发送缓冲区大小,单位字节.
+              buffer-size: 16384
+              sync: false
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 1
