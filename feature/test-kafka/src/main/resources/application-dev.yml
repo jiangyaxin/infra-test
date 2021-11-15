@@ -6,6 +6,40 @@ spring:
     name: test-kafka
   cloud:
     stream:
+#      有多少个消费者实例
+#      instance-count: 1
+#      当前消费者实例的索引
+#      instance-index: 0
+#      注意topic是stream的属性
+#      dynamic-destinations
+#      spring.cloud.stream.default.<producer|consumer>.<property>=<value>
+      bindings:
+        input:
+#          topic
+          destination: test
+          group: test
+          content-type: application/json
+          consumer:
+#            自动启动消费者，默认true
+            auto-startup: true
+#            消费者并发数，默认1
+            concurrency: 1
+#            需要开启消费分区，默认false，与instance-count、instance-index联动
+#            partitioned: false
+#            重试次数（包括第一次），设置为1禁用重试，默认值3
+            max-attempts: 1
+        output:
+#           topic
+           destination: test
+           content-type: application/json
+#           producer:
+#             partition-count
+#              以下两个属性互斥，功能一样，需要partitionCount>1
+#              partition-key-expression
+#              partition-key-extractor-class
+#              以下两个属性互斥，功能一样，需要partitionCount>1,若都为空默认使用hashCode(key) % partitionCount
+#              partition-selector-expression
+#              partition-selector-class
       kafka:
         binder:
           brokers:
@@ -22,27 +56,14 @@ spring:
         bindings:
 #          通道名,默认输入通道名,Sink.java
           input:
-#            topic
-            destination: test
-            group: test
-            contentType: application/json
 #            spring.cloud.stream.kafka.default.consumer.<property>=<value> 可以为所用通道设置值
             consumer:
-              # 自动分配partition,不需要instance-count和instance-index,默认true,设置为false可以启用下面三个属性
+#              自动分配partition,不需要instance-count和instance-index,默认true,设置为false可以启用下面三个属性
               auto-rebalance-enabled: true
-#              需要开启消费分区
-#              partitioned: true
-#              有多少个消费者实例
-#              instance-count: 1
-#              当前消费者实例的索引
-#              instance-index: 0
-#              自动提交偏移量，默认true,设置为false需要使用org.springframework.kafka.support.Acknowledgment在程序中手动提交
-#              concurrency 并发数量
-#              重试次数（包括第一次），设置为1禁用重试，默认值3
-              max-attempts: 1
-              auto-commit-offset: true
 #              是否每一条数据都提交偏移量,与上个属性配合使用,默认false,表示处理完consumer.poll()一批数据后再提交，轮询返回的记录数由max.poll.records
               ack-each-record: false
+#              自动提交偏移量，默认true,设置为false需要使用org.springframework.kafka.support.Acknowledgment在程序中手动提交
+              auto-commit-offset: true
 #              是否将消费者的偏移量重置为startOffset提供的值。如果提供了KafkaRebalanceListener，则必须为 false；
               reset-offsets: false
 #              start-offset 可以设置earliest 和 latest,如果group设置，则将设置为earliest。否则，它被设置latest
@@ -56,9 +77,6 @@ spring:
               poll-timeout: 5000
 #          通道名,默认输出通道名,Source.java
           output:
-#            topic
-            destination: test
-            contentType: application/json
 #            spring.cloud.stream.kafka.default.producer.<property>=<value> 可以为所用通道设置值
             producer:
 #              生产者发送缓冲区大小,单位字节.
@@ -69,15 +87,9 @@ spring:
 #              生产者在发送消息之前等待多长时间以允许在同一批次中累积更多消息，即延迟为代价增加吞吐量，默认值为0
               batch-timeout: 0
 #              message-key-expression 针对用于填充生成的 Kafka 消息的键的传出消息计算的 SpEL 表达式,例如 headers['myKey']。默认为空
-#              compression none, gzip, snappy,lz4
+#              configuration.compression.type     none, gzip, snappy,lz4
 #              关闭生产者等待的超时时间，默认30s
               close-timeout: 30
-#              以下两个属性互斥，功能一样，需要partitionCount>1
-#              partition-key-expression
-#              partition-key-extractor-class
-#              以下两个属性互斥，功能一样，需要partitionCount>1,若都为空默认使用hashCode(key) % partitionCount
-#              partition-selector-expression
-#              partition-selector-class
 
 logging:
   file:
