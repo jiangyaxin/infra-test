@@ -14,9 +14,18 @@ spring:
             - 1.12.236.101:9003
 #          all,-1 等所有brokers收到结果 1 leader收到结果 0 不管有么有收到结果 默认：1
           required-acks: 1
+#          反序列化异常处理 logAndContinue,logAndFail,sendToDlq
+          deserialization-exception-handler: logAndFail
+          auto-create-topics: false
+          consumer-properties:
+            allow.auto.create.topics: false
         bindings:
 #          通道名,默认输入通道名,Sink.java
           input:
+#            topic
+            destination: test
+            group: test
+            contentType: application/json
 #            spring.cloud.stream.kafka.default.consumer.<property>=<value> 可以为所用通道设置值
             consumer:
               # 自动分配partition,不需要instance-count和instance-index,默认true,设置为false可以启用下面三个属性
@@ -28,6 +37,9 @@ spring:
 #              当前消费者实例的索引
 #              instance-index: 0
 #              自动提交偏移量，默认true,设置为false需要使用org.springframework.kafka.support.Acknowledgment在程序中手动提交
+#              concurrency 并发数量
+#              重试次数（包括第一次），设置为1禁用重试，默认值3
+              max-attempts: 1
               auto-commit-offset: true
 #              是否每一条数据都提交偏移量,与上个属性配合使用,默认false,表示处理完consumer.poll()一批数据后再提交，轮询返回的记录数由max.poll.records
               ack-each-record: false
@@ -44,11 +56,29 @@ spring:
               poll-timeout: 5000
 #          通道名,默认输出通道名,Source.java
           output:
+#            topic
+            destination: test
+            contentType: application/json
 #            spring.cloud.stream.kafka.default.producer.<property>=<value> 可以为所用通道设置值
             producer:
 #              生产者发送缓冲区大小,单位字节.
               buffer-size: 16384
+#              异步发送，默认false
               sync: false
+#              send-timeout-expression 使用同步发送时超时时间，单位毫秒，可使用SpEL表达式，例如 headers['mySendTimeout'],默认为空，会一直阻塞
+#              生产者在发送消息之前等待多长时间以允许在同一批次中累积更多消息，即延迟为代价增加吞吐量，默认值为0
+              batch-timeout: 0
+#              message-key-expression 针对用于填充生成的 Kafka 消息的键的传出消息计算的 SpEL 表达式,例如 headers['myKey']。默认为空
+#              compression none, gzip, snappy,lz4
+#              关闭生产者等待的超时时间，默认30s
+              close-timeout: 30
+#              以下两个属性互斥，功能一样，需要partitionCount>1
+#              partition-key-expression
+#              partition-key-extractor-class
+#              以下两个属性互斥，功能一样，需要partitionCount>1,若都为空默认使用hashCode(key) % partitionCount
+#              partition-selector-expression
+#              partition-selector-class
+
 logging:
   file:
     name: ${spring.application.name}

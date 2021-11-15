@@ -2,6 +2,8 @@ package com.jyx.feature.test.kafka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.cloud.stream.messaging.Processor;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -10,6 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan("com.jyx")
+@EnableBinding(Processor.class)
 public class KafkaApplication {
 
     public static void main(String[] args) {
