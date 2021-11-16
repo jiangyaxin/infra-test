@@ -28,18 +28,25 @@ spring:
 #            partitioned: false
 #            重试次数（包括第一次），设置为1禁用重试，默认值3
             max-attempts: 1
+#            负数表示使用 spring.cloud.stream.instanceCount,大于等于0表示使用该值
+            instance-count: -1
+            instance-index: -1
+#            未在retryable-exceptions的异常是否可以重试
+            default-retryable: true
+#            retryable-exceptions 例如 spring.cloud.stream.bindings.input.consumer.retryable-exceptions.java.lang.IllegalStateException=false
         output:
 #           topic
            destination: test
            content-type: application/json
-#           producer:
+           producer:
+             auto-startup: true
 #             partition-count
 #              以下两个属性互斥，功能一样，需要partitionCount>1
 #              partition-key-expression
-#              partition-key-extractor-class
+#              partition-key-extractor-name 实现PartitionKeyExtractorStrategy
 #              以下两个属性互斥，功能一样，需要partitionCount>1,若都为空默认使用hashCode(key) % partitionCount
 #              partition-selector-expression
-#              partition-selector-class
+#              partition-selector-name 实现PartitionSelectorStrategy
       kafka:
         binder:
           brokers:
@@ -85,7 +92,7 @@ spring:
 #              生产者在发送消息之前等待多长时间以允许在同一批次中累积更多消息，即延迟为代价增加吞吐量，默认值为0
               batch-timeout: 0
 #              message-key-expression 针对用于填充生成的 Kafka 消息的键的传出消息计算的 SpEL 表达式,例如 headers['myKey']。默认为空
-#              configuration.compression.type     none, gzip, snappy,lz4
+#              configuration.compression.type     none, gzip, snappy,lz4,zstd
 #              关闭生产者等待的超时时间，默认30s
               close-timeout: 30
 
