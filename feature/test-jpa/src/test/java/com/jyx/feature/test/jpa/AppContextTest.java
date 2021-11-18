@@ -2,14 +2,12 @@ package com.jyx.feature.test.jpa;
 
 import com.jyx.infra.context.AppContext;
 import com.jyx.infra.context.SpringContextHolder;
-import com.jyx.infra.event.EventBusContext;
+import com.jyx.infra.event.GuavaEventBusContext;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.naming.event.EventContext;
 
 import static com.jyx.infra.context.AppConstant.ID_ALLOCATOR;
 
@@ -39,8 +37,8 @@ public class AppContextTest {
 
     @Test
     public void testGuavaEvent(){
-        EventBusContext.registerListener(new GuavaEventListener());
-        EventBusContext.postEvent(new GuavaEvent());
+        GuavaEventBusContext.registerListener(new TestGuavaGuavaEventListener());
+        GuavaEventBusContext.postEvent(new TestGuavaEvent());
     }
 
 

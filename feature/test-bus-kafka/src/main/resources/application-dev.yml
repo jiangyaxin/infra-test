@@ -1,0 +1,39 @@
+server:
+  port: 30003
+
+spring:
+  application:
+    name: bus-kafka
+  cloud:
+    bus:
+#      是否开启，默认为 true
+      enabled: true
+#      目标消息队列，默认为 springCloudBus
+      destination: springCloudBus
+    stream:
+      kafka:
+        binder:
+          brokers:
+            - 1.12.236.101:9001
+            - 1.12.236.101:9002
+            - 1.12.236.101:9003
+          required-acks: 1
+          auto-create-topics: false
+          consumer-properties:
+            allow.auto.create.topics: false
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 1

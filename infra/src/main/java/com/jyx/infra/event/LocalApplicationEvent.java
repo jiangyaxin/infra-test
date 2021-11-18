@@ -1,6 +1,8 @@
 package com.jyx.infra.event;
 
 import lombok.Getter;
+import lombok.ToString;
+import org.springframework.context.ApplicationEvent;
 
 import java.util.Date;
 
@@ -8,16 +10,18 @@ import static com.jyx.infra.context.AppConstant.ID_ALLOCATOR;
 
 /**
  * @author JYX
- * @since 2021/11/9 9:28
+ * @since 2021/11/18 10:34
  */
 @Getter
-public abstract class Event{
+@ToString(callSuper = true)
+public abstract class LocalApplicationEvent extends ApplicationEvent {
 
     private Long id;
 
     private Date publishDate;
 
-    public Event(){
+    public LocalApplicationEvent(Object source) {
+        super(source);
         init();
     }
 

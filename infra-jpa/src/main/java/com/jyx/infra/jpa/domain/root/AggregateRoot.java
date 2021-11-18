@@ -2,7 +2,7 @@ package com.jyx.infra.jpa.domain.root;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import com.jyx.infra.event.Event;
+import com.jyx.infra.event.GuavaEvent;
 import com.jyx.infra.jpa.domain.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,16 +28,16 @@ public class AggregateRoot extends Auditable{
 
     @JsonIgnore
     @Transient
-    private final List<Event> domainEvents = Lists.newCopyOnWriteArrayList();
+    private final List<GuavaEvent> domainEvents = Lists.newCopyOnWriteArrayList();
 
-    public <T extends Event> T registerEvent(T event){
+    public <T extends GuavaEvent> T registerEvent(T event){
         Assert.notNull(event,"Domain event is null.");
         domainEvents.add(event);
         return event;
     }
 
     @DomainEvents
-    public List<Event> events() {
+    public List<GuavaEvent> events() {
         return Collections.unmodifiableList(domainEvents);
     }
 

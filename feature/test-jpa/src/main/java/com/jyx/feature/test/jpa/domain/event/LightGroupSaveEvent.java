@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jpa.domain.event;
 
 import com.jyx.feature.test.jpa.domain.entity.LightGroup;
-import com.jyx.infra.event.Event;
+import com.jyx.infra.event.GuavaEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class LightGroupSaveEvent extends Event {
+public class LightGroupSaveEvent extends GuavaEvent {
 
     private LightGroup lightGroup;
 }

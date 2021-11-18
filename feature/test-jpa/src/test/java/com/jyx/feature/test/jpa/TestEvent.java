@@ -1,12 +1,12 @@
 package com.jyx.feature.test.jpa;
 
-import org.springframework.context.ApplicationEvent;
+import com.jyx.infra.event.LocalApplicationEvent;
 
 /**
  * @author JYX
  * @since 2021/11/9 8:53
  */
-public class TestEvent extends ApplicationEvent {
+public class TestEvent extends LocalApplicationEvent {
 
     public TestEvent(Object source) {
         super(source);

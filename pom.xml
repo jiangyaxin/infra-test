@@ -22,7 +22,6 @@
         <module>feature</module>
         <module>infra-web</module>
         <module>infra-bus</module>
-        <module>infra-bus-kafka</module>
     </modules>
 
     <properties>
@@ -64,19 +63,7 @@
 
             <dependency>
                 <groupId>com.jyx</groupId>
-                <artifactId>infra-kafka</artifactId>
-                <version>${spring-test-experience.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.jyx</groupId>
                 <artifactId>infra-bus</artifactId>
-                <version>${spring-test-experience.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.jyx</groupId>
-                <artifactId>infra-bus-kafka</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 

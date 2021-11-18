@@ -2,17 +2,13 @@ spring:
   profiles:
     active: dev
   application:
-    name: experience-jpa
+    name: bus-kafka
 logging:
   file:
     name: ${spring.application.name}
     path: ./target/logs
   level:
     root: INFO
-    org.hibernate.type.descriptor.sql.BasicBinder: trace
-    # jdbc 日志打印
-    jdbc:
-      sqlonly: DEBUG
 
 logstash:
   destination: "1.12.236.101:4560"

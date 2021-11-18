@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class TestEventListener{
+public class TestApplicationEventListener {
 
     @EventListener
     public void testEvent(TestEvent event){

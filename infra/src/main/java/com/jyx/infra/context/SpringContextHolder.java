@@ -1,5 +1,6 @@
 package com.jyx.infra.context;
 
+import com.jyx.infra.event.LocalApplicationEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.DisposableBean;
@@ -14,9 +15,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class SpringContextHolder implements ApplicationContextAware, ApplicationEventPublisherAware,DisposableBean {
 
-    private  static ApplicationContext applicationContext=null;
+    protected static ApplicationContext applicationContext=null;
 
-    private static ApplicationEventPublisher applicationEventPublisher=null;
+    protected static ApplicationEventPublisher applicationEventPublisher=null;
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -46,12 +47,12 @@ public class SpringContextHolder implements ApplicationContextAware, Application
         return applicationContext;
     }
 
-    public static  <E extends ApplicationEvent> void publishEvent(E event){
+    public static  <E extends LocalApplicationEvent> void publishEvent(E event){
         applicationEventPublisher.publishEvent(event);
         if(log.isDebugEnabled()){
-            return;
+            log.debug("Post application event is {}:{}",event.getId(),event);
         }
-        log.debug("发布Application事件{}",event);
+
     }
 
 }

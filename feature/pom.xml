@@ -15,6 +15,7 @@
     <modules>
         <module>test-jpa</module>
         <module>test-kafka</module>
+        <module>test-bus-kafka</module>
     </modules>
 
 </project>
