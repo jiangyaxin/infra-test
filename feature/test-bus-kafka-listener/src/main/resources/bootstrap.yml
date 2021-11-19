@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: bus-kafka-listener
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"

@@ -1,9 +1,9 @@
 server:
-  port: 30003
+  port: 30004
 
 spring:
   application:
-    name: bus-kafka
+    name: bus-kafka-listener
   cloud:
     bus:
 #      是否开启，默认为 true

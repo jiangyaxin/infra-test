@@ -1,4 +1,4 @@
-package com.jyx.feature.test.bus.kafka;
+package com.jyx.feature.test.bus.kafka.listener;
 
 import com.jyx.infra.bus.event.GlobalApplicationEvent;
 
@@ -8,6 +8,9 @@ import com.jyx.infra.bus.event.GlobalApplicationEvent;
  */
 public class TestBusEvent extends GlobalApplicationEvent {
 
+    /**
+     * 该构造器不能使用，保留是为了序列化使用,否则出现 java.lang.NullPointerException ServiceMatcher
+     */
     public TestBusEvent() {
     }
 

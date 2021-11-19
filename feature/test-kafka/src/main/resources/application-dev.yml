@@ -55,9 +55,10 @@ spring:
             - 1.12.236.101:9003
 #          all,-1 等所有brokers收到结果 1 leader收到结果 0 不管有么有收到结果 默认：1
           required-acks: 1
-          auto-create-topics: false
-          consumer-properties:
-            allow.auto.create.topics: false
+#          以下两个属性会导致 Metadata update failed
+#          auto-create-topics: false
+#          consumer-properties:
+#            allow.auto.create.topics: false
         bindings:
 #          通道名,默认输入通道名,Sink.java
           input:

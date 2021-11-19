@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class BusContextHolder extends SpringContextHolder {
 
+    /**
+     * 先发送到本地,再发送到kafka
+     */
     public static  <E extends GlobalApplicationEvent> void publishGlobalEvent(E event){
         applicationEventPublisher.publishEvent(event);
         if(log.isDebugEnabled()){
