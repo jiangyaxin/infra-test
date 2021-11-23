@@ -17,6 +17,7 @@
         <module>test-kafka</module>
         <module>test-bus-kafka</module>
         <module>test-bus-kafka-listener</module>
+        <module>test-redis</module>
     </modules>
 
 </project>

@@ -7,6 +7,9 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.context.*;
 import org.springframework.stereotype.Component;
 
+import java.lang.annotation.Annotation;
+import java.util.Map;
+
 /**
  * @author JYX
  * @since 2021/10/20 18:31
@@ -41,6 +44,10 @@ public class SpringContextHolder implements ApplicationContextAware, Application
 
     public static <T> T getBean(Class<T> requiredType) {
         return applicationContext.getBean(requiredType);
+    }
+
+    public static <T extends Annotation> Map<String,Object> getBeansWithAnnotation(Class<T> annotationType){
+        return applicationContext.getBeansWithAnnotation(annotationType);
     }
 
     public static ApplicationContext getApplicationContext() {

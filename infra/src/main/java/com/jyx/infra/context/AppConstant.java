@@ -8,6 +8,8 @@ import com.jyx.infra.id.SnowflakeIdAllocator;
  */
 public interface AppConstant {
 
+    char SEPARATOR = '#';
+
     AppContext APP_CONTEXT = SpringContextHolder.getBean(AppContext.class);
 
     ClusterContext CLUSTER_CONTEXT = APP_CONTEXT.getCluster();
