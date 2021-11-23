@@ -9,16 +9,21 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>feature</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>infra-mail</artifactId>
 
-    <modules>
-        <module>test-jpa</module>
-        <module>test-kafka</module>
-        <module>test-bus-kafka</module>
-        <module>test-bus-kafka-listener</module>
-        <module>test-redis</module>
-        <module>test-mail</module>
-    </modules>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.jyx</groupId>
+            <artifactId>infra</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+    </dependencies>
 
 </project>

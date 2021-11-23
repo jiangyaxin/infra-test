@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
 import static com.jyx.infra.context.AppConstant.ID_ALLOCATOR;
 
@@ -16,6 +19,7 @@ import static com.jyx.infra.context.AppConstant.ID_ALLOCATOR;
  */
 @Slf4j
 @SpringBootTest
+@EnableScheduling
 public class RedisServiceTest {
 
     @Autowired
@@ -24,12 +28,24 @@ public class RedisServiceTest {
     @Autowired
     private CacheTestService cacheTestService;
 
+    /**
+     * 可以通过 spring.task.execution 配置
+     */
+    @Autowired
+    private ThreadPoolTaskExecutor taskExecutor;
+
+    /**
+     * 需要注解@EnableScheduling,并且可以通过 spring.task.scheduling 配置
+     */
+    @Autowired
+    private ThreadPoolTaskScheduler taskScheduler;
+
     @Test
     public void testCache() {
-        cacheTestService.getUser();
-        cacheTestService.getPost();
-        cacheTestService.getUser();
-        cacheTestService.getPost();
+        String user = cacheTestService.getUser();
+        String post = cacheTestService.getPost();
+        user = cacheTestService.getUser();
+        post = cacheTestService.getPost();
     }
 
     @Test

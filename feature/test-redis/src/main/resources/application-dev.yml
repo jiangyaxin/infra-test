@@ -36,6 +36,8 @@ spring:
       cache-duration:
         user: 10s
         post: 20s
+#      默认过期时间
+      time-to-live: 30m
 logging:
   file:
     name: ${spring.application.name}
