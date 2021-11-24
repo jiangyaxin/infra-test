@@ -1,0 +1,27 @@
+server:
+  port: 30007
+
+spring:
+  application:
+    name: test-elasticsearch
+  elasticsearch:
+    rest:
+      uris: 1.12.236.101:9200
+      username: elastic
+      password: elastic
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 1
