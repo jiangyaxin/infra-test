@@ -24,6 +24,7 @@
         <module>infra-bus</module>
         <module>infra-redis</module>
         <module>infra-mail</module>
+        <module>infra-test</module>
     </modules>
 
     <properties>
@@ -78,6 +79,12 @@
             <dependency>
                 <groupId>com.jyx</groupId>
                 <artifactId>infra-mail</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-test</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 

@@ -65,5 +65,10 @@
             <artifactId>lombok-mapstruct-binding</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
+        </dependency>
+
     </dependencies>
 </project>

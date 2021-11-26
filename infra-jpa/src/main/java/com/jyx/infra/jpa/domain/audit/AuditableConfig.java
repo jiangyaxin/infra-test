@@ -1,7 +1,6 @@
 package com.jyx.infra.jpa.domain.audit;
 
 import com.jyx.infra.exception.AppException;
-import com.jyx.infra.exception.BusinessException;
 import com.jyx.infra.jpa.domain.id.Identity;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

@@ -3,6 +3,7 @@ package com.jyx.feature.test.jpa;
 import com.google.common.collect.Lists;
 import com.jyx.feature.test.jpa.application.dto.ChannelDto;
 import com.jyx.feature.test.jpa.application.dto.LightGroupDto;
+import com.jyx.infra.test.MockMvcSupport;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,11 +17,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import static com.jyx.feature.test.jpa.domain.entity.value.Direction.EAST_SOUTH;
-import static com.jyx.feature.test.jpa.domain.entity.value.Direction.WEST_SOUTH;
 import static com.jyx.feature.test.jpa.domain.entity.value.FlowDirection.PEDESTRIAN_ONCE_CROSSING;
-import static com.jyx.feature.test.jpa.domain.entity.value.FlowDirection.TURN_ROUND_LEFT_STRAIGHT_RIGHT;
 import static com.jyx.feature.test.jpa.domain.entity.value.LightGroupType.PEDESTRIAN;
-import static com.jyx.feature.test.jpa.domain.entity.value.LightGroupType.VEHICLE;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**

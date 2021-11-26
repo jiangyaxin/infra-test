@@ -1,4 +1,4 @@
-package com.jyx.feature.test.jpa;
+package com.jyx.infra.test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
