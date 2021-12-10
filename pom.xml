@@ -30,6 +30,7 @@
     <properties>
         <spring-cloud-dependencies.version>Hoxton.SR12</spring-cloud-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2.2.6.RELEASE</spring-cloud-alibaba-dependencies.version>
+        <spring-security-oauth2-authorization-server.version>0.2.1</spring-security-oauth2-authorization-server.version>
 
         <spring-test-experience.version>1.0.0</spring-test-experience.version>
         <java.version>11</java.version>
@@ -102,6 +103,12 @@
                 <version>${spring-cloud-alibaba-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-oauth2-authorization-server</artifactId>
+                <version>${spring-security-oauth2-authorization-server.version}</version>
             </dependency>
 
             <dependency>

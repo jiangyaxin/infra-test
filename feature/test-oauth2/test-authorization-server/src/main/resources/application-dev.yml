@@ -1,0 +1,111 @@
+server:
+  port: 30009
+
+spring:
+  application:
+    name: test-authorization-server
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: GMT+8
+        session_factory:
+          #配合@DynamicUpdate注解解决空值更新的问题
+          interceptor: com.jyx.infra.jpa.domain.interceptor.NotUpdateNullInterceptor
+  datasource:
+    druid:
+      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
+#      driver-class-name: net.sf.log4jdbc.DriverSpy
+      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
+#      url: jdbc:log4jdbc:mysql://1.12.236.101:3306/security_test?serverTimezone=GMT%2B8&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&useUnicode=true
+      url: jdbc:mysql://1.12.236.101:3306/security_test?serverTimezone=GMT%2B8&characterEncoding=utf8&serverTimezone=UTC&useSSL=false&useUnicode=true
+      username: root
+      password: 21qaz@!QAZ
+
+      # 启动程序时，在连接池中初始化多少个连接
+      initial-size: 15
+      # 回收空闲连接时，将保证至少有minIdle个连接.
+      min-idle: 15
+      # 连接池中最多支持多少个活动会话
+      max-active: 100
+      # 程序向连接池中请求连接时,超过maxWait的值后，认为本次请求失败，即连接池没有可用连接，单位毫秒，设置-1时表示无限等待
+      max-wait: 60000
+      # 缓存
+      pool-prepared-statements: false
+      # 每个连接最多缓存多少个SQL
+      max-pool-prepared-statement-per-connection-size: 20
+
+      # 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
+      validation-query: select 1
+      # validationQuery超时时间
+      validation-query-timeout: 1000
+      # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+      test-on-borrow: false
+      # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+      test-on-return: false
+      # 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+      test-while-idle: true
+      # 1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据
+      time-between-eviction-runs-millis: 60000
+      # 池中某个连接的空闲时长达到 N 毫秒后, 连接池在下次检查空闲连接时，将回收该连接,要小于防火墙超时设置
+      min-evictable-idle-time-millis: 300000
+      # 程序没有close连接且空闲时长超过 minEvictableIdleTimeMillis,则会执行validationQuery指定的SQL,以保证该程序连接不会池kill掉,其范围不超过minIdle指定的连接个数。
+      keep-alive: true
+
+      # 要求程序从池中get到连接后, N 秒后必须close,否则druid 会强制回收该连接,不管该连接中是活动还是空闲, 以防止进程不会进行close而霸占连接。
+      remove-abandoned: false
+      # 设置druid 强制回收连接的时限，当程序从池中get到连接开始算起，超过此值后，druid将强制回收该连接，单位秒。
+      remove-abandoned-timeout: 180
+      # 当druid强制回收连接后，是否将stack trace 记录到日志中
+      log-abandoned: true
+
+      # 监听相关
+      filter:
+        # 监控统计
+        stat:
+          enabled: true
+          log-slow-sql: true
+          slow-sql-millis: 5000
+        # 日志打印
+        log4j2:
+          enabled: true
+        # 防御sql注入
+        wall:
+          enabled: true
+      # 监听哪些请求
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      #druid监控前端界面
+      stat-view-servlet:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: root
+        login-password: 123456
+        # deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝。
+        allow: 127.0.0.1
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
+    # jdbc 日志打印
+    jdbc:
+      sqlonly: DEBUG
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 1
