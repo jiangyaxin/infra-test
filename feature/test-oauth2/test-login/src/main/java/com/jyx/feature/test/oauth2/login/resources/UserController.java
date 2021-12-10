@@ -1,6 +1,5 @@
-package com.jyx.feature.test.oauth2.client.resources;
+package com.jyx.feature.test.oauth2.login.resources;
 
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

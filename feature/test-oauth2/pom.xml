@@ -14,7 +14,8 @@
 
     <modules>
         <module>test-authorization-server</module>
-        <module>test-client-server</module>
+        <module>test-com.jyx.feature.test.oauth2.client-server</module>
+        <module>test-login</module>
     </modules>
 
 </project>

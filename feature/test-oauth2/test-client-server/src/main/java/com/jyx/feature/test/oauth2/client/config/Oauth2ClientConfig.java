@@ -10,12 +10,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * HeaderWriterFilter
  * LogoutFilter
  * OAuth2AuthorizationRequestRedirectFilter
- * OAuth2LoginAuthenticationFilter
- * DefaultLoginPageGeneratingFilter
- * DefaultLogoutPageGeneratingFilter
  * RequestCacheAwareFilter
  * SecurityContextHolderAwareRequestFilter
  * AnonymousAuthenticationFilter
+ * OAuth2AuthorizationCodeGrantFilter
  * SessionManagementFilter
  * ExceptionTranslationFilter
  * FilterSecurityInterceptor
@@ -34,6 +32,6 @@ public class Oauth2ClientConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .oauth2Login();
+                .oauth2Client();
     }
 }

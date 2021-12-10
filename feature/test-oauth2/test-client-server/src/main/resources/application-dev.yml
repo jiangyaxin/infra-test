@@ -102,7 +102,7 @@ logging:
     name: ${spring.application.name}
     path: ./target/logs
   level:
-    root: DEBUG
+    root: INFO
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     # jdbc 日志打印
     jdbc:

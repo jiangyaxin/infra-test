@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>test-com.jyx.feature.test.oauth2.client-server</artifactId>
+    <artifactId>test-login</artifactId>
 
     <dependencies>
         <dependency>
@@ -45,7 +45,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-com.jyx.feature.test.oauth2.client</artifactId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
     </dependencies>
 
@@ -57,5 +57,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
