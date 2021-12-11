@@ -4,12 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>test-oauth2</artifactId>
-        <groupId>com.jyx</groupId>
+        <groupId>com.jyx.feature</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.jyx.feature.oauth2</groupId>
     <artifactId>test-login</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

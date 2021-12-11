@@ -4,12 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>test-oauth2</artifactId>
-        <groupId>com.jyx</groupId>
+        <groupId>com.jyx.feature</groupId>
         <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>test-com.jyx.feature.test.oauth2.client-server</artifactId>
+    <groupId>com.jyx.feature.oauth2</groupId>
+    <artifactId>test-client-server</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -45,7 +47,7 @@
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-com.jyx.feature.test.oauth2.client</artifactId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
     </dependencies>
 

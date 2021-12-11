@@ -9,12 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>com.jyx.feature</groupId>
     <artifactId>test-oauth2</artifactId>
     <packaging>pom</packaging>
 
     <modules>
         <module>test-authorization-server</module>
-        <module>test-com.jyx.feature.test.oauth2.client-server</module>
+        <module>test-client-server</module>
         <module>test-login</module>
     </modules>
 
