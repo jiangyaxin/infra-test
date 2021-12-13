@@ -8,6 +8,9 @@ spring:
     oauth2:
       client:
         registration:
+          google:
+            client-id: 137558705174-hgc0dv0rsd2mdu68c95jq98oialasv32.apps.googleusercontent.com
+            client-secret: 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
           github:
             client-id: b65f6825769768665bfb
             client-secret: a16ac3c04345874794eca219e00b6c74a2adfcce
@@ -102,7 +105,7 @@ logging:
     name: ${spring.application.name}
     path: ./target/logs
   level:
-    root: DEBUG
+    root: INFO
     org.hibernate.type.descriptor.sql.BasicBinder: trace
     # jdbc 日志打印
     jdbc:
