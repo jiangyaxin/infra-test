@@ -12,6 +12,8 @@ import static com.jyx.infra.context.AppConstant.ID_ALLOCATOR;
 @Slf4j
 public class SnowflakeIdGenerator extends AbstractLazyIdGenerator<Long>{
 
+    public static final String STRATEGY = "com.jyx.infra.jpa.domain.id.SnowflakeIdGenerator";
+
     @Override
     protected IdAllocator<Long> initGenerator() {
         return ID_ALLOCATOR;

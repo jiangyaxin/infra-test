@@ -22,6 +22,6 @@ public class Identity {
 
     @Id
     @GeneratedValue(generator = "id.gen")
-    @GenericGenerator(name = "id.gen", strategy = "com.jyx.infra.jpa.domain.id.SnowflakeIdGenerator")
+    @GenericGenerator(name = "id.gen", strategy = SnowflakeIdGenerator.STRATEGY)
     private Long id;
 }
