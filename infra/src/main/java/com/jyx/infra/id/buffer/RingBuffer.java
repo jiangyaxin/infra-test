@@ -128,10 +128,12 @@ public class RingBuffer {
         // 触发异步填充数据
         long currentTail = tail.get();
         if (currentTail - nextCursor < paddingThreshold) {
-            log.debug("Reach the padding threshold:{}. tail:{}, cursor:{}",
-                    paddingThreshold,
-                    currentTail,
-                    nextCursor);
+            if(log.isDebugEnabled()) {
+                log.debug("Reach the padding threshold:{}. tail:{}, cursor:{}",
+                        paddingThreshold,
+                        currentTail,
+                        nextCursor);
+            }
             bufferPaddingExecutor.asyncPadding();
         }
 
@@ -163,7 +165,9 @@ public class RingBuffer {
     }
 
     protected void discardPutBuffer(RingBuffer ringBuffer, long id) {
-        log.debug("Rejected putting buffer for id:{}. {}", id, ringBuffer);
+        if(log.isDebugEnabled()) {
+            log.debug("Rejected putting buffer for id:{}. {}", id, ringBuffer);
+        }
     }
 
     protected void exceptionRejectedTakeBuffer(RingBuffer ringBuffer) {

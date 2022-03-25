@@ -74,11 +74,14 @@ public class BufferPaddingExecutor {
      * 填充数据，使tail追上cursor
      */
     public void paddingBuffer() {
-        log.debug("Ready to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
-
+        if(log.isDebugEnabled()) {
+            log.debug("Ready to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
+        }
         // 一个时间只有一个任务在执行
         if (!running.compareAndSet(false, true)) {
-            log.debug("Padding buffer is still running. {}", ringBuffer);
+            if(log.isDebugEnabled()) {
+                log.debug("Padding buffer is still running. {}", ringBuffer);
+            }
             return;
         }
 
@@ -95,7 +98,9 @@ public class BufferPaddingExecutor {
         }
 
         running.compareAndSet(true, false);
-        log.debug("End to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
+        if(log.isDebugEnabled()) {
+            log.debug("End to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
+        }
     }
 
     public void shutdown() {

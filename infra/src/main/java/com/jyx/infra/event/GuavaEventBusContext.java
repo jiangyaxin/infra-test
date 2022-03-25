@@ -20,7 +20,7 @@ public class GuavaEventBusContext {
     public static GuavaEventListener registerListener(GuavaEventListener guavaEventListener){
         EVENT_BUS.register(guavaEventListener);
         EVENT_LISTENER_MAP.put(guavaEventListener.getId(), guavaEventListener);
-        if(!log.isDebugEnabled()){
+        if(log.isDebugEnabled()){
             log.debug("Register event listener is {}", guavaEventListener.getId());
         }
         return guavaEventListener;
@@ -29,7 +29,7 @@ public class GuavaEventBusContext {
     public static GuavaEventListener unregisterListener(GuavaEventListener guavaEventListener){
         EVENT_BUS.unregister(guavaEventListener);
         EVENT_LISTENER_MAP.remove(guavaEventListener.getId());
-        if(!log.isDebugEnabled()){
+        if(log.isDebugEnabled()){
             log.debug("Unregister event listener is {}", guavaEventListener.getId());
         }
         return guavaEventListener;
@@ -37,7 +37,7 @@ public class GuavaEventBusContext {
 
     public static GuavaEvent postEvent(GuavaEvent event){
         EVENT_BUS.post(event);
-        if(!log.isDebugEnabled()){
+        if(log.isDebugEnabled()){
             log.debug("Post event is {}",event.getId());
         }
         return event;
