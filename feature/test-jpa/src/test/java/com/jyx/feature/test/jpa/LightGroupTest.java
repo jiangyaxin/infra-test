@@ -129,6 +129,12 @@ public class LightGroupTest {
     }
 
     @Test
+    void testQueryChannel() {
+        Channel channel = channelJpaRepo.findById(7341907357220866L).get();
+        Assert.notNull(channel.getLightGroup(),"channel light group is null");
+    }
+
+    @Test
     void testQueryLightGroupByExample() {
         Channel channel1 = Channel.builder().number(3).build();
         Channel channel2 = Channel.builder().number(4).build();
