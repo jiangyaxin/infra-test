@@ -11,7 +11,6 @@ import java.lang.reflect.ParameterizedType;
  * @author asa
  * @since 2021/11/6 17:50
  */
-@javax.persistence.Converter
 public abstract class EnumConverter<E extends Enum<E> & EnumI<Code>,Code> implements AttributeConverter<E, Code>, Converter<Code,E> {
 
     @SuppressWarnings("unchecked")
