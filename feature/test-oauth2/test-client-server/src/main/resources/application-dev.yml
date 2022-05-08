@@ -11,6 +11,7 @@ spring:
           github:
             client-id: b65f6825769768665bfb
             client-secret: a16ac3c04345874794eca219e00b6c74a2adfcce
+            redirect-Uri: http://localhost:30010/index.html
   jpa:
     show-sql: true
     hibernate:

@@ -45,11 +45,11 @@ public class Exceptions {
         trace.add(msg);
 
         // If debug enabled, log error stack trace
-        Tuple2<StackTraceElement[], Integer> stack = forEachStackTrace(t, enclosingTrace, ste -> trace.add("\tat " + ste));
+        Tuple2<StackTraceElement[], Integer> stack = forEachStackTrace(t, enclosingTrace, ste -> trace.add("at " + ste));
 
         // if there are remaining lines, print remaining information
         if (stack.getSecond() > 0) {
-            trace.add("\tat ... " + stack.getSecond() + " more");
+            trace.add("at ... " + stack.getSecond() + " more");
         }
 
         // print cause, if any
@@ -59,8 +59,7 @@ public class Exceptions {
         }
     }
 
-    private static Tuple2<StackTraceElement[], Integer> forEachStackTrace(Throwable t,
-                                                                          StackTraceElement[] enclosingTrace, Consumer<StackTraceElement> s) {
+    private static Tuple2<StackTraceElement[], Integer> forEachStackTrace(Throwable t, StackTraceElement[] enclosingTrace, Consumer<StackTraceElement> s) {
         StackTraceElement[] stes = t.getStackTrace();
         int framesInCommon = 0;
         if (stes != null && stes.length > 0) {
