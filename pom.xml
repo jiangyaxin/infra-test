@@ -31,7 +31,7 @@
         <spring-boot-maven-plugin.version>2.3.12.RELEASE</spring-boot-maven-plugin.version>
         <spring-cloud-dependencies.version>Hoxton.SR12</spring-cloud-dependencies.version>
         <spring-cloud-alibaba-dependencies.version>2.2.6.RELEASE</spring-cloud-alibaba-dependencies.version>
-        <spring-security-oauth2-authorization-server.version>0.2.1</spring-security-oauth2-authorization-server.version>
+        <spring-security-oauth2-authorization-server.version>0.2.3</spring-security-oauth2-authorization-server.version>
 
         <spring-test-experience.version>1.0.0</spring-test-experience.version>
         <java.version>11</java.version>
