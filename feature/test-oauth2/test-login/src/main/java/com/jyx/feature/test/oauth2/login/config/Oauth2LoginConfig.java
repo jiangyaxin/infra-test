@@ -49,7 +49,6 @@ public class Oauth2LoginConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .csrf(AbstractHttpConfigurer::disable)
                 .antMatcher("/**").authorizeRequests()
                 .antMatchers("/index.html").permitAll()
