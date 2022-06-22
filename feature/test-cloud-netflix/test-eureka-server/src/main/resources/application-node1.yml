@@ -1,0 +1,30 @@
+server:
+  port: 30014
+
+spring:
+  application:
+    name: eureka-server
+
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+eureka:
+  instance:
+    hostname: node1
+  client:
+    service-url:
+      defaultZone: http://node2:30015/eureka/,http://node3:30016/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info

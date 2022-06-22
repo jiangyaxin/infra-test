@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.jyx.infra.exception.Exceptions;
 import com.jyx.infra.exception.MessageCode;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import static com.jyx.infra.context.AppConstant.MODULE;
  * @since 2021/11/5 16:32
  */
 @Data
+@NoArgsConstructor
 @JsonPropertyOrder({"module", "code", "message", "trace" })
 public class ErrorResult {
 
@@ -33,6 +35,8 @@ public class ErrorResult {
     private List<String> trace;
 
     public ErrorResult(MessageCode messageCode,Throwable cause){
+        this.messageCode = messageCode;
+        this.cause = cause;
         this.code = messageCode.getCode();
         this.message = messageCode.getMessage();
         this.trace = Exceptions.getTrace(cause);

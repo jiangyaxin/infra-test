@@ -22,6 +22,7 @@
         <module>test-elasticsearch</module>
         <module>test-security</module>
         <module>test-oauth2</module>
+        <module>test-cloud-netflix</module>
     </modules>
 
 </project>

@@ -1,6 +1,7 @@
 package com.jyx.infra.web.exception.handler;
 
 import com.jyx.infra.exception.MessageCode;
+import com.jyx.infra.exception.SystemException;
 import com.jyx.infra.result.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
@@ -55,7 +56,12 @@ public class DefaultExceptionHandler {
         if (!log.isErrorEnabled()) {
             return;
         }
-
-        log.error(String.format("[%s][%s-%s]",MODULE,messageCode.getCode(),messageCode.getMessage()),cause);
+        if ( cause instanceof SystemException){
+            SystemException systemException = (SystemException) cause;
+            MessageCode systemExceptionCode = systemException.getCode();
+            log.error("[{}]-[{}] -> {}",MODULE,systemExceptionCode.getCode(),systemExceptionCode.getMessage(),systemException);
+        } else {
+            log.error("[{}]-[{}] -> {}",MODULE,messageCode.getCode(),messageCode.getMessage(),cause);
+        }
     }
 }

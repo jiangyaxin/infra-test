@@ -1,0 +1,36 @@
+server:
+  port: 30021
+
+spring:
+  application:
+    name: eureka-client-producer
+
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+eureka:
+  instance:
+    hostname: eureka-client-producer-node3
+  client:
+    service-url:
+      defaultZone: http://node1:30014/eureka/,http://node2:30015/eureka/,http://node3:30016/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 3

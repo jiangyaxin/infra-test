@@ -1,0 +1,29 @@
+server:
+  port: 30013
+
+spring:
+  application:
+    name: eureka-server-single
+
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+eureka:
+  instance:
+    hostname: 127.0.0.1
+  client:
+    # 本服务是否注册到注册中心
+    register-with-eureka: true
+    # 是否从注册中心获取服务列表
+    fetch-registry: false
+    service-url:
+      # defaultZone 不能分开写，是 Map 接收
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
