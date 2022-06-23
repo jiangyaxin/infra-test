@@ -35,15 +35,15 @@ public abstract class GlobalApplicationEvent extends RemoteApplicationEvent {
      * 例如：
      *      @Autowired private ServiceMatcher serviceMatcher
      *      serviceMatcher.getServiceId()
-     * @param destination 事件目的地
+     * @param destinationService 事件目的地
      * 样式：  spring.application.name : port : 随机字符串
      * 例如: bus-kafka:30003:9025e7977392de95a3e70249810f924a
      * 如果广播给所有服务的所有实例，则设置为 **
      * 如果广播给 bus-kafka 服务的所有实例，则设置为 bus-kafka:**
      * 如果广播给 bus-kafka 服务的指定实例，则设置为 bus-kafka:30003:9025e7977392de95a3e70249810f924a
      */
-    public GlobalApplicationEvent(Object source, String originService, Destination destination) {
-        super(source, originService, destination);
+    public GlobalApplicationEvent(Object source, String originService, String destinationService) {
+        super(source, originService, DEFAULT_DESTINATION_FACTORY.getDestination(destinationService));
         init();
     }
 
