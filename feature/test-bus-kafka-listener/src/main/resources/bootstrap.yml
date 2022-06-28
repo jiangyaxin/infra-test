@@ -3,6 +3,20 @@ spring:
     active: dev
   application:
     name: bus-kafka-listener
+  cloud:
+    nacos:
+      config:
+        file-extension: yaml
+    sentinel:
+      eager: true
+      datasource:
+        - nacos:
+            server-addr: localhost:8848
+            data-id: ${spring.application.name}-sentinel.json
+            group-id: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow
+            namespace: public
 logging:
   file:
     name: ${spring.application.name}
@@ -12,3 +26,5 @@ logging:
 
 logstash:
   destination: "1.12.236.101:4560"
+seata:
+  tx-service-group:

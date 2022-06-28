@@ -17,6 +17,7 @@
         <module>test-eureka-server</module>
         <module>test-eureka-client-producer</module>
         <module>test-eureka-client-openfeign-consumer</module>
+        <module>test-config-server</module>
     </modules>
 
 </project>

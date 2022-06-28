@@ -1,23 +1,22 @@
-package com.jyx.feature.test.bus.kafka.listener;
+package com.jyx.config;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.bus.jackson.RemoteApplicationEventScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @author asa
+ * @author jiangyaxin
  */
-@ComponentScan("com.jyx")
-@RemoteApplicationEventScan
-@SpringBootApplication
 @EnableDiscoveryClient
-public class BusKafkaListenerApplication {
+@SpringBootApplication
+@ComponentScan("com.jyx")
+@EnableConfigServer
+public class ConfigServerApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(BusKafkaListenerApplication.class, args);
+        SpringApplication.run(ConfigServerApplication.class, args);
     }
-
 
 }

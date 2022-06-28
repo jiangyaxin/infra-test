@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 public class ClusterContext {
 
-    private Integer dataCenterId;
+    private Integer dataCenterId = 1;
 
-    private Integer workerId;
+    private Integer workerId = 1;
 }

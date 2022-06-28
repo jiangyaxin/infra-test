@@ -1,5 +1,5 @@
 | 服务                                  | 实例  | 端口  |
-| ------------------------------------- | ----- | ----- |
+| --------------------------------------- | ------- | ------- |
 | test-jpa                              | 单点  | 30001 |
 | test-kafka                            | 单点  | 30002 |
 | test-bus-kafka                        | 单点  | 30003 |
@@ -22,3 +22,5 @@
 | test-eureka-client-producer           | 节点2 | 30020 |
 | test-eureka-client-producer           | 节点3 | 30021 |
 | test-eureka-client-openfeign-consumer | 单点  | 30022 |
+| test-config-server                    | 单点  | 30023 |
+| sentinel-dashboard                    | 单点  | 30024 |

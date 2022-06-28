@@ -15,6 +15,6 @@ public class AppContext {
 
     private ClusterContext cluster;
 
-    private boolean enabledCachedIdGenerator;
+    private boolean enabledCachedIdGenerator = true;
 
 }

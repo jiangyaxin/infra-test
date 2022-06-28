@@ -1,0 +1,49 @@
+server:
+  port: 30023
+
+spring:
+  application:
+    name: test-config-server
+  cloud:
+    config:
+      server:
+        # Spring Cloud Config Server 的 Git 存储器的配置项，对应 MultipleJGitEnvironmentProperties 类
+        git:
+          # Git 仓库地址
+          uri: https://gitee.com/persistentfish/others.git
+          # 读取文件的根地址
+          search-paths: /
+          # 使用的默认分支，默认为 master
+          default-label: master
+#          username: ${CODING_USERNAME}
+#          password: ${CODING_PASSWORD}
+
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+eureka:
+  instance:
+    hostname: test-config-server
+  client:
+    service-url:
+      defaultZone: http://node1:30014/eureka/,http://node2:30015/eureka/,http://node3:30016/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info
+
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 1
