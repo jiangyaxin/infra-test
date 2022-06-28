@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>feature</artifactId>
+        <groupId>com.jyx</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.jyx.feature</groupId>
+    <artifactId>test-grpc</artifactId>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>grpc-proto</module>
+        <module>grpc-server</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.jyx.feature.grpc</groupId>
+                <artifactId>grpc-proto</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>

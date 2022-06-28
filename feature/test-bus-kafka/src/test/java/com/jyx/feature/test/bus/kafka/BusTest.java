@@ -21,21 +21,21 @@ public class BusTest {
 
     @Test
     public void testBusContext(){
-        BusContextHolder.publishGlobalEvent(new TestBusEvent("Test.",serviceMatcher.getServiceId()));
+        BusContextHolder.publishGlobalEvent(new TestBusEvent("Test.",serviceMatcher.getBusId()));
     }
 
     @Test
     public void testBusDestinationContext(){
-        BusContextHolder.publishGlobalEvent(new TestBusEvent("Test.",serviceMatcher.getServiceId(),"bus-kafka-listener:**"));
+        BusContextHolder.publishGlobalEvent(new TestBusEvent("Test.",serviceMatcher.getBusId(),"bus-kafka-listener:**"));
     }
 
     @Test
     public void testBusNotSendKafkaListenerContext(){
-        BusContextHolder.publishGlobalEvent(new TestBusEvent("Test.",serviceMatcher.getServiceId(),"bus-kafka:**"));
+        BusContextHolder.publishGlobalEvent(new TestBusEvent("Test.",serviceMatcher.getBusId(),"bus-kafka:**"));
     }
 
     @Test
     public void testServiceMatcher(){
-        log.info("ServiceMatcher id is : {}",serviceMatcher.getServiceId());
+        log.info("ServiceMatcher id is : {}",serviceMatcher.getBusId());
     }
 }

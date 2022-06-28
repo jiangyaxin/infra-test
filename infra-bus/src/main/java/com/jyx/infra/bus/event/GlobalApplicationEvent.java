@@ -2,6 +2,7 @@ package com.jyx.infra.bus.event;
 
 import lombok.Getter;
 import lombok.ToString;
+import org.springframework.cloud.bus.event.Destination;
 import org.springframework.cloud.bus.event.RemoteApplicationEvent;
 
 import java.util.Date;
@@ -42,7 +43,7 @@ public abstract class GlobalApplicationEvent extends RemoteApplicationEvent {
      * 如果广播给 bus-kafka 服务的指定实例，则设置为 bus-kafka:30003:9025e7977392de95a3e70249810f924a
      */
     public GlobalApplicationEvent(Object source, String originService, String destinationService) {
-        super(source, originService, destinationService);
+        super(source, originService, DEFAULT_DESTINATION_FACTORY.getDestination(destinationService));
         init();
     }
 
@@ -52,7 +53,7 @@ public abstract class GlobalApplicationEvent extends RemoteApplicationEvent {
      * @param originService 事件发送源
      */
     public GlobalApplicationEvent(Object source, String originService) {
-        super(source, originService);
+        super(source, originService,DEFAULT_DESTINATION_FACTORY.getDestination(null));
         init();
     }
 
