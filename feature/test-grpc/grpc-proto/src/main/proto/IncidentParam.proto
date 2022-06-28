@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.jyx.feature.grpc.incident";
+option java_outer_classname = "IncidentProto";
+
+package IncidentRpcServ;
+
+service IncidentRpcService {
+    // call incident
+    rpc startSimulationWithIncident (IncidentParam) returns (IncidentResponse) {}
+    // call guidance
+    rpc startSimulationWithGuidance (GuidanceParam) returns (GuidanceResponse) {}
+    // call stopSim
+    rpc stopSim(StopSimParam) returns (StopSimResponse){}
+
+}
+
+message Incident {
+    string incidentId = 1;
+    string linkKey = 2;
+    int32 startTime = 3;
+    int32 endTime = 4;
+    int32 incLaneLength = 5;
+    string laneClosures = 6;
+    int32 speedLimit = 7;
+    string type = 8;
+    int32 guidancePriority = 9;
+    int32 incidentNum = 10;
+}
+
+
+message IncidentParam {
+    int32 weekDay = 1;
+    repeated Incident incidents = 2;
+    string scenarioId = 3;
+    string incidentGroupId = 4;
+    string normalScenarioId = 5;
+}
+
+message IncidentResponse {
+    int32 code = 1;
+    string scenarioId = 2;
+}
+
+
+message VMSSet{
+    string linkKey = 1;
+}
+
+message GuidanceParam {
+    repeated VMSSet vmses = 1;
+    string incidentGroupId = 2;
+    repeated Incident incidents = 3;
+    string scenarioId = 4;
+    int32 weekDay = 5;
+
+}
+
+message GuidanceResponse {
+    int32 code = 1;
+    string scenarioId = 2;
+}
+
+message StopSimParam{
+    string scenarioId = 1;
+}
+
+message StopSimResponse {
+    int32 code = 1;
+}

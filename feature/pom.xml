@@ -23,6 +23,7 @@
         <module>test-security</module>
         <module>test-oauth2</module>
         <module>test-cloud-netflix</module>
+        <module>test-grpc</module>
     </modules>
 
 </project>

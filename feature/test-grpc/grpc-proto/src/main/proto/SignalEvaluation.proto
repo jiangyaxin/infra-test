@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.jyx.feature.grpc.signalEvaluation";
+option java_outer_classname = "SignalEvaluationProto";
+
+package SimulationServ;
+
+//远程服务接口
+service SimulationService {
+    rpc CallSignalEvaluation (SimulationRequest) returns (SimulationResponse) {}
+}
+
+message SimulationRequest {
+    string simDate = 1; // 格式：yyyy-mm-dd
+    string startTime = 2; // 格式：hh24:mi:ss
+    string endTime = 3;
+    repeated SimSignalSchedule EvaluateSignal = 4;
+    repeated SimSubarea subareas = 5;
+    repeated SimRealtimeSignal realtimeSignals = 6;
+    int32 type = 7; // 0-result insert into database; 1-result return;
+    repeated SimOD simOD = 8;
+    repeated LaneStatus laneStatus = 9;
+    string kafkaBroker = 10;
+    string kafkaTopicName = 11;    //用不用kafka有待讨论
+    SimulationConfig simulationConfig = 12;    //该部分是否保留：LinkMeasureFileRepository需要额外维护成员变量
+}
+
+// 子区
+message SimSubarea {
+    string subareaSolutionId = 1;
+    repeated string scheduleIds = 2;
+    string subareaComomentId = 3;
+    string startTime = 4;
+    string endTime = 5;
+    string subareaId = 6;
+}
+// 实时信号
+message SimRealtimeSignal {
+    string nodeId = 1;
+    string solutionId = 2;
+    string phaseGroupId = 3;
+    string cycleBeginTime = 4; // 2020-01-01 10:00:00
+    int32 cycleLength = 5;
+    string subareaId = 6;
+}
+
+// 对应表sim_signal_schedules
+message SimSignalSchedule {
+    string scheduleId = 1;
+    string scheduleName = 2;
+    int32 dayTypeId = 3;
+    string nodeId = 4;
+    int32 dataSource = 5;
+    string sourceScheduleId = 6;
+    int32 updateType = 7;
+    repeated SimSignalMoment moments = 8;
+}
+
+// 对应表sim_signal_moments
+message SimSignalMoment {
+    string momentId = 1;
+    string phaseGroupId = 2;
+    string solutionId = 3;
+    int32 controlMode = 4;
+    string startTime = 5;
+    string endTime = 6;
+    int32 offset = 7;
+    int32 momentCycle = 8;
+    int32 phaseCnt = 9;
+    int32 updateType = 10;
+    repeated SimSignalPhase phases = 11;
+}
+
+// 对应表sim_signal_phases
+message SimSignalPhase {
+    string phaseId = 1;
+    int32 phaseSeq = 2;
+    int32 maxGreen = 3;
+    int32 minGreen = 4;
+    repeated SimSignalTiming timings = 5;
+}
+
+// 对应表sim_signal_timings
+message SimSignalTiming {
+    string timingId = 1;
+    string phaseMovementId = 2;
+    string movementId = 3;
+    int32 green = 4;
+    int32 yellow = 5;
+    int32 red = 6;
+    int32 lag = 7;
+    int32 movementType = 8;
+}
+
+//OD信息
+message SimOD{
+    string ori = 1;
+    string des = 2;
+    repeated int32 period = 3;
+    repeated int32 agentNum = 4;
+}
+
+// 车道数量
+message LaneStatus {
+  string linkId = 1;
+  string startTime = 2; // 格式：hh24:mi:ss
+  string endTime = 3;
+  float numOfULane = 4;
+  float numOfLeftLane = 5;
+  float numOfStraightLane = 6;
+  float numOfRightLane = 7;
+}
+
+//指定仿真
+message SimulationConfig{
+    string measureFrequence = 1;
+}
+
+message SimulationResponse {
+    int32 reCode = 1;//0表示启动成功，否则表示失败
+    repeated MovementState movementStates = 2;
+    string hostName = 3;
+    string hostIp = 4;
+}
+
+// evaluation result
+message MovementState {
+    string date = 1;
+    int32 period = 2;
+    string movementId = 3;
+    int32 volume = 4;
+    float capacity = 5;
+    float delay = 6;
+    float dos = 7;
+    float queueLength = 8;
+    float StatisticStopCount = 9;
+}

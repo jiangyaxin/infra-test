@@ -1,0 +1,75 @@
+syntax = "proto3";
+ 
+option java_multiple_files = true;
+option java_package = "com.jyx.feature.grpc.fixed";
+option java_outer_classname = "FixedTimeSignalOptProto";
+ 
+package FixedTimeSignalOpt;
+ 
+//服务器到处的接口
+service SignalOptimization {
+
+  //单点方案优化
+  rpc CallIsolatedIntersectionsOpt(IsolatedOptRequest) returns (OptResponse) {}
+  //干线协调优化
+  rpc CallSignalCoordinationOpt(SubareaOptRequest) returns (OptResponse) {}
+  // 防溢流优化（传入id）
+  rpc CallSignalPreventOverflowOpt(SubareaOptRequest) returns (OptResponse) {}
+
+}
+
+message IsolatedOptRequest {
+    repeated string nodeSet = 1 ;
+    int32 startTime = 2;
+    int32 endTime = 3 ;
+    int32 dayType = 4 ;
+    string dayValue = 5 ;
+    // 信号数据来源：0-正在使用方案，1-曾经使用过的历史方案，2-系统优化结果，3-外部数据
+    int32 signalDataSource = 6;
+    StatParams statParams = 7;
+    TimingParams timingParams = 8;
+    repeated string scheduleIds = 9;
+    repeated string phaseGroupIds = 10;
+}
+
+message StatParams {
+    // 历史数据采样的基准日期，值为null时，获取系统时间，2004-05-03T17:30:08+08:00
+    string sampleBaseDate = 1;
+    // 样本天数，用sampleBaseDate往前30天的历史数据作为输入，单位：天
+    int32 numOfSampleDays = 2 ;
+    // 最小采样步长，单位：分钟
+    int32 minSampleStep = 3 ;
+    // 检测数据的采样步长，单位：分支
+    int32 originSampleStep = 4 ;
+}
+// 配时参数
+message TimingParams {
+    // 最大周期，单位：秒
+    int32 maxCycle = 1;
+    // 最小周期，单位：秒
+    int32 minCycle = 2;
+    // 最大机动车红灯时长，单位：秒
+    int32 maxRed = 3 ;
+    // 最大行人红灯时长，单位：秒
+    int32 maxPedestrianRed = 4 ;
+}
+
+message OptResponse {
+    int32 reCode = 1;
+}
+
+
+message SubareaOptRequest {
+    // 优化的子区时段编号
+    string subareaCoMomentId = 1 ;
+    // 是否优化绿信比
+    bool isOptSplit = 2;
+    // 信号数据来源：-1时，不区分信号数据来源，获取最新的信号方案；0/1/2/对应实时信号/历史信号/优化信号
+    int32 signalDataSource = 3 ;
+    // 采样参数
+    StatParams statParams = 4;
+    // 配时参数
+    TimingParams timingParams = 5;
+}
+
+
