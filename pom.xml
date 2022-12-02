@@ -49,6 +49,7 @@
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
         <grpc-spring-boot-starter.version>4.7.1</grpc-spring-boot-starter.version>
+        <disruptor.version>3.4.4</disruptor.version>
     </properties>
 
     <dependencyManagement>
@@ -164,6 +165,12 @@
                 <groupId>io.github.lognet</groupId>
                 <artifactId>grpc-spring-boot-starter</artifactId>
                 <version>${grpc-spring-boot-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
             </dependency>
 
         </dependencies>
