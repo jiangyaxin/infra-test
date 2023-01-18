@@ -50,6 +50,7 @@
         <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
         <grpc-spring-boot-starter.version>4.7.1</grpc-spring-boot-starter.version>
         <disruptor.version>3.4.4</disruptor.version>
+        <arthas-spring-boot-starter>3.6.7</arthas-spring-boot-starter>
     </properties>
 
     <dependencyManagement>
@@ -171,6 +172,12 @@
                 <groupId>com.lmax</groupId>
                 <artifactId>disruptor</artifactId>
                 <version>${disruptor.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.arthas</groupId>
+                <artifactId>arthas-spring-boot-starter</artifactId>
+                <version>${arthas-spring-boot-starter}</version>
             </dependency>
 
         </dependencies>

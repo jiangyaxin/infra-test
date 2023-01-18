@@ -22,3 +22,5 @@
 | test-eureka-client-producer           | 节点2 | 30020 |
 | test-eureka-client-producer           | 节点3 | 30021 |
 | test-eureka-client-openfeign-consumer | 单点  | 30022 |
+| test-disruptor                        | 单点  | 30023 |
+| test-arthas                           | 单点  | 30024 |

@@ -25,6 +25,7 @@
         <module>test-cloud-netflix</module>
         <module>test-grpc</module>
         <module>test-disruptor</module>
+        <module>test-arthas</module>
     </modules>
 
 </project>
