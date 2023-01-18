@@ -38,4 +38,36 @@ public class DisruptorTests {
 
         Thread.currentThread().join();
     }
+
+
+    @Test
+    public void disruptorOutOfMemoryTest() throws Exception {
+        EventFactory<Truck<byte[]>> truckFactory = Truck::new;
+        ThreadFactory threadFactory = new NamingThreadFactory("disruptor");
+        WaitStrategy waitStrategy = new YieldingWaitStrategy();
+        int ringSize = 2 << 10;
+        Disruptor<Truck<byte[]>> disruptor = new Disruptor<>(truckFactory, ringSize, threadFactory, ProducerType.MULTI, waitStrategy);
+
+        WorkHandler<Truck<byte[]>> consumer1 = truck -> {
+            log.info("consumer1 ------ {}", "消费数据");
+            truck.clear();
+        };
+        disruptor.handleEventsWithWorkerPool(consumer1);
+        disruptor.start();
+
+        new Thread(() -> {
+            for (int i = 0; i < 100; i++) {
+                byte[] data = new byte[1024*1024];
+                disruptor.publishEvent((truck, sequence) -> truck.load(data));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }).start();
+
+
+        Thread.currentThread().join();
+    }
 }

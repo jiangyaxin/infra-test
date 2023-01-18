@@ -20,4 +20,8 @@ public class Truck<T> {
     public void load(T data) {
         this.data = data;
     }
+
+    public void clear() {
+        this.data = null;
+    }
 }
