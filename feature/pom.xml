@@ -26,6 +26,7 @@
         <module>test-grpc</module>
         <module>test-disruptor</module>
         <module>test-arthas</module>
+        <module>test-jdk</module>
     </modules>
 
 </project>
