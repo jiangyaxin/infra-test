@@ -5,10 +5,9 @@ spring:
   application:
     name: test-elasticsearch
   elasticsearch:
-    rest:
-      uris: 1.12.236.101:9200
-      username: elastic
-      password: elastic
+    uris: 1.12.236.101:9200
+    username: elastic
+    password: elastic
 
 logging:
   file:
