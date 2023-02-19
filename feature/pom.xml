@@ -24,6 +24,10 @@
         <module>test-oauth2</module>
         <module>test-cloud-netflix</module>
         <module>test-grpc</module>
+        <module>test-disruptor</module>
+        <module>test-arthas</module>
+        <module>test-jdk</module>
+        <module>test-cqengine</module>
     </modules>
 
 </project>

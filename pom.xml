@@ -50,6 +50,9 @@
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
         <grpc-spring-boot-starter.version>4.7.1</grpc-spring-boot-starter.version>
+        <disruptor.version>3.4.4</disruptor.version>
+        <arthas-spring-boot-starter>3.6.7</arthas-spring-boot-starter>
+        <cqengine.version>3.6.0</cqengine.version>
     </properties>
 
     <dependencyManagement>
@@ -172,6 +175,25 @@
                 <artifactId>sentinel-datasource-nacos</artifactId>
                 <version>${sentinel-datasource.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.lmax</groupId>
+                <artifactId>disruptor</artifactId>
+                <version>${disruptor.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.taobao.arthas</groupId>
+                <artifactId>arthas-spring-boot-starter</artifactId>
+                <version>${arthas-spring-boot-starter}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.googlecode.cqengine</groupId>
+                <artifactId>cqengine</artifactId>
+                <version>${cqengine.version}</version>
+            </dependency>
+
 
         </dependencies>
     </dependencyManagement>

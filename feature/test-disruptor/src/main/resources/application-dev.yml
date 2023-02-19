@@ -1,0 +1,17 @@
+server:
+  port: 30023
+
+spring:
+  application:
+    name: test-disruptor
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+app:
+  enabled-cached-id-generator: true
+  cluster:
+    data-center-id: 1
+    worker-id: 1
