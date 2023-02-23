@@ -17,78 +17,107 @@ spring:
           #配合@DynamicUpdate注解解决空值更新的问题
           interceptor: com.jyx.infra.jpa.domain.interceptor.NotUpdateNullInterceptor
   datasource:
-    druid:
-      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
-#      driver-class-name: net.sf.log4jdbc.DriverSpy
-      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
-#      url: jdbc:log4jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
-      url: jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
-      username: root
-      password: 21qaz@!QAZ
-
-      # 启动程序时，在连接池中初始化多少个连接
-      initial-size: 15
-      # 回收空闲连接时，将保证至少有minIdle个连接.
-      min-idle: 15
-      # 连接池中最多支持多少个活动会话
-      max-active: 100
-      # 程序向连接池中请求连接时,超过maxWait的值后，认为本次请求失败，即连接池没有可用连接，单位毫秒，设置-1时表示无限等待
-      max-wait: 60000
-      # 缓存
-      pool-prepared-statements: false
-      # 每个连接最多缓存多少个SQL
-      max-pool-prepared-statement-per-connection-size: 20
-
-      # 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
-      validation-query: select 1
-      # validationQuery超时时间
-      validation-query-timeout: 1000
-      # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
-      test-on-borrow: false
-      # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
-      test-on-return: false
-      # 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
-      test-while-idle: true
-      # 1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据
-      time-between-eviction-runs-millis: 60000
-      # 池中某个连接的空闲时长达到 N 毫秒后, 连接池在下次检查空闲连接时，将回收该连接,要小于防火墙超时设置
-      min-evictable-idle-time-millis: 300000
-      # 程序没有close连接且空闲时长超过 minEvictableIdleTimeMillis,则会执行validationQuery指定的SQL,以保证该程序连接不会池kill掉,其范围不超过minIdle指定的连接个数。
-      keep-alive: true
-
-      # 要求程序从池中get到连接后, N 秒后必须close,否则druid 会强制回收该连接,不管该连接中是活动还是空闲, 以防止进程不会进行close而霸占连接。
-      remove-abandoned: false
-      # 设置druid 强制回收连接的时限，当程序从池中get到连接开始算起，超过此值后，druid将强制回收该连接，单位秒。
-      remove-abandoned-timeout: 180
-      # 当druid强制回收连接后，是否将stack trace 记录到日志中
-      log-abandoned: true
-
-      # 监听相关
-      filter:
-        # 监控统计
-        stat:
-          enabled: true
-          log-slow-sql: true
-          slow-sql-millis: 5000
-        # 日志打印
-        log4j2:
-          enabled: true
-        # 防御sql注入
-        wall:
-          enabled: true
-      # 监听哪些请求
-      web-stat-filter:
-        enabled: true
-        url-pattern: /*
-        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
-      #druid监控前端界面
-      stat-view-servlet:
-        enabled: true
-        url-pattern: /druid/*
-        login-username: root
-        login-password: 123456
-        # deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝。
-        allow: 127.0.0.1
+    url: jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+    username: root
+    password: 21qaz@!QAZ
+    hikari:
+      # 是否自动提交,默认为 True
+      auto-commit: true
+      # 客户端创建连接等待超时时间,如果时间内没有获取连接则抛异常,默认 30 秒
+      connection-timeout: 30000
+      # 连接允许最长空闲时间,如果超时,则会被关闭，默认为 600 秒
+      # 如果idleTimeout+1秒>maxLifetime 且 maxLifetime>0，则会被重置为0
+      # 如果idleTimeout=0则表示空闲的连接在连接池中永远不被移除
+      # 由定时线程每隔30秒检测一次，实际移除的时间时可能是idleTimeout+30秒，平均idleTimeout+15秒
+      idle-timeout: 600000
+      # 会按照该时间间隔发送PING给数据库，JDBC4以上直接发送二进制数据，或者JDBC4以下发送connectionTestQuery
+      # 防止它被数据库或网络基础设施超时，默认值为：0（禁用）
+      keepalive-time: 0
+      # 当达到这个时间后连接会被标记被移除，如果连接没有被使用会被删除。
+      # 如果连接正在使用会在使用完成后被其他线程获取时被删除
+      # 值为 0 表示没有最大生命周期，默认值：1800000（30 分钟）
+      # 该值需要设置为比任何数据库或基础设施强加的连接时间限制短几秒。
+      # 设置为0或过大，可能导致 no operations allowed after connection closed 异常。
+      max-lifetime: 1800000
+      # 该值不要设置
+      # connectionTestQuery
+      # 该值不要设置，默认与 maximumPoolSize 保持一致
+      # minimumIdle
+      # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
+      maximumPoolSize: 20
+#  datasource:
+#    druid:
+#      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
+##      driver-class-name: net.sf.log4jdbc.DriverSpy
+#      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
+##      url: jdbc:log4jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+#      url: jdbc:mysql://1.12.236.101:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+#      username: root
+#      password: 21qaz@!QAZ
+#
+#      # 启动程序时，在连接池中初始化多少个连接
+#      initial-size: 15
+#      # 回收空闲连接时，将保证至少有minIdle个连接.
+#      min-idle: 15
+#      # 连接池中最多支持多少个活动会话
+#      max-active: 100
+#      # 程序向连接池中请求连接时,超过maxWait的值后，认为本次请求失败，即连接池没有可用连接，单位毫秒，设置-1时表示无限等待
+#      max-wait: 60000
+#      # 缓存
+#      pool-prepared-statements: false
+#      # 每个连接最多缓存多少个SQL
+#      max-pool-prepared-statement-per-connection-size: 20
+#
+#      # 用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会其作用。
+#      validation-query: select 1
+#      # validationQuery超时时间
+#      validation-query-timeout: 1000
+#      # 申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+#      test-on-borrow: false
+#      # 归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+#      test-on-return: false
+#      # 建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效
+#      test-while-idle: true
+#      # 1) Destroy线程会检测连接的间隔时间 2) testWhileIdle的判断依据
+#      time-between-eviction-runs-millis: 60000
+#      # 池中某个连接的空闲时长达到 N 毫秒后, 连接池在下次检查空闲连接时，将回收该连接,要小于防火墙超时设置
+#      min-evictable-idle-time-millis: 300000
+#      # 程序没有close连接且空闲时长超过 minEvictableIdleTimeMillis,则会执行validationQuery指定的SQL,以保证该程序连接不会池kill掉,其范围不超过minIdle指定的连接个数。
+#      keep-alive: true
+#
+#      # 要求程序从池中get到连接后, N 秒后必须close,否则druid 会强制回收该连接,不管该连接中是活动还是空闲, 以防止进程不会进行close而霸占连接。
+#      remove-abandoned: false
+#      # 设置druid 强制回收连接的时限，当程序从池中get到连接开始算起，超过此值后，druid将强制回收该连接，单位秒。
+#      remove-abandoned-timeout: 180
+#      # 当druid强制回收连接后，是否将stack trace 记录到日志中
+#      log-abandoned: true
+#
+#      # 监听相关
+#      filter:
+#        # 监控统计
+#        stat:
+#          enabled: true
+#          log-slow-sql: true
+#          slow-sql-millis: 5000
+#        # 日志打印
+#        log4j2:
+#          enabled: true
+#        # 防御sql注入
+#        wall:
+#          enabled: true
+#      # 监听哪些请求
+#      web-stat-filter:
+#        enabled: true
+#        url-pattern: /*
+#        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+#      #druid监控前端界面
+#      stat-view-servlet:
+#        enabled: true
+#        url-pattern: /druid/*
+#        login-username: root
+#        login-password: 123456
+#        # deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝。
+#        allow: 127.0.0.1
 
 logging:
   file:
