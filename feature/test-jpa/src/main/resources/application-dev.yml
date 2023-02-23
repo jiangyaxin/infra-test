@@ -29,7 +29,8 @@ spring:
       # 如果idleTimeout+1秒>maxLifetime 且 maxLifetime>0，则会被重置为0
       # 如果idleTimeout=0则表示空闲的连接在连接池中永远不被移除
       # 由定时线程每隔30秒检测一次，实际移除的时间时可能是idleTimeout+30秒，平均idleTimeout+15秒
-      idle-timeout: 600000
+      # idle-timeout: 600000
+
       # 会按照该时间间隔发送PING给数据库，JDBC4以上直接发送二进制数据，或者JDBC4以下发送connectionTestQuery
       # 防止它被数据库或网络基础设施超时，默认值为：0（禁用）
       keepalive-time: 0
