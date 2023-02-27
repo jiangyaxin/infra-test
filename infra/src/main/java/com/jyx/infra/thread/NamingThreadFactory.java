@@ -59,4 +59,8 @@ public class NamingThreadFactory implements ThreadFactory {
 
         return thread;
     }
+
+    public String getPrefix() {
+        return prefix;
+    }
 }

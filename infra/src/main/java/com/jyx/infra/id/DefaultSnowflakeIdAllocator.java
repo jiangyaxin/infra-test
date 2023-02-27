@@ -11,18 +11,18 @@ import static com.jyx.infra.datetime.DateTimeConstant.ZONE_DEFAULT;
 
 /**
  * 雪花算法ID
- *
- *   +------+----------------------+----------------+--------------+-----------+
- *   | sign |     delta seconds    | data center id | work node id | sequence  |
- *   +------+----------------------+----------------+--------------+-----------+
- *     1bit          31bit               6bit            12bit         14bit
- *
+ * <p>
+ * +------+----------------------+----------------+--------------+-----------+
+ * | sign |     delta seconds    | data center id | work node id | sequence  |
+ * +------+----------------------+----------------+--------------+-----------+
+ * 1bit          31bit               6bit            12bit         14bit
+ * <p>
  * 1.第一位 占用1bit，其值始终是0，没有实际作用。
  * 2.时间戳 占用31bit，精确到秒，总共可以容纳约68年的时间。
  * 3.数据中心id 占用6bit，最多可以64个数据中心。
  * 4.工作机器id 占用12bit，每个数据中心最多可以有4096个节点。
  * 4.序列号 占用14bit，每个节点每秒0开始不断累加，最多可以累加到16384
- *
+ * <p>
  * 同一秒的ID数量 = 64 X 4096  X 16384
  *
  * @author JYX
@@ -31,7 +31,7 @@ import static com.jyx.infra.datetime.DateTimeConstant.ZONE_DEFAULT;
 @Slf4j
 public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
 
-    public final static LocalDateTime START_LOCAL_DATE_TIME = LocalDateTime.of(2021,10,19,0,0,0);
+    public final static LocalDateTime START_LOCAL_DATE_TIME = LocalDateTime.of(2021, 10, 19, 0, 0, 0);
 
     /**
      * 数据中心
@@ -58,14 +58,14 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
 
     SnowflakeIdFormatter fmt;
 
-    public DefaultSnowflakeIdAllocator(SnowflakeIdFormatter fmt, int dataCenterId, int workerId){
+    public DefaultSnowflakeIdAllocator(SnowflakeIdFormatter fmt, int dataCenterId, int workerId) {
         fmt.validate(dataCenterId, workerId);
 
         this.dataCenterId = dataCenterId;
         this.workerId = workerId;
         this.fmt = fmt;
 
-        log.info("Initialized bits({}) for dataCenterId:{} workerID:{}", fmt,dataCenterId,workerId);
+        log.info("{} Initialized bits({}) for dataCenterId:{} workerID:{}", this.getClass().getSimpleName(), fmt, dataCenterId, workerId);
     }
 
     @Override
@@ -77,16 +77,16 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         long currentSecond = getCurrentSecond();
 
         // 当前时间不能小于上一秒时间
-        Assert.isTrue(currentSecond >= lastSecond,String.format("Clock moved backwards. Refusing for %s seconds", lastSecond - currentSecond));
+        Assert.isTrue(currentSecond >= lastSecond, String.format("Clock moved backwards. Refusing for %s seconds", lastSecond - currentSecond));
 
         // 同一秒内增大序列号
         if (currentSecond == lastSecond) {
             sequence = (sequence + 1) & fmt.maxSequence;
             // 同一秒的序列数已经达到最大，只能等待下一秒
-            if(sequence == 0L){
+            if (sequence == 0L) {
                 currentSecond = getNextSecond(lastSecond);
             }
-        // 不是同一秒序列号从0开始
+            // 不是同一秒序列号从0开始
         } else {
             sequence = 0L;
         }
@@ -102,7 +102,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
     private long getCurrentSecond() {
         long currentSecond = LocalDateTime.now().atZone(ZONE_DEFAULT).toInstant().getEpochSecond();
         Assert.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
-                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s",currentSecond));
+                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
         return currentSecond;
     }
 
@@ -119,7 +119,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
     }
 
     @Override
-    public String parseId(Long  id) {
+    public String parseId(Long id) {
         int sequence = fmt.sequenceOf(id);
         int workerId = fmt.workerIdOf(id);
         int dataCenterId = fmt.dataCenterIdOf(id);
@@ -129,7 +129,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         String thatTimeStr = thatTime.format(DATETIME_FORMATTER);
 
         return String.format("{\"id\":\"%s\",\"timestamp\":\"%s\",\"dataCenterId\":\"%s\",\"workerId\":\"%s\",\"sequence\":\"%s\"}",
-                id, thatTimeStr,dataCenterId, workerId, sequence);
+                id, thatTimeStr, dataCenterId, workerId, sequence);
     }
 
     @Override

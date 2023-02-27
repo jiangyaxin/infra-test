@@ -11,8 +11,8 @@ logging:
   level:
     root: INFO
 app:
-  enabled-cached-id-generator: true
   cluster:
+    enabled-cached-id-generator: true
     data-center-id: 1
     worker-id: 1
 arthas:

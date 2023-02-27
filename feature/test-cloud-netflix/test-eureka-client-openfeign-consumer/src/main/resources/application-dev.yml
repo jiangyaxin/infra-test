@@ -35,7 +35,7 @@ service:
     producer: EUREKA-CLIENT-PRODUCER
 
 app:
-  enabled-cached-id-generator: true
   cluster:
+    enabled-cached-id-generator: true
     data-center-id: 1
     worker-id: 1

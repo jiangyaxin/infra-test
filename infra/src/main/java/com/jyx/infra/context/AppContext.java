@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "app")
 public class AppContext {
 
-    private ClusterContext cluster;
+    private ClusterContext cluster = new ClusterContext();
 
-    private boolean enabledCachedIdGenerator = true;
+    private PoolContext pool = new PoolContext();
 
 }

@@ -10,6 +10,9 @@ public interface AppConstant {
 
     char SEPARATOR = '#';
 
+    String IO_POOL_NAME = "IO-Pool";
+    String CALCULATE_POOL_NAME = "Calculate-Pool";
+
     AppContext APP_CONTEXT = SpringContextHolder.getBean(AppContext.class);
 
     ClusterContext CLUSTER_CONTEXT = APP_CONTEXT.getCluster();

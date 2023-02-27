@@ -38,7 +38,7 @@ logstash:
   destination: "1.12.236.101:4560"
 
 app:
-  enabled-cached-id-generator: true
   cluster:
+    enabled-cached-id-generator: true
     data-center-id: 1
     worker-id: 1
