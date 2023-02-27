@@ -2,6 +2,7 @@ package com.jyx.feature.test.disruptor;
 
 import com.jyx.infra.context.AppContext;
 import com.jyx.infra.context.SpringContextHolder;
+import com.jyx.infra.thread.ThreadPoolExecutors;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -46,12 +47,26 @@ public class AppContextTest {
     }
 
     @Test
-    public void ioPoolTest() {
+    public void ioPoolTest() throws InterruptedException {
         ThreadPoolExecutor ioPool = SpringContextHolder.getBean(IO_POOL_NAME);
         ThreadPoolExecutor calculatePool = SpringContextHolder.getBean(CALCULATE_POOL_NAME);
 
         Assertions.assertNotNull(ioPool);
         Assertions.assertNotNull(calculatePool);
+
+        ThreadPoolExecutor testPool = ThreadPoolExecutors.newThreadPool(1, 1, 5, "Test");
+
+        for(int i = 0 ; i < 5 ; i++) {
+            testPool.submit(()-> {
+                try {
+                    Thread.sleep(50*1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+
+        Thread.currentThread().join();
     }
 
 }

@@ -20,14 +20,14 @@ public class ThreadPoolExecutors {
     public static ThreadPoolExecutor getThreadPool(String poolName) {
         ThreadPoolExecutor pool = CURRENT_POOL_MAP.get(poolName);
         if (pool == null) {
-            throw new AppException(String.format("线程池未创建：%s", poolName));
+            throw new AppException(String.format("ThreadPool(%s) not created", poolName));
         }
         return pool;
     }
 
     public static synchronized ThreadPoolExecutor newThreadPool(int corePoolSize, int maxPoolSize, int queueCapacity, String poolName) {
         if (CURRENT_POOL_MAP.containsKey(poolName)) {
-            throw new AppException(String.format("线程池已存在：%s", poolName));
+            throw new AppException(String.format("ThreadPool(%s) already existed", poolName));
         }
         ThreadPoolExecutor pool = new ThreadPoolExecutor(
                 corePoolSize,
@@ -39,6 +39,7 @@ public class ThreadPoolExecutors {
                 new ThreadPoolExecutor.AbortPolicy()
         );
         CURRENT_POOL_MAP.put(poolName, pool);
+        Logs.info(log, "ThreadPool(name={},core={},max={},queueCapacity={}) created", poolName, corePoolSize, maxPoolSize, queueCapacity);
         return pool;
     }
 
@@ -57,10 +58,10 @@ public class ThreadPoolExecutors {
                                 if (!pool.awaitTermination(shutdownTimeout, TimeUnit.MILLISECONDS)) {
                                     List<Runnable> remainRunableList = pool.shutdownNow();
 
-                                    Logs.warn(log, "线程池:{} 剩余任务 {} 个", name, remainRunableList.size());
+                                    Logs.warn(log, "ThreadPool({}) has {} tasks not completed", name, remainRunableList.size());
                                 }
 
-                                Logs.info(log, "线程池:{} 已停止", name);
+                                Logs.info(log, "ThreadPool({}) stopped", name);
                             } catch (InterruptedException e) {
                                 throw new AppException(e);
                             }
