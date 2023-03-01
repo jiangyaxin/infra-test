@@ -1,18 +1,19 @@
 package com.jyx.infra.web.exception.handler;
 
 import com.jyx.infra.exception.BusinessException;
-import com.jyx.infra.result.ErrorResult;
+import com.jyx.infra.web.result.ErrorResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import javax.validation.ConstraintViolationException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
+
+import static com.jyx.infra.web.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.VALIDATION_EXCEPTION_HANDLER_ORDER;
-import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 
 /**
  * @author JYX

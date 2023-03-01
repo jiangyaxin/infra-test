@@ -9,7 +9,7 @@ import java.math.BigDecimal;
  * @since 2023/1/20
  */
 @Data
-public class FlowNorm extends Flow{
+public class FlowNorm extends Flow {
 
     private BigDecimal commFee;
 }

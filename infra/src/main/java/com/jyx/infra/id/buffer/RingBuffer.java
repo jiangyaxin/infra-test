@@ -1,8 +1,9 @@
 package com.jyx.infra.id.buffer;
 
+import com.jyx.infra.asserts.Asserts;
 import com.jyx.infra.atomic.PaddingAtomicLong;
+import com.jyx.infra.log.Logs;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
 
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -57,9 +58,9 @@ public class RingBuffer {
 
     public RingBuffer(int bufferSize, int paddingFactor) {
         // bufferSize 需要为2的倍数
-        Assert.isTrue(bufferSize > 0L, "RingBuffer size must be positive");
-        Assert.isTrue(Integer.bitCount(bufferSize) == 1, "RingBuffer size must be a power of 2");
-        Assert.isTrue(paddingFactor > 0 && paddingFactor < 100, "RingBuffer size must be positive");
+        Asserts.isTrue(bufferSize > 0L, "RingBuffer size must be positive");
+        Asserts.isTrue(Integer.bitCount(bufferSize) == 1, "RingBuffer size must be a power of 2");
+        Asserts.isTrue(paddingFactor > 0 && paddingFactor < 100, "RingBuffer size must be positive");
 
         this.bufferSize = bufferSize;
         this.indexMask = bufferSize - 1;
@@ -79,7 +80,6 @@ public class RingBuffer {
     }
 
     /**
-     *
      * @param id id
      * @return false 表示 缓存区已经放满
      */
@@ -114,6 +114,7 @@ public class RingBuffer {
 
     /**
      * 并发获取id
+     *
      * @return id
      */
     public long take() {
@@ -123,17 +124,16 @@ public class RingBuffer {
         long nextCursor = cursor.updateAndGet(old -> old == tail.get() ? old : old + 1);
 
         // 下一个序列号大于等于当前序列号
-        Assert.isTrue(nextCursor >= currentCursor, "Cursor can't move back");
+        Asserts.isTrue(nextCursor >= currentCursor, "Cursor can't move back");
 
         // 触发异步填充数据
         long currentTail = tail.get();
         if (currentTail - nextCursor < paddingThreshold) {
-            if(log.isDebugEnabled()) {
-                log.debug("Reach the padding threshold:{}. tail:{}, cursor:{}",
-                        paddingThreshold,
-                        currentTail,
-                        nextCursor);
-            }
+            Logs.debug(log, "Reach the padding threshold:{}. tail:{}, cursor:{}",
+                    paddingThreshold,
+                    currentTail,
+                    nextCursor);
+
             bufferPaddingExecutor.asyncPadding();
         }
 
@@ -144,7 +144,7 @@ public class RingBuffer {
 
         // 1.检查下一个cursor是否CAN_TAKE_FLAG
         int nextCursorIndex = calSlotIndex(nextCursor);
-        Assert.isTrue(flags[nextCursorIndex].get() == CAN_TAKE_FLAG, "Cursor not in can take status");
+        Asserts.isTrue(flags[nextCursorIndex].get() == CAN_TAKE_FLAG, "Cursor not in can take status");
 
         // 2. 获取id
         // 3. 将对应的flags置为CAN_PUT_FLAG
@@ -165,9 +165,7 @@ public class RingBuffer {
     }
 
     protected void discardPutBuffer(RingBuffer ringBuffer, long id) {
-        if(log.isDebugEnabled()) {
-            log.debug("Rejected putting buffer for id:{}. {}", id, ringBuffer);
-        }
+        Logs.debug(log, "Rejected putting buffer for id:{}. {}", id, ringBuffer);
     }
 
     protected void exceptionRejectedTakeBuffer(RingBuffer ringBuffer) {
@@ -175,7 +173,7 @@ public class RingBuffer {
     }
 
     public void setBufferPaddingExecutor(BufferPaddingExecutor bufferPaddingExecutor) {
-        Assert.notNull(bufferPaddingExecutor,"bufferPaddingExecutor is not null");
+        Asserts.notNull(bufferPaddingExecutor, "bufferPaddingExecutor is not null");
         this.bufferPaddingExecutor = bufferPaddingExecutor;
     }
 

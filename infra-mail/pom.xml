@@ -16,7 +16,7 @@
     <dependencies>
         <dependency>
             <groupId>com.jyx</groupId>
-            <artifactId>infra</artifactId>
+            <artifactId>infra-spring</artifactId>
         </dependency>
 
         <dependency>

@@ -9,4 +9,8 @@ public interface SnowflakeIdAllocator<T> extends IdAllocator<T> {
     long getWorkerId();
 
     long getDataCenterId();
+
+    @Override
+    default void close() {
+    }
 }

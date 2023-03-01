@@ -55,12 +55,12 @@ public class RedisCacheConfig {
     }
 
     @Bean
-    public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(RedisCacheConfiguration redisCacheConfiguration,RedisCacheDuration redisCacheDuration) {
+    public RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer(RedisCacheConfiguration redisCacheConfiguration, RedisCacheDuration redisCacheDuration) {
         return redisCacheManagerBuilder ->
-            redisCacheManagerBuilder.cacheDefaults(redisCacheConfiguration)
-                    .withInitialCacheConfigurations(redisCacheDuration.getCacheDuration().entrySet().stream()
-                            .collect(Collectors.toMap(Map.Entry::getKey,
-                                    entry -> redisCacheConfiguration.entryTtl(entry.getValue()))));
+                redisCacheManagerBuilder.cacheDefaults(redisCacheConfiguration)
+                        .withInitialCacheConfigurations(redisCacheDuration.getCacheDuration().entrySet().stream()
+                                .collect(Collectors.toMap(Map.Entry::getKey,
+                                        entry -> redisCacheConfiguration.entryTtl(entry.getValue()))));
     }
 
 }

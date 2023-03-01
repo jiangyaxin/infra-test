@@ -2,9 +2,9 @@ package com.jyx.infra.collection;
 
 /**
  * Tuple 2 class
+ *
  * @param <T1> the 1st element type
  * @param <T2> the 2nd element type
- *
  * @author JYX
  * @since 2021/11/5 17:05
  */
@@ -15,7 +15,7 @@ public class Tuple2<T1, T2> {
     /**
      * Can't be created directly, always use Tuple.of(a,b) to initialize it;
      *
-     * @param first the 1st element
+     * @param first  the 1st element
      * @param second the 2nd element
      */
     Tuple2(T1 first, T2 second) {

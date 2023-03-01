@@ -15,37 +15,43 @@ public interface MailService {
 
     /**
      * Create MimeMessage.
+     *
      * @return MimeMessage
      */
     MimeMessage createMimeMessage();
 
     /**
      * 并发发送
+     *
      * @param mimeMessageList List<MimeMessagePreparator>
-     * @return List<CompletableFuture<Void>>
+     * @return List<CompletableFuture < Void>>
      */
     List<CompletableFuture<Void>> asyncSend(List<MimeMessagePreparator> mimeMessageList);
 
     /**
      * mimeMessage
+     *
      * @param mimeMessage mimeMessage
      */
     void send(MimeMessage mimeMessage);
 
     /**
      * mimeMessagePreparator
+     *
      * @param mimeMessagePreparator mimeMessagePreparator
      */
     void send(MimeMessagePreparator mimeMessagePreparator);
 
     /**
      * simpleMessage
+     *
      * @param simpleMessage simpleMessage
      */
     void send(SimpleMailMessage simpleMessage);
 
     /**
      * Get application.yml spring.mail.username
+     *
      * @return from
      */
     String getFrom();

@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jpa;
 
 import com.google.common.eventbus.Subscribe;
-import com.jyx.infra.event.GuavaEventListener;
+import com.jyx.infra.spring.event.GuavaEventListener;
 import lombok.extern.slf4j.Slf4j;
 
 /**

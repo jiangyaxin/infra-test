@@ -16,6 +16,6 @@ public class KafkaConsumer {
 
     @StreamListener(Sink.INPUT)
     public void input(KafkaTestDto kafkaTestDto) {
-        log.info("接收到消息{}",kafkaTestDto);
+        log.info("接收到消息{}", kafkaTestDto);
     }
 }

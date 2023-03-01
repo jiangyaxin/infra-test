@@ -1,7 +1,9 @@
 package com.jyx.infra.jpa.domain.audit;
 
 import com.jyx.infra.jpa.domain.id.Identity;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;

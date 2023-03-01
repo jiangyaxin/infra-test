@@ -18,6 +18,7 @@
 
     <modules>
         <module>infra</module>
+        <module>infra-spring</module>
         <module>infra-jpa</module>
         <module>feature</module>
         <module>infra-web</module>
@@ -65,6 +66,12 @@
 
             <dependency>
                 <groupId>com.jyx</groupId>
+                <artifactId>infra-spring</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx</groupId>
                 <artifactId>infra-jpa</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
@@ -97,6 +104,7 @@
                 <groupId>com.jyx</groupId>
                 <artifactId>infra-test</artifactId>
                 <version>${spring-test-experience.version}</version>
+                <scope>test</scope>
             </dependency>
 
             <dependency>

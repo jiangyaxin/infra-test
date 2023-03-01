@@ -9,6 +9,7 @@ public interface RejectedTakeBufferHandler {
 
     /**
      * 拒绝take
+     *
      * @param ringBuffer ringBuffer
      */
     void rejectTakeBuffer(RingBuffer ringBuffer);

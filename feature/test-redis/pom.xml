@@ -27,7 +27,6 @@
         <dependency>
             <groupId>com.jyx</groupId>
             <artifactId>infra-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
     </dependencies>

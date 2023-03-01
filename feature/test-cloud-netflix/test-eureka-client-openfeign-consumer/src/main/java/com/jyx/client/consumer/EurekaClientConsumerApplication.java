@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients
 @SpringBootApplication
-@ComponentScan("com.jyx")
 public class EurekaClientConsumerApplication {
 
     public static void main(String[] args) {

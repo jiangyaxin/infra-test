@@ -18,17 +18,19 @@ public class MockMvcSupport {
 
     private static final ObjectWriter OBJECT_WRITER = new ObjectMapper().writer().withDefaultPrettyPrinter();
 
-    public static ResultActions prepareRequest(final MockMvc mockMvc, final MockHttpServletRequestBuilder saveRequestBuilder) throws Exception{
-        return prepareRequest(mockMvc,saveRequestBuilder,null);
+    public static ResultActions prepareRequest(final MockMvc mockMvc, final MockHttpServletRequestBuilder saveRequestBuilder) throws Exception {
+        return prepareRequest(mockMvc, saveRequestBuilder, null);
     }
-    public static ResultActions prepareRequest(final MockMvc mockMvc, final MockHttpServletRequestBuilder saveRequestBuilder, final Object object) throws Exception{
-        return prepareRequest(mockMvc,saveRequestBuilder,OBJECT_WRITER.writeValueAsString(object));
+
+    public static ResultActions prepareRequest(final MockMvc mockMvc, final MockHttpServletRequestBuilder saveRequestBuilder, final Object object) throws Exception {
+        return prepareRequest(mockMvc, saveRequestBuilder, OBJECT_WRITER.writeValueAsString(object));
     }
-    public static ResultActions prepareRequest(final MockMvc mockMvc, final MockHttpServletRequestBuilder saveRequestBuilder, final String content) throws Exception{
+
+    public static ResultActions prepareRequest(final MockMvc mockMvc, final MockHttpServletRequestBuilder saveRequestBuilder, final String content) throws Exception {
         saveRequestBuilder.contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .characterEncoding(StandardCharsets.UTF_8.name());
-        if(Objects.nonNull(content)){
+        if (Objects.nonNull(content)) {
             saveRequestBuilder.content(content);
         }
         ResultActions actions = mockMvc.perform(saveRequestBuilder);

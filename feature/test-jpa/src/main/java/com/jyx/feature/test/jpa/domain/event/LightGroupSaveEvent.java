@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jpa.domain.event;
 
 import com.jyx.feature.test.jpa.domain.entity.LightGroup;
-import com.jyx.infra.event.GuavaEvent;
+import com.jyx.infra.spring.event.GuavaEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

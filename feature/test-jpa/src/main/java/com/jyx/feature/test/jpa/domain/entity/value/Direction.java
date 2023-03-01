@@ -1,8 +1,8 @@
 package com.jyx.feature.test.jpa.domain.entity.value;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.jyx.infra.converter.EnumConverter;
-import com.jyx.infra.converter.EnumI;
+import com.jyx.infra.jpa.domain.converter.EnumConverter;
+import com.jyx.infra.spring.converter.EnumI;
 
 import javax.persistence.Converter;
 

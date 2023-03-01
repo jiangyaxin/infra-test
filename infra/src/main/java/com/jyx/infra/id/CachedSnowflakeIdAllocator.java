@@ -1,10 +1,10 @@
 package com.jyx.infra.id;
 
+import com.jyx.infra.asserts.Asserts;
 import com.jyx.infra.id.buffer.BufferPaddingExecutor;
 import com.jyx.infra.id.buffer.RingBuffer;
+import com.jyx.infra.log.Logs;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
  * @since 2021/10/20 1:07
  */
 @Slf4j
-public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator implements DisposableBean {
+public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator {
 
     private static final int DEFAULT_BOOST_POWER = 3;
 
@@ -22,19 +22,19 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator impl
 
     private BufferPaddingExecutor bufferPaddingExecutor;
 
-    public CachedSnowflakeIdAllocator(SnowflakeIdFormatter fmt, int dataCenterId, int workerId){
-        super(fmt,dataCenterId,workerId);
+    public CachedSnowflakeIdAllocator(SnowflakeIdFormatter fmt, int dataCenterId, int workerId) {
+        super(fmt, dataCenterId, workerId);
         initRingBuffer();
     }
 
     private void initRingBuffer() {
         // 借用未来的时间，maxSequence未消耗完已经在生产下一秒数据
-        int bufferSize = ((int) fmt.maxSequence+ 1) << DEFAULT_BOOST_POWER;
+        int bufferSize = ((int) fmt.maxSequence + 1) << DEFAULT_BOOST_POWER;
         int paddingFactor = RingBuffer.DEFAULT_PADDING_PERCENT;
         this.ringBuffer = new RingBuffer(bufferSize, paddingFactor);
         this.bufferPaddingExecutor = new BufferPaddingExecutor(ringBuffer, this::nextIdsForOneSecond);
         ringBuffer.setBufferPaddingExecutor(bufferPaddingExecutor);
-        if(log.isDebugEnabled()) {
+        if (log.isDebugEnabled()) {
             log.debug("Initialized ring buffer size:{}, paddingFactor:{}", bufferSize, paddingFactor);
         }
 
@@ -44,8 +44,8 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator impl
 
     protected List<Long> nextIdsForOneSecond(long currentSecond) {
         // 秒数达到最大值
-        Assert.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
-                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s",currentSecond));
+        Asserts.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
+                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
 
         // 数组长度 = max sequence + 1
         int listSize = (int) fmt.maxSequence + 1;
@@ -53,7 +53,7 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator impl
 
         // 取第一秒，然后依次递增至最大值
         // 当前时间不能小于上一秒时间
-        long firstIdInSecond =  fmt.toId(currentSecond - startSecond, dataCenterId, workerId, 0L);
+        long firstIdInSecond = fmt.toId(currentSecond - startSecond, dataCenterId, workerId, 0L);
         for (int offset = 0; offset < listSize; offset++) {
             idList.add(firstIdInSecond + offset);
         }
@@ -62,8 +62,10 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator impl
     }
 
     @Override
-    public void destroy() {
+    public void close() {
         bufferPaddingExecutor.shutdown();
+
+        Logs.info(log, "CachedSnowflakeIdAllocator stopped");
     }
 
     @Override

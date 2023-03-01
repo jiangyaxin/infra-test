@@ -1,7 +1,5 @@
 package com.jyx.infra.id;
 
-import static com.jyx.infra.id.SnowflakeIdFormatter.DEFAULT_FORMATTER;
-
 /**
  * @author JYX
  * @since 2021/10/20 17:02
@@ -9,11 +7,11 @@ import static com.jyx.infra.id.SnowflakeIdFormatter.DEFAULT_FORMATTER;
 public class IdAllocators {
 
     public static SnowflakeIdAllocator<Long> ofDefaultSnowflake(int dataCenterId, int workerId) {
-        return ofDefaultSnowflake(DEFAULT_FORMATTER, dataCenterId, workerId);
+        return ofDefaultSnowflake(SnowflakeIdFormatter.DEFAULT_FORMATTER, dataCenterId, workerId);
     }
 
     public static SnowflakeIdAllocator<Long> ofCachedSnowflake(int dataCenterId, int workerId) {
-        return ofCachedSnowflake(DEFAULT_FORMATTER, dataCenterId, workerId);
+        return ofCachedSnowflake(SnowflakeIdFormatter.DEFAULT_FORMATTER, dataCenterId, workerId);
     }
 
     public static DefaultSnowflakeIdAllocator ofDefaultSnowflake(SnowflakeIdFormatter fmt, int dataCenterId, int workerId) {

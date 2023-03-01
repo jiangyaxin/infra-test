@@ -7,7 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author JYX
  */
-@ComponentScan("com.jyx")
 @SpringBootApplication
 public class ArthasApplication {
 

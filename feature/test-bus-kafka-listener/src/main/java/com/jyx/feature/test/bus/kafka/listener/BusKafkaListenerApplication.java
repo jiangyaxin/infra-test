@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author asa
  */
-@ComponentScan("com.jyx")
 @RemoteApplicationEventScan
 @SpringBootApplication
 @EnableDiscoveryClient

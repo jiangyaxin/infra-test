@@ -2,7 +2,7 @@ package com.jyx.infra.web.exception.handler;
 
 import com.jyx.infra.exception.MessageCode;
 import com.jyx.infra.exception.SystemException;
-import com.jyx.infra.result.ErrorResult;
+import com.jyx.infra.web.result.ErrorResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import static com.jyx.infra.context.AppConstant.MODULE;
-import static com.jyx.infra.exception.WebMessageCodes.SERVER_ERROR_CODE;
+import static com.jyx.infra.spring.context.AppConstant.MODULE;
+import static com.jyx.infra.web.exception.WebMessageCodes.SERVER_ERROR_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.DEFAULT_EXCEPTION_HANDLER_ORDER;
 
 /**
@@ -48,7 +48,7 @@ public class DefaultExceptionHandler {
         return createErrorResponse(status, errorResult);
     }
 
-    private static  ResponseEntity<ErrorResult> createErrorResponse(HttpStatus status, ErrorResult errorResult) {
+    private static ResponseEntity<ErrorResult> createErrorResponse(HttpStatus status, ErrorResult errorResult) {
         return ResponseEntity.status(status).body(errorResult);
     }
 
@@ -56,12 +56,12 @@ public class DefaultExceptionHandler {
         if (!log.isErrorEnabled()) {
             return;
         }
-        if ( cause instanceof SystemException){
+        if (cause instanceof SystemException) {
             SystemException systemException = (SystemException) cause;
             MessageCode systemExceptionCode = systemException.getCode();
-            log.error("[{}]-[{}] -> {}",MODULE,systemExceptionCode.getCode(),systemExceptionCode.getMessage(),systemException);
+            log.error("[{}]-[{}] -> {}", MODULE, systemExceptionCode.getCode(), systemExceptionCode.getMessage(), systemException);
         } else {
-            log.error("[{}]-[{}] -> {}",MODULE,messageCode.getCode(),messageCode.getMessage(),cause);
+            log.error("[{}]-[{}] -> {}", MODULE, messageCode.getCode(), messageCode.getMessage(), cause);
         }
     }
 }

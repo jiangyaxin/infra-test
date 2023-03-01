@@ -1,7 +1,8 @@
 package com.jyx.infra.thread;
 
+import com.jyx.infra.asserts.Asserts;
+import com.jyx.infra.log.Logs;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
 
 import java.util.Objects;
 import java.util.concurrent.ThreadFactory;
@@ -40,7 +41,7 @@ public class NamingThreadFactory implements ThreadFactory {
     }
 
     public NamingThreadFactory(String prefix, boolean daemon, Thread.UncaughtExceptionHandler handler) {
-        Assert.hasText(prefix,"prefix is not null ");
+        Asserts.hasText(prefix, "prefix is not null ");
 
         this.prefix = prefix;
         this.daemon = daemon;
@@ -54,7 +55,7 @@ public class NamingThreadFactory implements ThreadFactory {
         thread.setDaemon(this.daemon);
         thread.setName(prefix + "-" + sequence.incrementAndGet());
         thread.setUncaughtExceptionHandler(Objects.requireNonNullElseGet(this.uncaughtExceptionHandler, () ->
-                (t, e) -> log.error("unhandled exception in thread: " + t.getId() + ":" + t.getName(), e)
+                (t, e) -> Logs.error(log, "unhandled exception in thread: " + t.getId() + ":" + t.getName(), e)
         ));
 
         return thread;

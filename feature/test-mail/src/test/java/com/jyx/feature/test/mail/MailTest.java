@@ -25,7 +25,7 @@ public class MailTest {
     private MailService mailService;
 
     @Test
-    public void sendMail(){
+    public void sendMail() {
         MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
             mimeMessageHelper.setFrom(mailService.getFrom());
@@ -38,7 +38,7 @@ public class MailTest {
     }
 
     @Test
-    public void sendSimpleMail(){
+    public void sendSimpleMail() {
         SimpleMailMessage message = new SimpleMailMessage();
 
         message.setFrom(mailService.getFrom());
@@ -50,7 +50,7 @@ public class MailTest {
     }
 
     @Test
-    public void sendMineMail() throws Exception{
+    public void sendMineMail() throws Exception {
         MimeMessage mimeMessage = mailService.createMimeMessage();
 
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -63,7 +63,7 @@ public class MailTest {
     }
 
     @Test
-    public void send50Mail(){
+    public void send50Mail() {
 
         List<MimeMessagePreparator> mimeMessagePrepareList = IntStream.range(1, 51)
                 .mapToObj(index -> (MimeMessagePreparator) mimeMessage -> {
@@ -71,7 +71,7 @@ public class MailTest {
                     mimeMessageHelper.setFrom(mailService.getFrom());
                     mimeMessageHelper.setTo("jiangyaxin@sutpc.com");
                     mimeMessageHelper.setSubject("I am a Tester" + index + ".");
-                    mimeMessageHelper.setText("Em... puta puta puta "+index);
+                    mimeMessageHelper.setText("Em... puta puta puta " + index);
                 })
                 .collect(Collectors.toList());
         List<CompletableFuture<Void>> completableFutureList = mailService.asyncSend(mimeMessagePrepareList);

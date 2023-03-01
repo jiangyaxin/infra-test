@@ -1,7 +1,7 @@
 package com.jyx.feature.test.disruptor;
 
-import com.jyx.infra.context.AppContext;
-import com.jyx.infra.context.SpringContextHolder;
+import com.jyx.infra.spring.context.AppContext;
+import com.jyx.infra.spring.context.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.ThreadPoolExecutor;
 
-import static com.jyx.infra.context.AppConstant.*;
+import static com.jyx.infra.spring.context.AppConstant.*;
 
 /**
  * @author JYX
@@ -33,7 +33,7 @@ public class AppContextTest {
     private ThreadPoolExecutor calculatePoolAutowired;
 
     @Test
-    public void testAppContext(){
+    public void testAppContext() {
         Integer workerId = appContext.getCluster().getWorkerId();
         Integer dataCenterId = appContext.getCluster().getDataCenterId();
 

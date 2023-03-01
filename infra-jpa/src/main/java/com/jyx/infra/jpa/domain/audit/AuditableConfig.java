@@ -25,16 +25,16 @@ public class AuditableConfig {
     @Bean
     @ConditionalOnClass({SecurityContextHolder.class})
     @ConditionalOnMissingBean(AuditorAware.class)
-    public AuditorAware<Long> auditorProvider(){
+    public AuditorAware<Long> auditorProvider() {
         return () -> {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            if(Objects.isNull(authentication) || !authentication.isAuthenticated()){
+            if (Objects.isNull(authentication) || !authentication.isAuthenticated()) {
                 throw new AppException("No authorization.");
             }
             Object principal = authentication.getPrincipal();
-            if(principal instanceof Identity){
-                return Optional.ofNullable(((Identity)principal).getId());
-            }else {
+            if (principal instanceof Identity) {
+                return Optional.ofNullable(((Identity) principal).getId());
+            } else {
                 throw new AppException("Principal need extends Identity.");
             }
         };

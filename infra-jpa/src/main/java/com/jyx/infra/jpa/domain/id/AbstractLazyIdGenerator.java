@@ -19,7 +19,7 @@ public abstract class AbstractLazyIdGenerator<T extends Serializable> implements
 
     /**
      * 生成id生成器
-     *
+     * <p>
      * lazy = true 表示调用 getGenerator() 的时候是双重检查单例模式创建
      *
      * @return IdGenerator

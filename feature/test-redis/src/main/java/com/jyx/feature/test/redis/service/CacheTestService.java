@@ -22,20 +22,20 @@ public class CacheTestService {
      * Argument Name |	执行上下文 |	当前被调用的方法的参数，如findArtisan(Artisan artisan),可以通过#artsian.id获得参数            |	#artsian.id
      * result	     |  执行上下文 |	方法执行后的返回值（仅当方法执行后的判断有效，如 unless cacheEvict的beforeInvocation=false）   |	#result
      */
-    @Cacheable(value = "user",key = "#root.args")
-    public String getUser(){
+    @Cacheable(value = "user", key = "#root.args")
+    public String getUser() {
         log.info("Generate user.");
         return "user";
     }
 
-    @Cacheable(value = "post",key = "#root.args")
-    public String getPost(){
+    @Cacheable(value = "post", key = "#root.args")
+    public String getPost() {
         log.info("Generate post.");
         return "post";
     }
 
-    @Cacheable(value = "user1",key = "#root.args")
-    public String getUser1(){
+    @Cacheable(value = "user1", key = "#root.args")
+    public String getUser1() {
         log.info("Generate user1.");
         return "user1";
     }

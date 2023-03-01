@@ -1,7 +1,7 @@
 package com.jyx.infra.web.exception.handler;
 
 import com.jyx.infra.exception.BusinessException;
-import com.jyx.infra.result.ErrorResult;
+import com.jyx.infra.web.result.ErrorResult;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;

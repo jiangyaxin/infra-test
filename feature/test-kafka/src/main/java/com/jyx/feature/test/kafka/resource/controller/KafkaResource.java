@@ -25,7 +25,7 @@ public class KafkaResource {
     private final KafkaProducer kafkaProducer;
 
     @PostMapping("/message")
-    public void message(@RequestBody @NotBlank(message = "消息不能为空") String message){
+    public void message(@RequestBody @NotBlank(message = "消息不能为空") String message) {
         kafkaProducer.sendMessage(message);
     }
 }

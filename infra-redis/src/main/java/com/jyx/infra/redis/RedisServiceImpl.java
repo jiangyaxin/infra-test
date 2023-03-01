@@ -15,15 +15,15 @@ import java.util.concurrent.TimeUnit;
  * @since 2021/11/22 15:52
  */
 @Slf4j
-@RequiredArgsConstructor
 @Service
-public class RedisServiceImpl implements RedisService{
+@RequiredArgsConstructor
+public class RedisServiceImpl implements RedisService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
     private final ValueOperations<String, Object> valueOperations;
 
-    private final HashOperations<String,String,Object> hashOperations;
+    private final HashOperations<String, String, Object> hashOperations;
 
     private final ListOperations<String, Object> listOperations;
 
@@ -31,7 +31,7 @@ public class RedisServiceImpl implements RedisService{
 
     @Override
     public void set(String key, Object value, long time) {
-        valueOperations.set(key,value,time, TimeUnit.SECONDS);
+        valueOperations.set(key, value, time, TimeUnit.SECONDS);
     }
 
     @Override
@@ -81,18 +81,18 @@ public class RedisServiceImpl implements RedisService{
 
     @Override
     public Object hGet(String key, String hashKey) {
-        return hashOperations.get(key,hashKey) ;
+        return hashOperations.get(key, hashKey);
     }
 
     @Override
     public Boolean hSet(String key, String hashKey, Object value, long time) {
-        hashOperations.put(key,hashKey,value);
-        return expire(key,time);
+        hashOperations.put(key, hashKey, value);
+        return expire(key, time);
     }
 
     @Override
     public void hSet(String key, String hashKey, Object value) {
-        hashOperations.put(key,hashKey,value);
+        hashOperations.put(key, hashKey, value);
     }
 
     @Override

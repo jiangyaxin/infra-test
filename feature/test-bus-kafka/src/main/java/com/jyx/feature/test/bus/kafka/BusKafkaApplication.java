@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 /**
  * @author JYX
  */
-@ComponentScan("com.jyx")
 @RemoteApplicationEventScan
 @SpringBootApplication
 public class BusKafkaApplication {

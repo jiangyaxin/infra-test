@@ -38,7 +38,7 @@ public class MailServiceImpl implements MailService {
     @Override
     public List<CompletableFuture<Void>> asyncSend(List<MimeMessagePreparator> mimeMessageList) {
         return mimeMessageList.stream()
-                .map(mimeMessage -> CompletableFuture.runAsync(() -> send(mimeMessage),taskExecutor))
+                .map(mimeMessage -> CompletableFuture.runAsync(() -> send(mimeMessage), taskExecutor))
                 .collect(Collectors.toList());
     }
 

@@ -1,6 +1,6 @@
 package com.jyx.infra.id;
 
-import org.springframework.util.Assert;
+import com.jyx.infra.asserts.Asserts;
 
 /**
  * @author JYX
@@ -37,7 +37,7 @@ public class SnowflakeIdFormatter {
     long timestampShift;
 
     /**
-     *  每一部分的掩码
+     * 每一部分的掩码
      */
     long sequenceMask;
     long workerMask;
@@ -57,7 +57,7 @@ public class SnowflakeIdFormatter {
      * ~(-1L << sequenceBits) = 2^4 = 8
      */
     private SnowflakeIdFormatter(int timestampBits, int dataCenterBits, int workerBits, int sequenceBits) {
-        Assert.isTrue(1+timestampBits+dataCenterBits+workerBits+sequenceBits == 64,"Sum of timestampBits, dataCenterBits,workerBits and sequenceBits requires to be 63.");
+        Asserts.isTrue(1 + timestampBits + dataCenterBits + workerBits + sequenceBits == 64, "Sum of timestampBits, dataCenterBits,workerBits and sequenceBits requires to be 63.");
 
         this.sequenceBits = sequenceBits;
         this.workerBits = workerBits;
@@ -101,17 +101,17 @@ public class SnowflakeIdFormatter {
     }
 
     public void validate(long dataCenterId, long workerId) {
-        Assert.isTrue(dataCenterId >= 0 && dataCenterId <= this.maxDataCenterId,String.format("data center id:max[%s],current[%s]",maxDataCenterId,dataCenterId));
-        Assert.isTrue(workerId >= 0 && workerId <= this.maxWorkerId,String.format("worker id:max[%s],current[%s]",maxWorkerId,workerId));
+        Asserts.isTrue(dataCenterId >= 0 && dataCenterId <= this.maxDataCenterId, String.format("data center id:max[%s],current[%s]", maxDataCenterId, dataCenterId));
+        Asserts.isTrue(workerId >= 0 && workerId <= this.maxWorkerId, String.format("worker id:max[%s],current[%s]", maxWorkerId, workerId));
     }
 
     @Override
     public String toString() {
         return String.format("1,timestampBits=%s,maxDataCenterId=%s,maxWorkerId=%s,maxSequence=%s"
-                ,timestampBits
-                ,maxDataCenterId
-                ,maxWorkerId
-                ,maxSequence
+                , timestampBits
+                , maxDataCenterId
+                , maxWorkerId
+                , maxSequence
         );
     }
 }

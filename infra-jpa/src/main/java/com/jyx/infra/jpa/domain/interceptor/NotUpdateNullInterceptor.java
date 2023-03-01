@@ -19,14 +19,14 @@ public class NotUpdateNullInterceptor extends EmptyInterceptor {
         int count = 0;
         int span = propertyNames.length;
 
-        for ( int i = 0; i < span; i++ ) {
+        for (int i = 0; i < span; i++) {
             // 如果字段是null，默认不插入或者更新
             final boolean dirty =
                     null != currentState[i]
                             &&
-                    !Objects.deepEquals(currentState[i], previousState[i]);
-            if ( dirty ) {
-                if ( results == null ) {
+                            !Objects.deepEquals(currentState[i], previousState[i]);
+            if (dirty) {
+                if (results == null) {
                     results = new int[span];
                 }
                 results[count++] = i;
@@ -34,10 +34,9 @@ public class NotUpdateNullInterceptor extends EmptyInterceptor {
         }
 
         // 数据完全一致，返回空数组确保不会执行默认的逻辑
-        if ( count == 0 ) {
+        if (count == 0) {
             return new int[0];
-        }
-        else {
+        } else {
             return ArrayHelper.trim(results, count);
         }
     }

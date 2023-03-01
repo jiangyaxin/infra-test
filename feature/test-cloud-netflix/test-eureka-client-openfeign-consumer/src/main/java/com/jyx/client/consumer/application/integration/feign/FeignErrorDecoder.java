@@ -3,7 +3,7 @@ package com.jyx.client.consumer.application.integration.feign;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jyx.infra.exception.MessageCode;
 import com.jyx.infra.exception.SystemException;
-import com.jyx.infra.result.ErrorResult;
+import com.jyx.infra.web.result.ErrorResult;
 import feign.Response;
 import feign.Util;
 import feign.codec.ErrorDecoder;

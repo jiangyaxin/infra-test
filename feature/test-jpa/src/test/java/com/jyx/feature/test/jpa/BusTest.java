@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jpa;
 
-import com.jyx.infra.context.SpringContextHolder;
-import com.jyx.infra.event.GuavaEventBusContext;
+import com.jyx.infra.spring.context.SpringContextHolder;
+import com.jyx.infra.spring.event.GuavaEventBusContext;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

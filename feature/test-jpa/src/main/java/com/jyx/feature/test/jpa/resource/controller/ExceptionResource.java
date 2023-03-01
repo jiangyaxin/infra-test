@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotBlank;
 
-import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
+import static com.jyx.infra.web.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 
 /**
  * @author asa

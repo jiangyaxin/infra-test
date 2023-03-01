@@ -1,6 +1,6 @@
 package com.jyx.feature.test.jpa;
 
-import com.jyx.infra.event.GuavaEvent;
+import com.jyx.infra.spring.event.GuavaEvent;
 
 /**
  * @author JYX

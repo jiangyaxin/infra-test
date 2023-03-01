@@ -1,7 +1,10 @@
 package com.jyx.infra.web.dto;
 
 import com.jyx.infra.web.validation.groups.Modify;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.Min;
@@ -27,7 +30,7 @@ public class AuditableDto extends IdentityDto {
 
     private Date lastModifiedDate;
 
-    @NotNull(message = "Version is required.",groups = Modify.class)
-    @Min(value = 0,message = "Version min is 0.",groups = Modify.class)
+    @NotNull(message = "Version is required.", groups = Modify.class)
+    @Min(value = 0, message = "Version min is 0.", groups = Modify.class)
     private Long version;
 }

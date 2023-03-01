@@ -2,8 +2,8 @@ package com.jyx.infra.jpa.domain.root;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
-import com.jyx.infra.event.GuavaEvent;
 import com.jyx.infra.jpa.domain.audit.Auditable;
+import com.jyx.infra.spring.event.GuavaEvent;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.experimental.SuperBuilder;
@@ -24,14 +24,14 @@ import java.util.List;
 @SuperBuilder
 @AllArgsConstructor
 @MappedSuperclass
-public class AggregateRoot extends Auditable{
+public class AggregateRoot extends Auditable {
 
     @JsonIgnore
     @Transient
     private final List<GuavaEvent> domainEvents = Lists.newCopyOnWriteArrayList();
 
-    public <T extends GuavaEvent> T registerEvent(T event){
-        Assert.notNull(event,"Domain event is null.");
+    public <T extends GuavaEvent> T registerEvent(T event) {
+        Assert.notNull(event, "Domain event is null.");
         domainEvents.add(event);
         return event;
     }

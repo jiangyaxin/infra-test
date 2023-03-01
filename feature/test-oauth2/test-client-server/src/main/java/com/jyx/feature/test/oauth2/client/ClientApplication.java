@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 2021/10/13 16:00
  */
 @SpringBootApplication
-@ComponentScan("com.jyx")
 public class ClientApplication {
 
     public static void main(String[] args) {

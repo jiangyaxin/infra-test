@@ -16,8 +16,12 @@
     <dependencies>
         <dependency>
             <groupId>com.jyx</groupId>
+            <artifactId>infra-spring</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jyx</groupId>
             <artifactId>infra-test</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -9,8 +9,9 @@ public interface RejectedPutBufferHandler {
 
     /**
      * 拒绝put
+     *
      * @param ringBuffer ringBuffer
-     * @param id id
+     * @param id         id
      */
     void rejectPutBuffer(RingBuffer ringBuffer, long id);
 }

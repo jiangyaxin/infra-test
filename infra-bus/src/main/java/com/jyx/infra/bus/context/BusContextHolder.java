@@ -1,7 +1,8 @@
 package com.jyx.infra.bus.context;
 
 import com.jyx.infra.bus.event.GlobalApplicationEvent;
-import com.jyx.infra.context.SpringContextHolder;
+import com.jyx.infra.log.Logs;
+import com.jyx.infra.spring.context.SpringContextHolder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +17,9 @@ public class BusContextHolder extends SpringContextHolder {
     /**
      * 先发送到本地,再发送到kafka
      */
-    public static  <E extends GlobalApplicationEvent> void publishGlobalEvent(E event){
+    public static <E extends GlobalApplicationEvent> void publishGlobalEvent(E event) {
         applicationEventPublisher.publishEvent(event);
-        if(log.isDebugEnabled()){
-            log.debug("Post global application event is {}:{}",event.getGlobalId(),event);
-        }
-
+        Logs.debug(log, "Post global application event is {}:{}", event.getGlobalId(), event);
     }
 
 }

@@ -1,13 +1,12 @@
 package com.jyx.infra.id;
 
+import com.jyx.infra.asserts.Asserts;
+import com.jyx.infra.datetime.DateTimeConstant;
+import com.jyx.infra.log.Logs;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.Assert;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
-
-import static com.jyx.infra.datetime.DateTimeConstant.DATETIME_FORMATTER;
-import static com.jyx.infra.datetime.DateTimeConstant.ZONE_DEFAULT;
 
 /**
  * 雪花算法ID
@@ -54,7 +53,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
      * 启始时间戳
      * 2021-10-19
      */
-    long startSecond = START_LOCAL_DATE_TIME.atZone(ZONE_DEFAULT).toEpochSecond();
+    long startSecond = START_LOCAL_DATE_TIME.atZone(DateTimeConstant.ZONE_DEFAULT).toEpochSecond();
 
     SnowflakeIdFormatter fmt;
 
@@ -65,7 +64,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         this.workerId = workerId;
         this.fmt = fmt;
 
-        log.info("{} Initialized bits({}) for dataCenterId:{} workerID:{}", this.getClass().getSimpleName(), fmt, dataCenterId, workerId);
+        Logs.info(log, "{} Initialized bits({}) for dataCenterId:{} workerID:{}", this.getClass().getSimpleName(), fmt, dataCenterId, workerId);
     }
 
     @Override
@@ -77,7 +76,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         long currentSecond = getCurrentSecond();
 
         // 当前时间不能小于上一秒时间
-        Assert.isTrue(currentSecond >= lastSecond, String.format("Clock moved backwards. Refusing for %s seconds", lastSecond - currentSecond));
+        Asserts.isTrue(currentSecond >= lastSecond, String.format("Clock moved backwards. Refusing for %s seconds", lastSecond - currentSecond));
 
         // 同一秒内增大序列号
         if (currentSecond == lastSecond) {
@@ -100,8 +99,8 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
      * Get current second
      */
     private long getCurrentSecond() {
-        long currentSecond = LocalDateTime.now().atZone(ZONE_DEFAULT).toInstant().getEpochSecond();
-        Assert.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
+        long currentSecond = LocalDateTime.now().atZone(DateTimeConstant.ZONE_DEFAULT).toInstant().getEpochSecond();
+        Asserts.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
                 String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
         return currentSecond;
     }
@@ -125,8 +124,8 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         int dataCenterId = fmt.dataCenterIdOf(id);
         long timestampOffset = fmt.timestampOffsetOf(id);
 
-        LocalDateTime thatTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startSecond + timestampOffset), ZONE_DEFAULT);
-        String thatTimeStr = thatTime.format(DATETIME_FORMATTER);
+        LocalDateTime thatTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startSecond + timestampOffset), DateTimeConstant.ZONE_DEFAULT);
+        String thatTimeStr = thatTime.format(DateTimeConstant.DATETIME_FORMATTER);
 
         return String.format("{\"id\":\"%s\",\"timestamp\":\"%s\",\"dataCenterId\":\"%s\",\"workerId\":\"%s\",\"sequence\":\"%s\"}",
                 id, thatTimeStr, dataCenterId, workerId, sequence);
@@ -141,4 +140,5 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
     public long getDataCenterId() {
         return dataCenterId;
     }
+
 }
