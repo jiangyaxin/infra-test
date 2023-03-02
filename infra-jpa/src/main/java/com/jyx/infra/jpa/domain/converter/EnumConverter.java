@@ -1,7 +1,7 @@
 package com.jyx.infra.jpa.domain.converter;
 
 import com.jyx.infra.spring.converter.EnumI;
-import com.jyx.infra.spring.converter.EnumJsonSupport;
+import com.jyx.infra.spring.converter.EnumJsonConverter;
 
 import javax.persistence.AttributeConverter;
 
@@ -9,7 +9,7 @@ import javax.persistence.AttributeConverter;
  * @author asa
  * @since 2021/11/6 17:50
  */
-public abstract class EnumConverter<E extends Enum<E> & EnumI<Code>, Code> extends EnumJsonSupport<E, Code> implements AttributeConverter<E, Code> {
+public abstract class EnumConverter<E extends Enum<E> & EnumI<Code>, Code> extends EnumJsonConverter<E, Code> implements AttributeConverter<E, Code> {
 
     @Override
     public Code convertToDatabaseColumn(E attribute) {

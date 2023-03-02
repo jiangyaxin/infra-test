@@ -10,7 +10,7 @@ import java.lang.reflect.ParameterizedType;
  * @author asa
  * @since 2021/11/6 17:50
  */
-public abstract class EnumJsonSupport<E extends Enum<E> & EnumI<Code>, Code> implements Converter<Code, E> {
+public abstract class EnumJsonConverter<E extends Enum<E> & EnumI<Code>, Code> implements Converter<Code, E> {
 
     @SuppressWarnings("unchecked")
     protected final Class<E> enumClass = (Class<E>) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
