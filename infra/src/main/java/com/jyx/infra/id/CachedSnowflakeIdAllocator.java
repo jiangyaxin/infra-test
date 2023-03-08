@@ -34,9 +34,8 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator {
         this.ringBuffer = new RingBuffer(bufferSize, paddingFactor);
         this.bufferPaddingExecutor = new BufferPaddingExecutor(ringBuffer, this::nextIdsForOneSecond);
         ringBuffer.setBufferPaddingExecutor(bufferPaddingExecutor);
-        if (log.isDebugEnabled()) {
-            log.debug("Initialized ring buffer size:{}, paddingFactor:{}", bufferSize, paddingFactor);
-        }
+
+        Logs.debug(log,"Initialized ring buffer size:{}, paddingFactor:{}", bufferSize, paddingFactor);
 
         // 启动时填充数据
         bufferPaddingExecutor.paddingBuffer();
