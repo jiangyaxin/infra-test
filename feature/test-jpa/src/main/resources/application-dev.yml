@@ -46,6 +46,8 @@ spring:
       # minimumIdle
       # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
       maximumPoolSize: 20
+      data-source-properties:
+        logger: com.mysql.cj.log.Slf4JLogger
 #  datasource:
 #    druid:
 #      # 打印 jdbc 日志需要加上 log4jdbc,生产环境应该去掉
