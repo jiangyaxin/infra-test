@@ -54,6 +54,7 @@
         <disruptor.version>3.4.4</disruptor.version>
         <arthas-spring-boot-starter>3.6.7</arthas-spring-boot-starter>
         <cqengine.version>3.6.0</cqengine.version>
+        <flink.version>1.16.1</flink.version>
     </properties>
 
     <dependencyManagement>
@@ -200,6 +201,18 @@
                 <groupId>com.googlecode.cqengine</groupId>
                 <artifactId>cqengine</artifactId>
                 <version>${cqengine.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-java</artifactId>
+                <version>${flink.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.flink</groupId>
+                <artifactId>flink-streaming-java</artifactId>
+                <version>${flink.version}</version>
             </dependency>
 
 
