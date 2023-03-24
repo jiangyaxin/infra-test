@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 import java.util.function.BinaryOperator;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
@@ -39,7 +40,7 @@ public class StreamTest {
                         reducing(
                                 FlowNorm::new,
                                 (base, incr) -> {
-                                    BigDecimal fee = base.getCommFee().add(incr.getCommFee());
+                                    BigDecimal fee = Optional.ofNullable(base.getCommFee()).orElse(BigDecimal.ZERO).add(incr.getCommFee());
                                     base.setCommFee(fee);
                                     return base;
                                 }
