@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- scan 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。 -->
+<!-- scanPeriod 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
+<configuration>
+    <Properties>
+        <Property name="LOG_PATH">D:\application\spring-test-experience\feature\test-flink\target\log</Property>
+        <Property name="APP_NAME">test-flink</Property>
+        <Property name="ENV">dev</Property>
+
+        <Property name="LOG_FILE">${APP_NAME}</Property>
+        <Property name="LOG_PATTERN">
+            %d{yyyy-MM-dd HH:mm:ss.SSS} %5p [%t] %logger{36}: %m%n
+        </Property>
+        <Property name="LOG_CHARSET">
+            UTF-8
+        </Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="${LOG_CHARSET}"/>
+        </Console>
+
+        <RollingFile name="FILE" fileName="${LOG_PATH}/${LOG_FILE}-${ENV}.log"
+                     filePattern="${LOG_PATH}/${LOG_FILE}-${ENV}-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" charset="${LOG_CHARSET}"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="100MB" />
+                <!-- 每天创建一个日志文件 -->
+                <TimeBasedTriggeringPolicy interval="1" />
+            </Policies>
+            <!-- 同一个文件夹最多文件数量-->
+            <DefaultRolloverStrategy max="100"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="INFO">
+            <AppenderRef ref="CONSOLE" />
+            <AppenderRef ref="FILE"/>
+        </Root>
+    </Loggers>
+
+</configuration>

@@ -28,6 +28,7 @@
         <module>test-arthas</module>
         <module>test-jdk</module>
         <module>test-cqengine</module>
+        <module>test-flink</module>
     </modules>
 
 </project>
