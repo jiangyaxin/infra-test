@@ -38,7 +38,7 @@ public class SignatureTest {
         String sign = sign(source, privateKey);
         log.info("签名 = {}", sign);
 
-        Assertions.assertTrue(varify(source, sign, publicKey));
+        Assertions.assertTrue(verify(source, sign, publicKey));
     }
 
     public KeyPair generateKeyPair() {
@@ -82,7 +82,7 @@ public class SignatureTest {
         }
     }
 
-    public boolean varify(String source, String sign, String publicKeyStr) {
+    public boolean verify(String source, String sign, String publicKeyStr) {
         try {
             RSAPublicKey publicKey = transferPublicKey(publicKeyStr);
 
