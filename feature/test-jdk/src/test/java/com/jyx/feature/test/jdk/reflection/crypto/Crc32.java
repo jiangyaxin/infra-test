@@ -1,10 +1,13 @@
 package com.jyx.feature.test.jdk.reflection.crypto;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.zip.CRC32;
 
+@Slf4j
 public final class Crc32 {
 
     private Crc32() {
@@ -42,18 +45,18 @@ public final class Crc32 {
      * @throws IOException 读取文件异常
      */
     public static long file(File file) throws IOException {
-        FileInputStream fi = new FileInputStream(file);
+        FileInputStream fileInputStream = new FileInputStream(file);
         byte[] buff = new byte[64 * 1024];
         int len;
         CRC32 crc32 = new CRC32();
         try {
-            while ((len = fi.read(buff)) != -1) {
+            while ((len = fileInputStream.read(buff)) != -1) {
                 crc32.update(buff, 0, len);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         } finally {
-            fi.close();
+            fileInputStream.close();
         }
 
         return crc32.getValue();
