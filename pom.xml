@@ -55,6 +55,10 @@
 
         <protobuf-maven-plugin.version>0.6.1</protobuf-maven-plugin.version>
         <os-maven-plugin.version>1.7.0</os-maven-plugin.version>
+
+        <jna.version>5.4.0</jna.version>
+        <jacob.version>1.18</jacob.version>
+        <opencv.version>411</opencv.version>
     </properties>
 
     <dependencyManagement>
@@ -201,6 +205,17 @@
                 <groupId>com.googlecode.cqengine</groupId>
                 <artifactId>cqengine</artifactId>
                 <version>${cqengine.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna</artifactId>
+                <version>${jna.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.java.dev.jna</groupId>
+                <artifactId>jna-platform</artifactId>
+                <version>${jna.version}</version>
             </dependency>
 
         </dependencies>
