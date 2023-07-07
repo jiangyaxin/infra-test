@@ -31,12 +31,12 @@ public class BSTView<K extends Comparable<K>, V> extends JPanel implements View 
         g.drawOval(x - radius, y - radius, 2 * radius, 2 * radius);
         g.drawString(node.key.toString(), x - 6, y + 4);
         if (node.left != null) {
-            connectLeftChild(g, x - hGap, y + vGap, x, y);
-            display(g, node.left, x - hGap, y + vGap, hGap / 2);
+            connectLeftChild(g, x - hGap, y + offset, x, y);
+            display(g, node.left, x - hGap, y + offset, hGap / 2);
         }
         if (node.right != null) {
-            connectRightChild(g, x + hGap, y + vGap, x, y);
-            display(g, node.right, x + hGap, y + vGap, hGap / 2);
+            connectRightChild(g, x + hGap, y + offset, x, y);
+            display(g, node.right, x + hGap, y + offset, hGap / 2);
         }
     }
 }

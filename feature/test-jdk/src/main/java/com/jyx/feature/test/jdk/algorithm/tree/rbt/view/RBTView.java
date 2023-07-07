@@ -28,16 +28,16 @@ public class RBTView<K extends Comparable<K>, V> extends JPanel implements View 
             if (RBT.isRed(node.left)) {
                 g.setColor(Color.RED);
             }
-            connectLeftChild(g, x - hGap, y + vGap, x, y);
+            connectLeftChild(g, x - hGap, y + offset, x, y);
 
-            display(g, node.left, x - hGap, y + vGap, hGap / 2);
+            display(g, node.left, x - hGap, y + offset, hGap / 2);
         }
         if (node.right != null) {
             if (RBT.isRed(node.right)) {
                 g.setColor(Color.RED);
             }
-            connectRightChild(g, x + hGap, y + vGap, x, y);
-            display(g, node.right, x + hGap, y + vGap, hGap / 2);
+            connectRightChild(g, x + hGap, y + offset, x, y);
+            display(g, node.right, x + hGap, y + offset, hGap / 2);
         }
     }
 }

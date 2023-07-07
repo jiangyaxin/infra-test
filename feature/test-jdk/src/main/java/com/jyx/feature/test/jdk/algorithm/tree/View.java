@@ -14,7 +14,7 @@ public interface View {
 
     int radius = 20;
 
-    int vGap = 50;
+    int offset = 50;
 
     default Object clone(Object root) {
         try {
@@ -31,20 +31,20 @@ public interface View {
     }
 
     default void connectRightChild(Graphics g, int x1, int y1, int x2, int y2) {
-        double d = Math.sqrt(vGap * vGap + (x2 - x1) * (x2 - x1));
+        double d = Math.sqrt(offset * offset + (x2 - x1) * (x2 - x1));
         int x11 = (int) (x1 - radius * (x1 - x2) / d);
-        int y11 = (int) (y1 - radius * vGap / d);
+        int y11 = (int) (y1 - radius * offset / d);
         int x21 = (int) (x2 + radius * (x1 - x2) / d);
-        int y21 = (int) (y2 + radius * vGap / d);
+        int y21 = (int) (y2 + radius * offset / d);
         g.drawLine(x11, y11, x21, y21);
     }
 
     default void connectLeftChild(Graphics g, int x1, int y1, int x2, int y2) {
-        double d = Math.sqrt(vGap * vGap + (x2 - x1) * (x2 - x1));
+        double d = Math.sqrt(offset * offset + (x2 - x1) * (x2 - x1));
         int x11 = (int) (x1 + radius * (x2 - x1) / d);
-        int y11 = (int) (y1 - radius * vGap / d);
+        int y11 = (int) (y1 - radius * offset / d);
         int x21 = (int) (x2 - radius * (x2 - x1) / d);
-        int y21 = (int) (y2 + radius * vGap / d);
+        int y21 = (int) (y2 + radius * offset / d);
         g.drawLine(x11, y11, x21, y21);
     }
 }
