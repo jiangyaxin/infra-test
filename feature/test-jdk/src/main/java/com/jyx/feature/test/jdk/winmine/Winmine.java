@@ -49,5 +49,7 @@ public class Winmine {
 
             }
         }
+
+        win32Processor.destroy();
     }
 }
