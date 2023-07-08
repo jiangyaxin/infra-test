@@ -7,7 +7,7 @@ import java.util.Set;
  * @author Archforce
  * @since 2023/7/7 15:15
  */
-public class UndirectedVertex {
+public class Vertex {
 
     /**
      * 顶点ID
@@ -21,7 +21,7 @@ public class UndirectedVertex {
     private final Set<Integer> bag = new HashSet<>();
 
 
-    public UndirectedVertex(Integer id) {
+    public Vertex(Integer id) {
         this.id = id;
     }
 

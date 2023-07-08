@@ -7,7 +7,7 @@ import java.util.Map;
  * @author Archforce
  * @since 2023/7/7 15:13
  */
-public class UndirectedGraph {
+public class Graph {
 
     /**
      * 顶点的数量
@@ -22,7 +22,7 @@ public class UndirectedGraph {
     /**
      * 领接表 AdjacencyList
      */
-    private final Map<Integer, UndirectedVertex> adj = new HashMap<>();
+    private final Map<Integer, Vertex> adj = new HashMap<>();
 
     /**
      * 新增边
@@ -37,11 +37,11 @@ public class UndirectedGraph {
      * 计算V的度
      */
     public int degree(Integer v) {
-        UndirectedVertex undirectedVertex = adj.get(v);
-        if (undirectedVertex == null) {
+        Vertex vertex = adj.get(v);
+        if (vertex == null) {
             throw new RuntimeException(String.format("节点 %s 找不到", v));
         }
-        return undirectedVertex.getDegree();
+        return vertex.getDegree();
     }
 
     /**
@@ -49,7 +49,7 @@ public class UndirectedGraph {
      */
     public int maxDegree() {
         int maxDegree = adj.values().stream()
-                .mapToInt(UndirectedVertex::getDegree)
+                .mapToInt(Vertex::getDegree)
                 .max()
                 .getAsInt();
         return maxDegree;
@@ -60,7 +60,7 @@ public class UndirectedGraph {
      */
     public int avgDegree() {
         int sum = adj.values().stream()
-                .mapToInt(UndirectedVertex::getDegree)
+                .mapToInt(Vertex::getDegree)
                 .sum();
         return sum / vertexNum;
     }
@@ -70,9 +70,9 @@ public class UndirectedGraph {
      */
     public int numOfSelfLoop() {
         int count = 0;
-        for (UndirectedVertex undirectedVertex : adj.values()) {
-            for (Integer near : undirectedVertex.getBag()) {
-                if (near == undirectedVertex.getId()) {
+        for (Vertex vertex : adj.values()) {
+            for (Integer near : vertex.getBag()) {
+                if (near == vertex.getId()) {
                     count++;
                     break;
                 }
@@ -83,21 +83,21 @@ public class UndirectedGraph {
 
     private void connect(Integer out, Integer in) {
         if (adj.containsKey(in)) {
-            UndirectedVertex undirectedVertexW = adj.get(in);
-            undirectedVertexW.addEdge(out);
+            Vertex vertexW = adj.get(in);
+            vertexW.addEdge(out);
         } else {
             vertexNum++;
-            UndirectedVertex undirectedVertexW = new UndirectedVertex(in);
-            undirectedVertexW.addEdge(out);
-            adj.put(in, undirectedVertexW);
+            Vertex vertexW = new Vertex(in);
+            vertexW.addEdge(out);
+            adj.put(in, vertexW);
         }
     }
 
     public String print() {
         StringBuilder sb = new StringBuilder("\n");
         sb.append(String.format("Graph has %s vertex，%s edge\n", vertexNum, edgeNum));
-        for (UndirectedVertex undirectedVertex : adj.values()) {
-            sb.append(String.format("Node %s out connected node %s \n", undirectedVertex.getId(), undirectedVertex.getBag()));
+        for (Vertex vertex : adj.values()) {
+            sb.append(String.format("Node %s out connected node %s \n", vertex.getId(), vertex.getBag()));
         }
         return sb.toString();
     }
