@@ -7,7 +7,7 @@ import java.util.Set;
  * @author Archforce
  * @since 2023/7/7 15:15
  */
-public class Vertex {
+public class UndirectedVertex {
 
     /**
      * 顶点ID
@@ -18,20 +18,19 @@ public class Vertex {
     /**
      * 入度
      */
-    private final Set<Integer> in = new HashSet<>();
+    private final Set<Integer> bag = new HashSet<>();
 
-    /**
-     * 出度
-     */
-    private final Set<Integer> out = new HashSet<>();
 
-    public Vertex(Integer id) {
+    public UndirectedVertex(Integer id) {
         this.id = id;
     }
 
     public void addEdge(Integer w) {
-        in.add(w);
-        out.add(w);
+        bag.add(w);
+    }
+
+    public int getDegree() {
+        return bag.size();
     }
 
     public Integer getId() {
@@ -39,11 +38,7 @@ public class Vertex {
     }
 
 
-    public Set<Integer> getIn() {
-        return in;
-    }
-
-    public Set<Integer> getOut() {
-        return out;
+    public Set<Integer> getBag() {
+        return bag;
     }
 }
