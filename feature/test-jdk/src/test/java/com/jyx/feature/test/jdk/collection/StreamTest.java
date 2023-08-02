@@ -48,4 +48,10 @@ public class StreamTest {
                         )
                 ));
     }
+
+    @Test
+    public void test() {
+        String s = new String(new byte[]{0x20, 0x20, 0x20});
+        log.info("{}",s.length());
+    }
 }
