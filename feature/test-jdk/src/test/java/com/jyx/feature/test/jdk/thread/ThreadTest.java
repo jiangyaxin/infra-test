@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jdk.thread;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import com.jyx.feature.test.jdk.concurrent.pool.PriorityThreadPoolExecutor;
+import com.jyx.infra.thread.PriorityThreadPoolExecutor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -36,19 +36,39 @@ public class ThreadTest {
         );
 
         List<Future<Integer>> futureList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 6; i++) {
             int finalI = i;
-            Future<Integer> submit = threadPoolExecutor.submit(() -> {
-                try {
-                    Thread.sleep(finalI * 1000);
-                    log.info("我是{}", finalI);
-                    return finalI;
-                } catch (Exception e) {
-                    log.error("", e);
-                    return -1;
-                }
-            });
-            futureList.add(submit);
+            if (i % 3 == 0) {
+                Future<Integer> submit = threadPoolExecutor.submit(() -> {
+                    try {
+                        Thread.sleep(finalI * 1000);
+                        log.info("我是{}", finalI);
+                        return finalI;
+                    } catch (Exception e) {
+                        log.error("", e);
+                        return -1;
+                    }
+                },finalI);
+                futureList.add(submit);
+            } else if (i % 3 == 1)  {
+                threadPoolExecutor.submit(() -> {
+                    try {
+                        Thread.sleep(finalI * 1000);
+                        log.info("我是{}", finalI);
+                    } catch (Exception e) {
+                        log.error("", e);
+                    }
+                },finalI);
+            } else {
+                threadPoolExecutor.execute(() -> {
+                    try {
+                        Thread.sleep(finalI * 1000);
+                        log.info("我是{}", finalI);
+                    } catch (Exception e) {
+                        log.error("", e);
+                    }
+                },finalI);
+            }
         }
 
         for (Future<Integer> future : futureList) {

@@ -1,4 +1,4 @@
-package com.jyx.feature.test.jdk.concurrent.pool;
+package com.jyx.infra.thread;
 
 import java.util.concurrent.*;
 
@@ -8,7 +8,7 @@ import java.util.concurrent.*;
  */
 public class PriorityThreadPoolExecutor extends ThreadPoolExecutor {
 
-    public final static int BASE_PRIORITY = 5;
+    public final static int BASE_PRIORITY = Integer.MIN_VALUE;
 
     public PriorityThreadPoolExecutor(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, int queueSize) {
         super(corePoolSize, maximumPoolSize, keepAliveTime, unit, new PriorityBlockingQueue<>(queueSize));
