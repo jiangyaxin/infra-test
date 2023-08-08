@@ -7,10 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 /**
  * @author Archforce
@@ -18,6 +15,21 @@ import java.util.concurrent.TimeUnit;
  */
 @Slf4j
 public class ThreadTest {
+
+    public static void main(String[] args) {
+        Executors.newFixedThreadPool(1).submit(() -> {
+            while (true) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                log.info("我还在运行");
+            }
+        });
+
+        log.info("我马上结束运行");
+    }
 
     @Test
     public void priorityPoolTest() throws Exception {
