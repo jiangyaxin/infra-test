@@ -69,6 +69,9 @@ public class BufferPaddingExecutor {
     }
 
     public void asyncPadding() {
+        if (running.get() == true) {
+            return;
+        }
         idPadExecutor.submit(this::paddingId);
     }
 
@@ -96,12 +99,12 @@ public class BufferPaddingExecutor {
 
     private void paddingIdInternal() {
         // 填充数据
-        boolean isFullRingBuffer = false;
-        while (!isFullRingBuffer) {
+        boolean overLoad = false;
+        while (!overLoad) {
             List<Long> idList = idProvider.provide(lastSecond.incrementAndGet());
             for (Long id : idList) {
-                isFullRingBuffer = !ringBuffer.put(id);
-                if (isFullRingBuffer) {
+                overLoad = !ringBuffer.put(id);
+                if (overLoad) {
                     break;
                 }
             }
