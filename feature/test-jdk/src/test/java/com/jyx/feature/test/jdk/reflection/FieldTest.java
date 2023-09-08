@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
@@ -40,5 +41,11 @@ public class FieldTest {
     public void logTest() {
         Exception ex = new Exception("异常");
         log.error("{} ---- {} ---- {}", 1, 2, 3, ex);
+    }
+
+    @Test
+    public void constructorTest() {
+        Constructor<?> constructor = FlowNorm.class.getConstructors()[0];
+        log.info(constructor.getName());
     }
 }
