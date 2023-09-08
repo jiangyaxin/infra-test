@@ -31,4 +31,10 @@ public class Logs {
             log.debug(msg, arguments);
         }
     }
+
+    public static void trace(Logger log, String msg, Object... arguments) {
+        if (log.isTraceEnabled()) {
+            log.trace(msg, arguments);
+        }
+    }
 }

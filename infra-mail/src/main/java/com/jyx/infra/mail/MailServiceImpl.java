@@ -1,5 +1,6 @@
 package com.jyx.infra.mail;
 
+import com.jyx.infra.log.Logs;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -38,7 +39,11 @@ public class MailServiceImpl implements MailService {
     @Override
     public List<CompletableFuture<Void>> asyncSend(List<MimeMessagePreparator> mimeMessageList) {
         return mimeMessageList.stream()
-                .map(mimeMessage -> CompletableFuture.runAsync(() -> send(mimeMessage), taskExecutor))
+                .map(mimeMessage -> CompletableFuture.runAsync(() -> send(mimeMessage), taskExecutor)
+                        .exceptionally(ex -> {
+                            Logs.error(log, "发送失败: {}", mimeMessage, ex);
+                            return null;
+                        }))
                 .collect(Collectors.toList());
     }
 
