@@ -4,6 +4,7 @@ import com.jyx.infra.id.SnowflakeIdFormatter;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.util.Assert;
+import org.springframework.util.StopWatch;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -32,17 +33,23 @@ public class DefaultSnowflakeIdGeneratorTest {
 
     @Test
     public void testSerialGenerate() {
+        StopWatch watch = new StopWatch();
+        watch.start();
         log.info("testSerialGenerate--------------------"+LocalDateTime.now().format(DATETIME_FORMATTER));
         Set<Long> idSet = new HashSet<>(SIZE);
         for (int i = 0; i < SIZE; i++) {
             doGenerate(idSet,i);
         }
+        watch.stop();
+        log.info("DefaultSnowflakeIdGeneratorTest.testSerialGenerate 耗时：{}ms",watch.getTotalTimeMillis());
 
         checkUniqueID(idSet);
     }
 
     @Test
     public void testParallelGenerate() throws InterruptedException {
+        StopWatch watch = new StopWatch();
+        watch.start();
         log.info("testParallelGenerate--------------------"+LocalDateTime.now().format(DATETIME_FORMATTER));
         AtomicInteger control = new AtomicInteger(-1);
         Set<Long> uidSet = new ConcurrentSkipListSet<>();
@@ -60,6 +67,8 @@ public class DefaultSnowflakeIdGeneratorTest {
         for (Thread thread : threadList) {
             thread.join();
         }
+        watch.stop();
+        log.info("DefaultSnowflakeIdGeneratorTest.testParallelGenerate 耗时：{}ms",watch.getTotalTimeMillis());
 
         Assert.isTrue(SIZE == control.get(),"thread not use the same control id.");
 

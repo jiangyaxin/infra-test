@@ -43,12 +43,12 @@ public class BufferPaddingExecutor {
     /**
      * id生成器
      */
-    private final BufferedIdProvider uidProvider;
+    private final BufferedIdProvider idProvider;
 
     /**
      * 填充线程池
      */
-    private final ExecutorService bufferPadExecutors;
+    private final ExecutorService idPadExecutor;
 
     public BufferPaddingExecutor(RingBuffer ringBuffer, BufferedIdProvider idProvider) {
         this.running = new AtomicBoolean(false);
@@ -58,38 +58,47 @@ public class BufferPaddingExecutor {
 
         this.lastSecond = new PaddingAtomicLong(nowLocalDateTime.atZone(ZONE_DEFAULT).toEpochSecond());
         this.ringBuffer = ringBuffer;
-        this.uidProvider = idProvider;
+        this.idProvider = idProvider;
 
         // 初始化线程池
         int cores = Runtime.getRuntime().availableProcessors();
-        int threadNumber = cores * 2;
-        this.bufferPadExecutors = new ThreadPoolExecutor(threadNumber, threadNumber,
-                0L, TimeUnit.MILLISECONDS,
-                new LinkedBlockingQueue<>(),
+        this.idPadExecutor = new ThreadPoolExecutor(cores + 1, cores * 2,
+                1L, TimeUnit.MINUTES,
+                new LinkedBlockingQueue<>(1024),
                 new NamingThreadFactory(WORKER_NAME));
     }
 
     public void asyncPadding() {
-        bufferPadExecutors.submit(this::paddingBuffer);
+        idPadExecutor.submit(this::paddingId);
     }
 
     /**
      * 填充数据，使tail追上cursor
      */
-    public void paddingBuffer() {
+    public void paddingId() {
         Logs.debug(log, "Ready to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
 
         // 一个时间只有一个任务在执行
         if (!running.compareAndSet(false, true)) {
-
             Logs.debug(log, "Padding buffer is still running. {}", ringBuffer);
             return;
         }
 
+        try {
+            paddingIdInternal();
+            Logs.debug(log, "End to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
+        } catch (Exception ex) {
+            Logs.error(log, "Padding id failed", ex);
+        } finally {
+            running.set(false);
+        }
+    }
+
+    private void paddingIdInternal() {
         // 填充数据
         boolean isFullRingBuffer = false;
         while (!isFullRingBuffer) {
-            List<Long> idList = uidProvider.provide(lastSecond.incrementAndGet());
+            List<Long> idList = idProvider.provide(lastSecond.incrementAndGet());
             for (Long id : idList) {
                 isFullRingBuffer = !ringBuffer.put(id);
                 if (isFullRingBuffer) {
@@ -97,15 +106,11 @@ public class BufferPaddingExecutor {
                 }
             }
         }
-
-        running.compareAndSet(true, false);
-
-        Logs.debug(log, "End to padding buffer lastSecond:{}. {}", lastSecond.get(), ringBuffer);
     }
 
     public void shutdown() {
-        if (!bufferPadExecutors.isShutdown()) {
-            bufferPadExecutors.shutdownNow();
+        if (!idPadExecutor.isShutdown()) {
+            idPadExecutor.shutdownNow();
         }
     }
 }
