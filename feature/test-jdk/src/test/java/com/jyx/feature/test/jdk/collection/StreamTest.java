@@ -1,12 +1,16 @@
 package com.jyx.feature.test.jdk.collection;
 
 import com.jyx.feature.test.jdk.FlowNorm;
+import com.jyx.infra.collection.Collections;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -25,6 +29,23 @@ public class StreamTest {
                 reduceOp::apply,
                 reduceOp
         );
+    }
+
+    @Test
+    public void toMapTest() {
+        List<FlowNorm> flowList = IntStream.range(0, 10)
+                .filter(index -> index < 20)
+                .mapToObj(index -> {
+                    FlowNorm flowNorm = new FlowNorm();
+                    flowNorm.setOrderId(String.valueOf(index));
+                    flowNorm.setCommFee(BigDecimal.valueOf(index));
+                    return flowNorm;
+                })
+                .collect(Collectors.toList());
+
+        Map<String, FlowNorm> map = Collections.toMap(flowList, Collectors.toMap(FlowNorm::getOrderId, Function.identity()));
+
+        System.out.printf("1");
     }
 
     @Test
