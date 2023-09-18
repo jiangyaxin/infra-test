@@ -55,7 +55,7 @@ public class NamingThreadFactory implements ThreadFactory {
         thread.setDaemon(this.daemon);
         thread.setName(prefix + "-" + sequence.incrementAndGet());
         thread.setUncaughtExceptionHandler(Objects.requireNonNullElseGet(this.uncaughtExceptionHandler, () ->
-                (t, e) -> Logs.error(log, "unhandled exception in thread: " + t.getId() + ":" + t.getName(), e)
+                (t, e) -> Logs.error(log, "Unhandled exception in thread: {} : {}", t.getId(), t.getName(), e)
         ));
 
         return thread;
