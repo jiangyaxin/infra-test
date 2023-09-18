@@ -41,7 +41,7 @@ public class NamingThreadFactory implements ThreadFactory {
     }
 
     public NamingThreadFactory(String prefix, boolean daemon, Thread.UncaughtExceptionHandler handler) {
-        Asserts.hasText(prefix, "prefix is not null ");
+        Asserts.hasText(prefix, () -> "prefix is not null ");
 
         this.prefix = prefix;
         this.daemon = daemon;

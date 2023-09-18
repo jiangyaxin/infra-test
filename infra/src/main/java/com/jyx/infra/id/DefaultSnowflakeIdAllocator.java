@@ -76,7 +76,8 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         long currentSecond = getCurrentSecond();
 
         // 当前时间不能小于上一秒时间
-        Asserts.isTrue(currentSecond >= lastSecond, String.format("Clock moved backwards. Refusing for %s seconds", lastSecond - currentSecond));
+        long finalCurrentSecond = currentSecond;
+        Asserts.isTrue(currentSecond >= lastSecond, () -> String.format("Clock moved backwards. Refusing for %s seconds", lastSecond - finalCurrentSecond));
 
         // 同一秒内增大序列号
         if (currentSecond == lastSecond) {
@@ -99,9 +100,9 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
      * Get current second
      */
     private long getCurrentSecond() {
-        long currentSecond = LocalDateTime.now().atZone(DateTimeConstant.ZONE_DEFAULT).toInstant().getEpochSecond();
+        long currentSecond = System.currentTimeMillis() / 1000;
         Asserts.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
-                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
+                () -> String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
         return currentSecond;
     }
 

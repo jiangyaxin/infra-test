@@ -58,9 +58,9 @@ public class RingBuffer {
 
     public RingBuffer(int bufferSize, int paddingFactor) {
         // bufferSize 需要为2的倍数
-        Asserts.isTrue(bufferSize > 0L, "RingBuffer size must be positive");
-        Asserts.isTrue(Integer.bitCount(bufferSize) == 1, "RingBuffer size must be a power of 2");
-        Asserts.isTrue(paddingFactor > 0 && paddingFactor < 100, "RingBuffer size must be positive");
+        Asserts.isTrue(bufferSize > 0L, () -> "RingBuffer size must be positive");
+        Asserts.isTrue(Integer.bitCount(bufferSize) == 1, () -> "RingBuffer size must be a power of 2");
+        Asserts.isTrue(paddingFactor > 0 && paddingFactor < 100, () -> "RingBuffer size must be positive");
 
         this.bufferSize = bufferSize;
         this.indexMask = bufferSize - 1;
@@ -124,7 +124,7 @@ public class RingBuffer {
         long nextCursor = cursor.updateAndGet(old -> old == tail.get() ? old : old + 1);
 
         // 下一个序列号大于等于当前序列号
-        Asserts.isTrue(nextCursor >= currentCursor, "Cursor can't move back");
+        Asserts.isTrue(nextCursor >= currentCursor, () -> "Cursor can't move back");
 
         // 触发异步填充数据
         long currentTail = tail.get();
@@ -144,7 +144,7 @@ public class RingBuffer {
 
         // 1.检查下一个cursor是否CAN_TAKE_FLAG
         int nextCursorIndex = calSlotIndex(nextCursor);
-        Asserts.isTrue(flags[nextCursorIndex].get() == CAN_TAKE_FLAG, "Cursor not in can take status");
+        Asserts.isTrue(flags[nextCursorIndex].get() == CAN_TAKE_FLAG, () -> "Cursor not in can take status");
 
         // 2. 获取id
         // 3. 将对应的flags置为CAN_PUT_FLAG
@@ -173,7 +173,7 @@ public class RingBuffer {
     }
 
     public void setBufferPaddingExecutor(BufferPaddingExecutor bufferPaddingExecutor) {
-        Asserts.notNull(bufferPaddingExecutor, "bufferPaddingExecutor is not null");
+        Asserts.notNull(bufferPaddingExecutor, () -> "bufferPaddingExecutor is not null");
         this.bufferPaddingExecutor = bufferPaddingExecutor;
     }
 

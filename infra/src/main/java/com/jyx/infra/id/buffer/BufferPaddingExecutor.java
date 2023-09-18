@@ -2,6 +2,7 @@ package com.jyx.infra.id.buffer;
 
 import com.jyx.infra.asserts.Asserts;
 import com.jyx.infra.atomic.PaddingAtomicLong;
+import com.jyx.infra.datetime.DateTimeConstant;
 import com.jyx.infra.id.DefaultSnowflakeIdAllocator;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.thread.NamingThreadFactory;
@@ -54,7 +55,7 @@ public class BufferPaddingExecutor {
         this.running = new AtomicBoolean(false);
 
         LocalDateTime nowLocalDateTime = LocalDateTime.now();
-        Asserts.isTrue(DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.isBefore(nowLocalDateTime), "system time before 2021-10-19");
+        Asserts.isTrue(DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.isBefore(nowLocalDateTime), () -> String.format("system time before %s", DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.format(DateTimeConstant.DATETIME_FORMATTER)));
 
         this.lastSecond = new PaddingAtomicLong(nowLocalDateTime.atZone(ZONE_DEFAULT).toEpochSecond());
         this.ringBuffer = ringBuffer;

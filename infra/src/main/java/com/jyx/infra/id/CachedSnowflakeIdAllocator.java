@@ -37,7 +37,7 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator {
         this.bufferPaddingExecutor = new BufferPaddingExecutor(ringBuffer, this::nextIdsForOneSecond);
         ringBuffer.setBufferPaddingExecutor(bufferPaddingExecutor);
 
-        Logs.debug(log,"Initialized ring buffer size:{}, paddingFactor:{}", bufferSize, paddingFactor);
+        Logs.debug(log, "Initialized ring buffer size:{}, paddingFactor:{}", bufferSize, paddingFactor);
 
         // 启动时填充数据
         bufferPaddingExecutor.paddingId();
@@ -46,7 +46,7 @@ public class CachedSnowflakeIdAllocator extends DefaultSnowflakeIdAllocator {
     protected List<Long> nextIdsForOneSecond(long currentSecond) {
         // 秒数达到最大值
         Asserts.isTrue(currentSecond - startSecond <= fmt.maxTimestamp,
-                String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
+                () -> String.format("Timestamp bits is exhausted. Refusing id generate. Now: %s", currentSecond));
 
         // 数组长度 = max sequence + 1
         int listSize = (int) fmt.maxSequence + 1;

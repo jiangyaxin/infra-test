@@ -57,7 +57,7 @@ public class SnowflakeIdFormatter {
      * ~(-1L << sequenceBits) = 2^4 = 8
      */
     private SnowflakeIdFormatter(int timestampBits, int dataCenterBits, int workerBits, int sequenceBits) {
-        Asserts.isTrue(1 + timestampBits + dataCenterBits + workerBits + sequenceBits == 64, "Sum of timestampBits, dataCenterBits,workerBits and sequenceBits requires to be 63.");
+        Asserts.isTrue(1 + timestampBits + dataCenterBits + workerBits + sequenceBits == 64, () -> "Sum of timestampBits, dataCenterBits,workerBits and sequenceBits requires to be 63.");
 
         this.sequenceBits = sequenceBits;
         this.workerBits = workerBits;
@@ -101,8 +101,8 @@ public class SnowflakeIdFormatter {
     }
 
     public void validate(long dataCenterId, long workerId) {
-        Asserts.isTrue(dataCenterId >= 0 && dataCenterId <= this.maxDataCenterId, String.format("data center id:max[%s],current[%s]", maxDataCenterId, dataCenterId));
-        Asserts.isTrue(workerId >= 0 && workerId <= this.maxWorkerId, String.format("worker id:max[%s],current[%s]", maxWorkerId, workerId));
+        Asserts.isTrue(dataCenterId >= 0 && dataCenterId <= this.maxDataCenterId, () -> String.format("data center id:max[%s],current[%s]", maxDataCenterId, dataCenterId));
+        Asserts.isTrue(workerId >= 0 && workerId <= this.maxWorkerId, () -> String.format("worker id:max[%s],current[%s]", maxWorkerId, workerId));
     }
 
     @Override
