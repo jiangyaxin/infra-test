@@ -17,6 +17,15 @@ import java.util.stream.Stream;
  */
 public class Collections {
 
+    public static <K, V> Map<K, V> newHashMap(int demandSize) {
+        int mapSize = evaluateMapSize(demandSize);
+        return new HashMap<>(mapSize);
+    }
+
+    public static int evaluateMapSize(int demandSize) {
+        return (int) (demandSize / 0.75 + 1);
+    }
+
     public static <T> Collector<T, ?, T> reducing(Supplier<T> supplier, BinaryOperator<T> reduceOp) {
         return Collector.of(
                 supplier,
@@ -41,7 +50,7 @@ public class Collections {
 
         Map<K, List<T>> result = stream.collect(Collectors.groupingBy(
                 keyFunction,
-                () -> new HashMap<>((int) (size / 0.75 + 1)),
+                () -> newHashMap(size),
                 Collectors.toList()
         ));
         return result;
@@ -63,7 +72,7 @@ public class Collections {
 
         Collector<T, Map, Map<K, U>> collector = (Collector<T, Map, Map<K, U>>) toMapCollector;
         Collector<T, ?, Map<K, U>> newCollector = Collector.of(
-                () -> new HashMap<>((int) (size / 0.75 + 1)),
+                () -> newHashMap(size),
                 collector.accumulator(),
                 collector.combiner(),
                 collector.finisher(),
