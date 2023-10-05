@@ -96,12 +96,12 @@ public abstract class AbstractSerializer implements Serializer {
 
         if (file.exists()) {
             if (!file.delete()) {
-                throw new SerializableException(String.format("删除文件 %s 失败", file.getAbsoluteFile()));
+                throw new SerializableException(String.format("Delete file %s failed", file.getAbsoluteFile()));
             }
         } else {
             if (!parentFile.exists()) {
                 if (!parentFile.mkdir()) {
-                    throw new SerializableException(String.format("创建目录 %s 失败", parentFile.getAbsoluteFile()));
+                    throw new SerializableException(String.format("Delete directory %s failed", parentFile.getAbsoluteFile()));
                 }
             }
         }
@@ -111,20 +111,20 @@ public abstract class AbstractSerializer implements Serializer {
         String tps = calculateSerializeTps(stopWatch, fileSize);
 
         if (dataList == null || dataList.size() == 0) {
-            Logs.info(log, "File {} serialize successes,spend {}ms,bytes {}B,tps= {}MB/s",
+            Logs.info(log, "Serialize successes,file {},spend {}ms,bytes {}B,tps= {}MB/s",
                     filePath, stopWatch.getTotalTimeMillis(), fileSize, tps);
         } else {
             Class<?> clazz = dataList.get(0).getClass();
-            Logs.info(log, "Instance {} File {} serialize successes,spend {}ms,bytes {}B,tps= {}MB/s",
-                    clazz.getSimpleName(), filePath, stopWatch.getTotalTimeMillis(), fileSize, tps);
+            Logs.info(log, "Serialize successes,instance {},file {},spend {}ms,bytes {}B,tps= {}MB/s",
+                    clazz.getName(), filePath, stopWatch.getTotalTimeMillis(), fileSize, tps);
         }
     }
 
     protected <T> void printDeserializeSuccessLog(String filePath, Class<T> clazz, StopWatch stopWatch, long fileSize) {
         String tps = calculateSerializeTps(stopWatch, fileSize);
 
-        Logs.info(log, "Instance {} File {} deserialize successes,spend {}ms,bytes {}B,tps= {}MB/s",
-                clazz.getSimpleName(), filePath, stopWatch.getTotalTimeMillis(), fileSize, tps);
+        Logs.info(log, "Deserialize successes,instance {},file {},spend {}ms,bytes {}B,tps= {}MB/s",
+                clazz.getName(), filePath, stopWatch.getTotalTimeMillis(), fileSize, tps);
     }
 
     protected void closeMappedByteBuffer(MappedByteBuffer mappedByteBuffer) {
