@@ -5,5 +5,5 @@ package com.jyx.infra.constant;
  * @since 2023/9/28 14:24
  */
 public interface CommonConstants {
-
+    String STATIC_CONSTRUCTOR_NAME = "of";
 }

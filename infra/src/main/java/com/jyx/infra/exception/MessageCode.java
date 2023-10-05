@@ -1,5 +1,6 @@
 package com.jyx.infra.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Value;
 
@@ -8,7 +9,7 @@ import lombok.Value;
  * @since 2021/11/5 15:45
  */
 @Getter
-@Value(staticConstructor = "of")
+@AllArgsConstructor(staticName = "of")
 public class MessageCode {
 
     Integer code;
