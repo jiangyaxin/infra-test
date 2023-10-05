@@ -6,7 +6,7 @@ package com.jyx.infra.collection;
  * @author JYX
  * @since 2021/11/5 17:04
  */
-public class Tuple {
+public class Tuples {
 
     /**
      * Tuple 2 Factory

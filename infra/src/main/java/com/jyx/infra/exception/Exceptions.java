@@ -1,6 +1,6 @@
 package com.jyx.infra.exception;
 
-import com.jyx.infra.collection.Tuple;
+import com.jyx.infra.collection.Tuples;
 import com.jyx.infra.collection.Tuple2;
 
 import java.util.ArrayList;
@@ -93,6 +93,6 @@ public class Exceptions {
                 s.accept(stes[i]);
             }
         }
-        return Tuple.of(stes, framesInCommon);
+        return Tuples.of(stes, framesInCommon);
     }
 }
