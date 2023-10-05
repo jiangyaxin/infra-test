@@ -26,6 +26,7 @@
         <module>infra-redis</module>
         <module>infra-mail</module>
         <module>infra-test</module>
+        <module>infra-serializable</module>
     </modules>
 
     <properties>
@@ -59,6 +60,7 @@
         <jna.version>5.4.0</jna.version>
         <jacob.version>1.18</jacob.version>
         <opencv.version>411</opencv.version>
+        <kryo.version>5.5.0</kryo.version>
     </properties>
 
     <dependencyManagement>
@@ -66,6 +68,12 @@
             <dependency>
                 <groupId>com.jyx</groupId>
                 <artifactId>infra</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-serializable</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 
@@ -218,6 +226,11 @@
                 <version>${jna.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.esotericsoftware</groupId>
+                <artifactId>kryo</artifactId>
+                <version>${kryo.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -234,9 +247,11 @@
                     <artifactId>protobuf-maven-plugin</artifactId>
                     <version>${protobuf-maven-plugin.version}</version>
                     <configuration>
-                        <protocArtifact>com.google.protobuf:protoc:3.5.1-1:exe:${os.detected.classifier}</protocArtifact>
+                        <protocArtifact>com.google.protobuf:protoc:3.5.1-1:exe:${os.detected.classifier}
+                        </protocArtifact>
                         <pluginId>grpc-java</pluginId>
-                        <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.16.1:exe:${os.detected.classifier}</pluginArtifact>
+                        <pluginArtifact>io.grpc:protoc-gen-grpc-java:1.16.1:exe:${os.detected.classifier}
+                        </pluginArtifact>
                     </configuration>
                     <executions>
                         <execution>

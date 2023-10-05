@@ -12,7 +12,7 @@ logging:
     root: INFO
 app:
   cluster:
-    enabled-cached-id-generator: true
+    enabled-cached-id-generator: false
     data-center-id: 1
     worker-id: 1
   pool:

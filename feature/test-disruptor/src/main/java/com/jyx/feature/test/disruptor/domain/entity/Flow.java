@@ -1,4 +1,4 @@
-package com.jyx.feature.test.jdk;
+package com.jyx.feature.test.disruptor.domain.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,9 +10,9 @@ import lombok.ToString;
  * @since 2023/1/20
  */
 @Data
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Flow {
 
     private static final long serialVersionUID = 42L;
