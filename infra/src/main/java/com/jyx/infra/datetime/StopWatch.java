@@ -31,6 +31,30 @@ public class StopWatch {
         this.id = id;
     }
 
+    public static StopWatch of() {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start();
+        return stopWatch;
+    }
+
+    public static StopWatch ofId(String id) {
+        StopWatch stopWatch = new StopWatch(id);
+        stopWatch.start();
+        return stopWatch;
+    }
+
+    public static StopWatch ofTask(String taskName) {
+        StopWatch stopWatch = new StopWatch();
+        stopWatch.start(taskName);
+        return stopWatch;
+    }
+
+    public static StopWatch ofIdAndTask(String id, String taskName) {
+        StopWatch stopWatch = new StopWatch(id);
+        stopWatch.start(taskName);
+        return stopWatch;
+    }
+
 
     public String getId() {
         return this.id;
@@ -130,40 +154,40 @@ public class StopWatch {
     }
 
     public String prettyPrint() {
-        StringBuilder sb = new StringBuilder(shortSummary());
-        sb.append('\n');
-        if (!this.keepTaskList) {
-            sb.append("No task info kept");
-        } else {
+        long totalMillis = getTotalTimeMillis();
+        StringBuilder sb = new StringBuilder(String.format("%s spend %sms", getId(), totalMillis));
+        TaskInfo[] taskInfos = getTaskInfo();
+        if (taskInfos != null || taskInfos.length > 0) {
+            sb.append('\n');
             sb.append("---------------------------------------------\n");
-            sb.append("ns         %     Task name\n");
+            sb.append("ms         %     Task name\n");
             sb.append("---------------------------------------------\n");
-            NumberFormat nf = NumberFormat.getNumberInstance();
-            nf.setMinimumIntegerDigits(9);
-            nf.setGroupingUsed(false);
             NumberFormat pf = NumberFormat.getPercentInstance();
             pf.setMinimumIntegerDigits(3);
             pf.setGroupingUsed(false);
-            for (TaskInfo task : getTaskInfo()) {
-                sb.append(nf.format(task.getTimeNanos())).append("  ");
-                sb.append(pf.format((double) task.getTimeNanos() / getTotalTimeNanos())).append("  ");
+
+            for (TaskInfo task : taskInfos) {
+                long taskMillis = task.getTimeMillis();
+                sb.append(taskMillis).append("  ");
+                sb.append(totalMillis == 0 ? "000%" : pf.format(taskMillis / (double) totalMillis)).append("  ");
                 sb.append(task.getTaskName()).append('\n');
             }
+
         }
         return sb.toString();
     }
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(shortSummary());
+        long totalMillis = getTotalTimeMillis();
+        StringBuilder sb = new StringBuilder(String.format("%s spend %sms", getId(), totalMillis));
         if (this.keepTaskList) {
             for (TaskInfo task : getTaskInfo()) {
-                sb.append("; [").append(task.getTaskName()).append("] took ").append(task.getTimeNanos()).append(" ns");
-                long percent = Math.round(100.0 * task.getTimeNanos() / getTotalTimeNanos());
+                long taskMillis = task.getTimeMillis();
+                sb.append("; [").append(task.getTaskName()).append("] took ").append(taskMillis).append("ms");
+                long percent = Math.round(100.0 * taskMillis / totalMillis);
                 sb.append(" = ").append(percent).append('%');
             }
-        } else {
-            sb.append("; no task info kept");
         }
         return sb.toString();
     }
