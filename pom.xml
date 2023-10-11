@@ -39,11 +39,13 @@
         <spring-test-experience.version>1.0.0</spring-test-experience.version>
         <java.version>11</java.version>
 
+        <shardingsphere.version>5.2.1</shardingsphere.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <druid-starter.version>1.2.8</druid-starter.version>
         <logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
         <log4jdbc.version>1.2</log4jdbc.version>
         <guava.version>31.0.1-jre</guava.version>
+        <reflections.version>0.10.2</reflections.version>
         <!-- lombok-mapstruct-binding 需要该版本以上 -->
         <lombok.version>1.18.22</lombok.version>
         <mapstruct.version>1.4.2.Final</mapstruct.version>
@@ -168,6 +170,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>${reflections.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
                 <version>${mapstruct.version}</version>
@@ -231,6 +239,13 @@
                 <artifactId>kryo</artifactId>
                 <version>${kryo.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.apache.shardingsphere</groupId>
+                <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
+                <version>${shardingsphere.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
