@@ -27,6 +27,7 @@
         <module>infra-mail</module>
         <module>infra-test</module>
         <module>infra-serializable</module>
+        <module>infra-mybatis-plus</module>
     </modules>
 
     <properties>
@@ -42,6 +43,7 @@
         <shardingsphere.version>5.2.1</shardingsphere.version>
         <commons-pool2.version>2.11.1</commons-pool2.version>
         <druid-starter.version>1.2.8</druid-starter.version>
+        <mybatis-plus-starter.version>3.5.3.2</mybatis-plus-starter.version>
         <logstash-logback-encoder.version>6.6</logstash-logback-encoder.version>
         <log4jdbc.version>1.2</log4jdbc.version>
         <guava.version>31.0.1-jre</guava.version>
@@ -70,12 +72,6 @@
             <dependency>
                 <groupId>com.jyx</groupId>
                 <artifactId>infra</artifactId>
-                <version>${spring-test-experience.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.jyx</groupId>
-                <artifactId>infra-serializable</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 
@@ -123,6 +119,18 @@
             </dependency>
 
             <dependency>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-serializable</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-mybatis-plus</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
                 <version>${spring-cloud-dependencies.version}</version>
@@ -148,6 +156,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
                 <version>${druid-starter.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus-starter.version}</version>
             </dependency>
 
             <dependency>

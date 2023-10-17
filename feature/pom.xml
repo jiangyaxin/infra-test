@@ -29,6 +29,7 @@
         <module>test-jdk</module>
         <module>test-cqengine</module>
         <module>test-activemq</module>
+        <module>test-mybatis-plus</module>
     </modules>
 
 </project>
