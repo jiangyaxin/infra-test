@@ -30,6 +30,7 @@
         <module>test-cqengine</module>
         <module>test-activemq</module>
         <module>test-mybatis-plus</module>
+        <module>test-mybatis</module>
     </modules>
 
 </project>

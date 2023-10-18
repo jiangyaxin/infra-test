@@ -26,4 +26,5 @@
 | test-arthas                           | 单点  | 30024 |
 | test-config-server                    | 单点  | 30025 |
 | sentinel-dashboard                    | 单点  | 30026 |
-| test-activemq                               | 单点  | 30027 |
+| test-activemq                         | 单点  | 30027 |
+| test-mybatis                          | 单点  | 30028 |
