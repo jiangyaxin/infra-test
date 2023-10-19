@@ -1,4 +1,4 @@
-package com.jyx.feature.test.mybatis.repository.repo1;
+package com.jyx.feature.test.mybatis.repository.repo2;
 
 import com.jyx.feature.test.mybatis.domain.entity.LightGroup;
 import org.apache.ibatis.annotations.Mapper;
@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2023/10/19 12:31
  */
 @Mapper
-public interface LightGroupMapper {
+public interface LightGroup2Mapper {
 
     LightGroup selectById(Long id);
 }

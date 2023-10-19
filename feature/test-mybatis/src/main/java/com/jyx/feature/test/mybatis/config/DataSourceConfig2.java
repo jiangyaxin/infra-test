@@ -18,7 +18,7 @@ import javax.sql.DataSource;
  * @author Archforce
  * @since 2023/10/18 18:11
  */
-//@Configuration
+@Configuration
 @MapperScan(basePackages = DataSourceConfig2.Constants.MAPPER_PACKAGE, sqlSessionFactoryRef = DataSourceConfig2.Constants.SQL_SESSION_FACTORY_BEAN_NAME)
 public class DataSourceConfig2 {
 
