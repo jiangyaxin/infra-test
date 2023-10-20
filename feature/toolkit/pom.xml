@@ -14,7 +14,10 @@
     <packaging>jar</packaging>
 
     <dependencies>
-
+        <dependency>
+            <groupId>com.jyx</groupId>
+            <artifactId>infra-web</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
