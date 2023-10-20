@@ -6,7 +6,6 @@
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
     <springProperty scope="context" name="APP_NAME" source="spring.application.name"/>
     <springProperty scope="context" name="ENV" source="spring.profiles.active"/>
-    <springProperty scope="context" name="LOGSTASH_DESTINATION" source="logstash.destination"/>
 
     <property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr([%t]){faint} %clr(%logger{36}){cyan} %clr(:){faint} %m%n" />
     <property name="CONSOLE_LOG_CHARSET" value="UTF-8"/>
@@ -33,34 +32,8 @@
         </rollingPolicy>
     </appender>
 
-    <appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-        <destination>${LOGSTASH_DESTINATION}</destination>
-        <encoder charset="UTF-8" class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-            <providers>
-                <timestamp>
-                    <timeZone>UTC</timeZone>
-                </timestamp>
-                <pattern>
-                    <pattern>
-                        {
-                            "appName": "${APP_NAME}",
-                            "env": "${ENV}",
-                            "level": "%level",
-                            "thread": "%thread",
-                            "class": "%logger{50}",
-                            "message": "%message",
-                            "stack_trace": "%exception",
-                            "time":"%d{yyyy-MM-dd HH:mm:ss.SSS}"
-                        }
-                    </pattern>
-                </pattern>
-            </providers>
-        </encoder>
-    </appender>
-
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
         <appender-ref ref="FILE"/>
-        <appender-ref ref="LOGSTASH"/>
     </root>
 </configuration>

@@ -1,0 +1,19 @@
+server:
+  port: 30030
+
+spring:
+  application:
+    name: toolkit
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+app:
+  cluster:
+    enabled-cached-id-generator: false
+    data-center-id: 1
+    worker-id: 1
