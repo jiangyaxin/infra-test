@@ -28,3 +28,4 @@
 | sentinel-dashboard                    | 单点  | 30026 |
 | test-activemq                         | 单点  | 30027 |
 | test-mybatis                          | 单点  | 30028 |
+| test-mybatis-plus                     | 单点  | 30029 |

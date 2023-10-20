@@ -1,0 +1,102 @@
+server:
+  port: 30029
+
+spring:
+  application:
+    name: test-mybatis-plus
+  datasource:
+    test1:
+      jdbc-url: jdbc:mysql://localhost:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+        # 是否自动提交,默认为 True
+      auto-commit: true
+      # 客户端创建连接等待超时时间,如果时间内没有获取连接则抛异常,默认 30 秒
+      connection-timeout: 30000
+      # 连接允许最长空闲时间,如果超时,则会被关闭，默认为 600 秒
+      # 如果idleTimeout+1秒>maxLifetime 且 maxLifetime>0，则会被重置为0
+      # 如果idleTimeout=0则表示空闲的连接在连接池中永远不被移除
+      # 由定时线程每隔30秒检测一次，实际移除的时间时可能是idleTimeout+30秒，平均idleTimeout+15秒
+      # idle-timeout: 600000
+
+      # 会按照该时间间隔发送PING给数据库，JDBC4以上直接发送二进制数据，或者JDBC4以下发送connectionTestQuery
+      # 防止它被数据库或网络基础设施超时，默认值为：0（禁用）
+      keepalive-time: 0
+      # 当达到这个时间后连接会被标记被移除，如果连接没有被使用会被删除。
+      # 如果连接正在使用会在使用完成后被其他线程获取时被删除
+      # 值为 0 表示没有最大生命周期，默认值：1800000（30 分钟）
+      # 该值需要设置为比任何数据库或基础设施强加的连接时间限制短几秒。
+      # 设置为0或过大，可能导致 no operations allowed after connection closed 异常。
+      max-lifetime: 1600000
+      # 该值不要设置
+      # connectionTestQuery
+      # 该值不要设置，默认与 maximumPoolSize 保持一致
+      # minimumIdle
+      # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
+      maximumPoolSize: 20
+      data-source-properties:
+        logger: com.mysql.cj.log.Slf4JLogger
+    test2:
+      jdbc-url: jdbc:mysql://127.0.0.1:3306/jpa_test2?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+      username: root
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      # 是否自动提交,默认为 True
+      auto-commit: true
+      # 客户端创建连接等待超时时间,如果时间内没有获取连接则抛异常,默认 30 秒
+      connection-timeout: 30000
+      # 连接允许最长空闲时间,如果超时,则会被关闭，默认为 600 秒
+      # 如果idleTimeout+1秒>maxLifetime 且 maxLifetime>0，则会被重置为0
+      # 如果idleTimeout=0则表示空闲的连接在连接池中永远不被移除
+      # 由定时线程每隔30秒检测一次，实际移除的时间时可能是idleTimeout+30秒，平均idleTimeout+15秒
+      # idle-timeout: 600000
+
+      # 会按照该时间间隔发送PING给数据库，JDBC4以上直接发送二进制数据，或者JDBC4以下发送connectionTestQuery
+      # 防止它被数据库或网络基础设施超时，默认值为：0（禁用）
+      keepalive-time: 0
+      # 当达到这个时间后连接会被标记被移除，如果连接没有被使用会被删除。
+      # 如果连接正在使用会在使用完成后被其他线程获取时被删除
+      # 值为 0 表示没有最大生命周期，默认值：1800000（30 分钟）
+      # 该值需要设置为比任何数据库或基础设施强加的连接时间限制短几秒。
+      # 设置为0或过大，可能导致 no operations allowed after connection closed 异常。
+      max-lifetime: 1800000
+      # 该值不要设置
+      # connectionTestQuery
+      # 该值不要设置，默认与 maximumPoolSize 保持一致
+      # minimumIdle
+      # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
+      maximumPoolSize: 20
+      data-source-properties:
+        logger: com.mysql.cj.log.Slf4JLogger
+
+pagehelper:
+  # oracle,mysql,mariadb,sqlite,hsqldb,postgresql,db2,sqlserver,informix,h2,sqlserver2012,derby
+  helperDialect: mysql
+  # 默认 true ,当使用运行时动态数据源或没有设置 helperDialect 属性自动获取数据库类型时，会自动获取一个数据库连接
+  closeConn: false
+  # 分页合理化参数，默认值为false。当该参数设置为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。默认false 时，直接根据参数进行查询
+  reasonable: true
+  # 支持通过 Mapper 接口参数来传递分页参数
+  # 例如：
+  # @Param("pageNum") int pageNum,
+  # @Param("pageSize") int pageSize
+  supportMethodsArguments: true
+
+
+
+logging:
+  file:
+    name: ${spring.application.name}
+    path: ./target/logs
+  level:
+    root: INFO
+
+logstash:
+  destination: "1.12.236.101:4560"
+
+app:
+  cluster:
+    enabled-cached-id-generator: true
+    data-center-id: 1
+    worker-id: 1

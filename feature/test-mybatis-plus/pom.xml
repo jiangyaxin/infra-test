@@ -17,7 +17,22 @@
 
         <dependency>
             <groupId>com.jyx</groupId>
+            <artifactId>infra-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jyx</groupId>
+            <artifactId>infra-test</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.jyx</groupId>
             <artifactId>infra-mybatis-plus</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
     </dependencies>
