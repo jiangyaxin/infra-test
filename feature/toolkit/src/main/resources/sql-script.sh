@@ -75,7 +75,7 @@ function custom_function(){
 
   if [ -n "$PASSWORD" ];
   then
-      mysql -h"$HOST" -P"$PORT" -u"$USER" "-p$PASSWORD" < "$sql_file_path"
+      mysql -h"$HOST" -P"$PORT" -u"$USER" -p"$PASSWORD" < "$sql_file_path"
   else
       mysql -h"$HOST" -P"$PORT" -u"$USER" < "$sql_file_path"
   fi
