@@ -12,12 +12,12 @@ function show_help(){
     echo "-P|--port : Mysql port,default is 3306"
     echo "-u|--user : Mysql user,default is root"
     echo "-p|--password : Mysql password"
-    echo "-f|--path=./sql : Execute sql script recursively,sql root path,default is ./sql"
+    echo "-f|--path : Execute sql script recursively,sql root path,default is ./sql"
 }
 
 if [ $# == 0 ]; then
     echo "Error,please input args"
-    show_help "$@"
+    show_help ""
     exit 1
 fi
 
@@ -52,7 +52,7 @@ do
            shift 2
            ;;
         --help)
-           show_help "$@"
+           show_help ""
            exit 0
            ;;
         --)
