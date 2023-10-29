@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.jyx.feature.test.mybatis.repository.repo1.LightGroup1Mapper">
+<mapper namespace="com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper">
 
     <select id="selectById" parameterType="long" resultType="lightGroup">
         SELECT * FROM tbl_light_group where id = #{1} LIMIT 1

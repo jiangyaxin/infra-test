@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.ChannelMapper">
+
+    <select id="selectById" parameterType="long" resultType="channel">
+        SELECT * FROM tbl_channel where id = #{1} LIMIT 1
+    </select>
+
+
+</mapper>
