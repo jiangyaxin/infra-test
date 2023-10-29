@@ -53,7 +53,7 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
      * 启始时间戳
      * 2021-10-19
      */
-    long startSecond = START_LOCAL_DATE_TIME.atZone(DateTimeConstant.ZONE_DEFAULT).toEpochSecond();
+    long startSecond = START_LOCAL_DATE_TIME.atZone(DateTimeConstant.ZoneOffsets.DEFAULT_ZONE).toEpochSecond();
 
     SnowflakeIdFormatter fmt;
 
@@ -125,8 +125,8 @@ public class DefaultSnowflakeIdAllocator implements SnowflakeIdAllocator<Long> {
         int dataCenterId = fmt.dataCenterIdOf(id);
         long timestampOffset = fmt.timestampOffsetOf(id);
 
-        LocalDateTime thatTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startSecond + timestampOffset), DateTimeConstant.ZONE_DEFAULT);
-        String thatTimeStr = thatTime.format(DateTimeConstant.DATETIME_FORMATTER);
+        LocalDateTime thatTime = LocalDateTime.ofInstant(Instant.ofEpochSecond(startSecond + timestampOffset), DateTimeConstant.ZoneOffsets.DEFAULT_ZONE);
+        String thatTimeStr = thatTime.format(DateTimeConstant.DateTimeFormatters.DEFAULT_DATETIME_FORMATTER);
 
         return String.format("{\"id\":\"%s\",\"timestamp\":\"%s\",\"dataCenterId\":\"%s\",\"workerId\":\"%s\",\"sequence\":\"%s\"}",
                 id, thatTimeStr, dataCenterId, workerId, sequence);

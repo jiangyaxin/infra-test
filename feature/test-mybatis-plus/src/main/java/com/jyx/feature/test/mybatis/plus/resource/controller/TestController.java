@@ -2,8 +2,10 @@ package com.jyx.feature.test.mybatis.plus.resource.controller;
 
 import com.jyx.feature.test.mybatis.plus.domain.entity.Channel;
 import com.jyx.feature.test.mybatis.plus.domain.entity.LightGroup;
+import com.jyx.feature.test.mybatis.plus.domain.entity.Stage;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.ChannelMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.ChannelService;
+import com.jyx.feature.test.mybatis.plus.repository.repo1.service.StageService;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
 import com.jyx.infra.mybatis.plus.DbHolder;
@@ -34,6 +36,9 @@ public class TestController {
 
     private final LightGroupService lightGroupService;
 
+    private final StageService stageService;
+
+
     @ApiOperation(value = "测试接口")
     @GetMapping
     public void dataSourceTest() {
@@ -41,6 +46,7 @@ public class TestController {
         LightGroup lightGroup = lightGroupMapper.selectById(1L);
         Channel channelServiceById = channelService.getById(2L);
         LightGroup lightGroupServiceById = lightGroupService.getById(1L);
+        Stage stageServiceById= stageService.getById(3L);
         log.error("1");
     }
 }

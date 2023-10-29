@@ -72,6 +72,14 @@ public class DbHolder {
         return datasource;
     }
 
+    public DataSource datasource(String datasourceName) {
+        DataSource datasource = dynamicRoutingDataSource.getDataSources().get(datasourceName);
+        if (datasource == null) {
+            throw AppException.of(String.format("Cannot find datasource: .", datasourceName));
+        }
+        return datasource;
+    }
+
     public <T> DbService<T> dbService(Class<T> clazz) {
         DbService<T> dbService = (DbService<T>) classToDbServiceMap.get(clazz);
         if (dbService == null) {

@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.jyx.infra.datetime.DateTimeConstant.DATETIME_FORMATTER;
+import static com.jyx.infra.datetime.DateTimeConstant.DateTimeFormatters.DEFAULT_DATETIME_FORMATTER;
 
 /**
  * @author JYX
@@ -33,7 +33,7 @@ public class CachedSnowflakeIdGeneratorTest {
     public void testSerialGenerate() {
         StopWatch watch = new StopWatch();
         watch.start();
-        log.info("testSerialGenerate--------------------" + LocalDateTime.now().format(DATETIME_FORMATTER));
+        log.info("testSerialGenerate--------------------" + LocalDateTime.now().format(DEFAULT_DATETIME_FORMATTER));
         Set<Long> idSet = new HashSet<>(SIZE);
         for (int i = 0; i < SIZE; i++) {
             doGenerate(idSet, i);
@@ -48,7 +48,7 @@ public class CachedSnowflakeIdGeneratorTest {
     public void testParallelGenerate() throws InterruptedException {
         StopWatch watch = new StopWatch();
         watch.start();
-        log.info("testParallelGenerate--------------------" + LocalDateTime.now().format(DATETIME_FORMATTER));
+        log.info("testParallelGenerate--------------------" + LocalDateTime.now().format(DEFAULT_DATETIME_FORMATTER));
         AtomicInteger control = new AtomicInteger(-1);
         Set<Long> uidSet = new ConcurrentSkipListSet<>();
 

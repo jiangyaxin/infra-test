@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.jyx.infra.datetime.DateTimeConstant.ZONE_DEFAULT;
+import static com.jyx.infra.datetime.DateTimeConstant.ZoneOffsets.DEFAULT_ZONE;
 
 /**
  * 异步补充数据
@@ -55,9 +55,9 @@ public class BufferPaddingExecutor {
         this.running = new AtomicBoolean(false);
 
         LocalDateTime nowLocalDateTime = LocalDateTime.now();
-        Asserts.isTrue(DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.isBefore(nowLocalDateTime), () -> String.format("system time before %s", DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.format(DateTimeConstant.DATETIME_FORMATTER)));
+        Asserts.isTrue(DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.isBefore(nowLocalDateTime), () -> String.format("system time before %s", DefaultSnowflakeIdAllocator.START_LOCAL_DATE_TIME.format(DateTimeConstant.DateTimeFormatters.DEFAULT_DATETIME_FORMATTER)));
 
-        this.lastSecond = new PaddingAtomicLong(nowLocalDateTime.atZone(ZONE_DEFAULT).toEpochSecond());
+        this.lastSecond = new PaddingAtomicLong(nowLocalDateTime.atZone(DEFAULT_ZONE).toEpochSecond());
         this.ringBuffer = ringBuffer;
         this.idProvider = idProvider;
 

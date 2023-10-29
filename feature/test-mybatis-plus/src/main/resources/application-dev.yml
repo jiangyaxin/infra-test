@@ -1,6 +1,25 @@
 server:
   port: 30029
 
+mybatis-generator:
+  enable: true
+  datasource:
+    name: test1
+  global:
+    swagger: false
+  package-path:
+    parent: com.jyx.feature.test.mybatis.plus
+    entity: domain.entity
+    service: repository.repo1.service
+    service-impl: repository.repo1.service.impl
+    mapper: repository.repo1.mapper
+    xml: mapper.test1
+  strategy:
+    file-override: true
+    includes:
+      - "stage"
+    super-entity-class: ""
+
 mybatis-plus:
   config-location: classpath:mybatis-config.xml
   type-aliases-package: com.jyx.feature.test.mybatis.plus.domain.entity
