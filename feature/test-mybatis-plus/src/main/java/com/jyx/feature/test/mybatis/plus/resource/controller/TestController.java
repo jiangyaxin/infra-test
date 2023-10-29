@@ -7,6 +7,7 @@ import com.jyx.feature.test.mybatis.plus.repository.repo1.service.ChannelService
 import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
 import com.jyx.infra.mybatis.plus.DbHolder;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class TestController {
 
     private final LightGroupService lightGroupService;
 
+    @ApiOperation(value = "测试接口")
     @GetMapping
     public void dataSourceTest() {
         Channel channel = channelMapper.selectById(2L);

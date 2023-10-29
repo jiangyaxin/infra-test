@@ -5,6 +5,11 @@ mybatis-plus:
   config-location: classpath:mybatis-config.xml
   type-aliases-package: com.jyx.feature.test.mybatis.plus.domain.entity
 
+springfox:
+  documentation:
+    swagger-ui:
+      enabled: true
+
 spring:
   application:
     name: test-mybatis-plus
