@@ -97,7 +97,7 @@ public class MybatisPlusGeneratorConfig {
                 .service(packageConfig.getService())
                 .serviceImpl(packageConfig.getServiceImpl())
                 .mapper(packageConfig.getMapper())
-                .pathInfo(Collections.singletonMap(OutputFile.xml, PROJECT_ROOT_PATH + "/src/main/resources/mapper/" + datasourceName);
+                .pathInfo(Collections.singletonMap(OutputFile.xml, PROJECT_ROOT_PATH + "/src/main/resources/mapper/" + datasourceName));
     }
 
     private void buildStrategyConfig(StrategyConfig.Builder builder, MybatisPlusGeneratorProperties properties) {
