@@ -237,6 +237,7 @@ public class MybatisPlusGeneratorConfig {
                     responseImportPackages.add(columnType.getPkg());
                 }
             });
+            requestImportPackages.remove(Date.class.getName());
             customMap.put("requestImportPackages", requestImportPackages);
             customMap.put("responseImportPackages", responseImportPackages);
         };

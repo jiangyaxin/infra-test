@@ -21,7 +21,11 @@ public class ${entity}Request extends ${requestSuperClass} {
 #foreach($field in ${table.fields})
 
     @ApiModelProperty("${field.comment}")
+    #if("$!field.propertyType" == "Date")
+    private String ${field.propertyName};
+    #else
     private ${field.propertyType} ${field.propertyName};
+    #end
 #end
 ## ----------  END 字段循环遍历  ----------
 

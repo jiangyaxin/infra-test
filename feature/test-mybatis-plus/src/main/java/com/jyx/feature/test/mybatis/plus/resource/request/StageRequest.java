@@ -1,16 +1,14 @@
 package com.jyx.feature.test.mybatis.plus.resource.request;
 
-import com.jyx.infra.mybatis.plus.query.PageRequest;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.Date;
+import com.jyx.infra.mybatis.plus.query.PageRequest;
 
 /**
  * @author CodeGenerator
- * @since 2023-10-30 14:15:09
+ * @since 2023-10-30 18:23:55
  */
 @Getter
 @Setter
@@ -27,12 +25,12 @@ public class StageRequest extends PageRequest {
     private Long createdBy;
 
     @ApiModelProperty("创建日期")
-    private Date createdDate;
+    private String createdDate;
 
     @ApiModelProperty("修改人")
     private Long lastModifiedBy;
 
     @ApiModelProperty("修改日期")
-    private Date lastModifiedDate;
+    private String lastModifiedDate;
 
 }
