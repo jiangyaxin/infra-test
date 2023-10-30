@@ -6,4 +6,6 @@ package com.jyx.infra.constant;
  */
 public interface CommonConstant {
     String STATIC_CONSTRUCTOR_NAME = "of";
+
+    String COMMA = ",";
 }

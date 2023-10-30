@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 public interface DateTimeConstant {
 
     interface Patterns {
+        String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
         String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     }
 
@@ -19,5 +20,6 @@ public interface DateTimeConstant {
 
     interface DateTimeFormatters {
         DateTimeFormatter DEFAULT_DATETIME_FORMATTER = DateTimeFormatter.ofPattern(Patterns.DEFAULT_DATETIME_PATTERN);
+        DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(Patterns.DEFAULT_DATE_PATTERN);
     }
 }

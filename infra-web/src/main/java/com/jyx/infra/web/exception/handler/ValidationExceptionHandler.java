@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolationException;
 
-import static com.jyx.infra.web.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
+import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.VALIDATION_EXCEPTION_HANDLER_ORDER;
 
 /**

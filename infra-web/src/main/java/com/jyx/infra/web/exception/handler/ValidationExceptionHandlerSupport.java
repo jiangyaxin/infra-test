@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static com.jyx.infra.web.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
+import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 
 /**
  * @author JYX

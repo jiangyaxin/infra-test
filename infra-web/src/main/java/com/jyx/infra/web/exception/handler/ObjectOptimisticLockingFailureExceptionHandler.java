@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import static com.jyx.infra.web.exception.WebMessageCodes.OBJECT_LOCKING_CODE;
+import static com.jyx.infra.exception.WebMessageCodes.OBJECT_LOCKING_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.OBJECT_OPTIMISTIC_LOCKING_FAILURE_EXCEPTION_HANDLER_ORDER;
 
 /**

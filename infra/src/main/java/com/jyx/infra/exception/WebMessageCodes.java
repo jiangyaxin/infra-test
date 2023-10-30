@@ -1,6 +1,4 @@
-package com.jyx.infra.web.exception;
-
-import com.jyx.infra.exception.MessageCode;
+package com.jyx.infra.exception;
 
 /**
  * @author JYX

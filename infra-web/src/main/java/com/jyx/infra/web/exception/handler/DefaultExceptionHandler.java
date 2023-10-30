@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import static com.jyx.infra.spring.context.AppConstant.MODULE;
-import static com.jyx.infra.web.exception.WebMessageCodes.SERVER_ERROR_CODE;
+import static com.jyx.infra.exception.WebMessageCodes.SERVER_ERROR_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.DEFAULT_EXCEPTION_HANDLER_ORDER;
 
 /**
