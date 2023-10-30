@@ -9,7 +9,9 @@ import lombok.Data;
 @Data
 public class PageRequest extends OrderRequest {
 
+    @QueryIgnore
     private Integer pageSize;
 
+    @QueryIgnore
     private Integer pageNumber;
 }

@@ -14,5 +14,6 @@ public class OrderRequest {
         String DESC = "-";
     }
 
+    @QueryIgnore
     private String[] orderBy;
 }

@@ -109,6 +109,7 @@ logging:
     path: ./target/logs
   level:
     root: INFO
+    com.jyx.feature.test.mybatis.plus.repository: DEBUG
 
 app:
   cluster:

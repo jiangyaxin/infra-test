@@ -13,7 +13,7 @@ public @interface QueryType {
 
     QueryTypes value() default QueryTypes.EQ;
 
-    String entityFieldName();
+    String entityFieldName() default "";
 
     BetweenType betweenType() default BetweenType.DEFAULT;
 }

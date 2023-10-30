@@ -98,7 +98,7 @@ public class QueryBuilder {
         String dbColumnName = resolveDbColumnName(entityField);
         Object requestFieldValue = requestField.get(request);
 
-        String errorMsg = String.format("%s of %s", request.getClass().getName(), requestField.getName());
+        String errorMsg = String.format("%s of %s", requestField.getName(), request.getClass().getName());
 
         parseQueryType(query, queryTypeAnnotation, dbColumnName, requestFieldValue, errorMsg);
     }
@@ -176,7 +176,7 @@ public class QueryBuilder {
         String from = between[0];
         String to = between.length == 1 ? "" : between[1];
         boolean fromExist = StringUtils.hasLength(from);
-        boolean toExist = StringUtils.hasLength(from);
+        boolean toExist = StringUtils.hasLength(to);
 
         switch (betweenType) {
             case SINGLE_DATE:
@@ -227,7 +227,7 @@ public class QueryBuilder {
                     query.ge(dbColumnName, from);
                 }
                 if (toExist) {
-                    query.lt(dbColumnName, to);
+                    query.le(dbColumnName, to);
                 }
                 break;
         }
