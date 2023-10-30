@@ -122,7 +122,10 @@ public class DbHolder {
     public Map<String, ColumnInfo> columnInfoMap(Class<?> clazz) {
         List<ColumnInfo> columnInfoList = columnInfo(clazz);
         Map<String, ColumnInfo> columnInfoMap = columnInfoList.stream()
-                .collect(Collectors.toMap(ColumnInfo::getColumn, Function.identity()));
+                .collect(Collectors.toMap(
+                        columnInfo -> columnInfo.getColumn().toUpperCase(),
+                        Function.identity())
+                );
         return columnInfoMap;
     }
 
