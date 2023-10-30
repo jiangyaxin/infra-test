@@ -151,7 +151,7 @@ public class MybatisPlusGeneratorConfig {
 
     private void buildTemplateConfig(TemplateConfig.Builder builder) {
         builder
-                .controller("")
+                .disable(TemplateType.CONTROLLER)
                 .service("/templates/service.java")
                 .serviceImpl("/templates/serviceImpl.java")
                 .entity("/templates/entity.java")
