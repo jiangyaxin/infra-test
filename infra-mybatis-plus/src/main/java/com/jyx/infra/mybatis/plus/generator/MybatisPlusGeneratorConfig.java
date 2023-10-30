@@ -18,6 +18,7 @@ import com.jyx.infra.mybatis.plus.generator.properties.MybatisPlusGeneratorPrope
 import com.jyx.infra.mybatis.plus.generator.properties.PackageProperties;
 import com.jyx.infra.mybatis.plus.generator.properties.StrategyProperties;
 import com.jyx.infra.mybatis.plus.mapper.BizBaseMapper;
+import com.jyx.infra.mybatis.plus.query.PageRequest;
 import com.jyx.infra.mybatis.plus.service.DbService;
 import com.jyx.infra.mybatis.plus.service.DbServiceImpl;
 import com.jyx.infra.util.OsUtil;
@@ -179,6 +180,8 @@ public class MybatisPlusGeneratorConfig {
             CustomFile requestFile = buildRequestConfig(request, fileOverride);
             customFileList.add(requestFile);
             customMap.put("requestPackage", parent + "." + request);
+            customMap.put("requestSuperClass", PageRequest.class.getSimpleName());
+            customMap.put("requestSuperClassPackage", PageRequest.class.getName());
         }
         // 处理request
         if (StringUtils.hasLength(response)) {

@@ -5,15 +5,16 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+import com.jyx.infra.mybatis.plus.query.PageRequest;
 
 /**
  * @author CodeGenerator
- * @since 2023-10-30 11:25:51
+ * @since 2023-10-30 14:15:09
  */
 @Getter
 @Setter
 @ApiModel(value = "阶段")
-public class StageRequest {
+public class StageRequest extends PageRequest {
 
     @ApiModelProperty("主键")
     private Long id;
