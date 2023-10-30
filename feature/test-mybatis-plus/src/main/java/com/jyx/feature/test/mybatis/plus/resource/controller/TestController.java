@@ -9,12 +9,15 @@ import com.jyx.feature.test.mybatis.plus.repository.repo1.service.StageService;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
 import com.jyx.infra.mybatis.plus.DbHolder;
+import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author Archforce
@@ -47,6 +50,8 @@ public class TestController {
         Channel channelServiceById = channelService.getById(2L);
         LightGroup lightGroupServiceById = lightGroupService.getById(1L);
         Stage stageServiceById= stageService.getById(3L);
+
+        List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
         log.error("1");
     }
 }
