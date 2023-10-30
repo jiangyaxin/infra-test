@@ -1,6 +1,6 @@
-package ${requestPackage};
+package ${responsePackage};
 
-#foreach($pkg in ${requestImportPackages})
+#foreach($pkg in ${responseImportPackages})
 import ${pkg};
 #end
 import io.swagger.annotations.ApiModel;
@@ -15,7 +15,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @ApiModel(value = "$!{table.comment}")
-public class ${entity}Request {
+public class ${entity}Response {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 

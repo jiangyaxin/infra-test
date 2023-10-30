@@ -14,6 +14,8 @@ mybatis-generator:
     service-impl: repository.repo1.service.impl
     mapper: repository.repo1.mapper
     xml: mapper.test1
+    request: resource.request
+    response: resource.response
   strategy:
     file-override: true
     includes:

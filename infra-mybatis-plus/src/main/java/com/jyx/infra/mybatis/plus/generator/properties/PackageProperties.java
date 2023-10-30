@@ -18,4 +18,8 @@ public class PackageProperties {
     private String serviceImpl;
 
     private String mapper;
+
+    private String request;
+
+    private String response;
 }

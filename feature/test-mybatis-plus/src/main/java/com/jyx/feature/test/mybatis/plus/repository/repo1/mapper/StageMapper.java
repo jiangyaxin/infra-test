@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author CodeGenerator
- * @since 2023-10-29 18:33:17
+ * @since 2023-10-30 11:25:51
  */
 @DS("test1")
 @Mapper

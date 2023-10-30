@@ -2,10 +2,14 @@ package com.jyx.infra.mybatis.plus.generator;
 
 import com.baomidou.mybatisplus.generator.FastAutoGenerator;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.builder.CustomFile;
 import com.baomidou.mybatisplus.generator.config.builder.Entity;
 import com.baomidou.mybatisplus.generator.config.builder.Mapper;
 import com.baomidou.mybatisplus.generator.config.builder.Service;
+import com.baomidou.mybatisplus.generator.config.po.TableField;
+import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
+import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.jyx.infra.datetime.DateTimeConstant;
 import com.jyx.infra.mybatis.plus.DbHolder;
@@ -21,12 +25,12 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 import javax.sql.DataSource;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.function.BiConsumer;
 
 /**
  * @author Archforce
@@ -157,10 +161,82 @@ public class MybatisPlusGeneratorConfig {
     }
 
     private void buildInjectionConfig(InjectionConfig.Builder builder, MybatisPlusGeneratorProperties properties) {
+        StrategyProperties strategy = properties.getStrategy();
+        boolean fileOverride = strategy.isFileOverride();
+
+        PackageProperties packagePath = properties.getPackagePath();
+        String parent = packagePath.getParent();
+        String request = packagePath.getRequest();
+        String response = packagePath.getResponse();
+
         String datasourceName = properties.getDatasource().getName();
         Map<String, Object> customMap = new HashMap<>();
         customMap.put("datasourceName", datasourceName);
+
+        List<CustomFile> customFileList = new ArrayList<>();
+        // 处理request
+        if (StringUtils.hasLength(request)) {
+            CustomFile requestFile = buildRequestConfig(request, fileOverride);
+            customFileList.add(requestFile);
+            customMap.put("requestPackage", parent + "." + request);
+        }
+        // 处理request
+        if (StringUtils.hasLength(response)) {
+            CustomFile responseFile = buildResponseConfig(response, fileOverride);
+            customFileList.add(responseFile);
+            customMap.put("responsePackage", parent + "." + response);
+        }
+
+        if (!CollectionUtils.isEmpty(customFileList)) {
+            builder.customFile(customFileList);
+
+            builder.beforeOutputFile(buildBeforeOutputFileMap());
+        }
         builder.customMap(customMap);
+    }
+
+    private CustomFile buildRequestConfig(String request, boolean fileOverride) {
+        CustomFile.Builder builder = new CustomFile.Builder()
+                .fileName("Request.java")
+                .packageName(request)
+                .templatePath("/templates/entityRequest.java.vm");
+
+        if (fileOverride) {
+            builder.enableFileOverride();
+        }
+
+        return builder.build();
+    }
+
+    private CustomFile buildResponseConfig(String response, boolean fileOverride) {
+        CustomFile.Builder builder = new CustomFile.Builder()
+                .fileName("Response.java")
+                .packageName(response)
+                .templatePath("/templates/entityResponse.java.vm");
+
+        if (fileOverride) {
+            builder.enableFileOverride();
+        }
+
+        return builder.build();
+    }
+
+    private BiConsumer<TableInfo, Map<String, Object>> buildBeforeOutputFileMap() {
+        return (tableInfo, customMap) -> {
+            List<TableField> fieldList = tableInfo.getFields();
+
+            Set<String> requestImportPackages = new HashSet<>();
+            Set<String> responseImportPackages = new HashSet<>();
+            fieldList.forEach(field -> {
+                IColumnType columnType = field.getColumnType();
+                if (null != columnType && null != columnType.getPkg()) {
+                    requestImportPackages.add(columnType.getPkg());
+                    responseImportPackages.add(columnType.getPkg());
+                }
+            });
+            customMap.put("requestImportPackages", requestImportPackages);
+            customMap.put("responseImportPackages", responseImportPackages);
+        };
     }
 
 }
