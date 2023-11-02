@@ -1,8 +1,9 @@
 package com.jyx.infra.pipeline.disruptor;
 
 import com.jyx.infra.pipeline.PipelineException;
-import com.lmax.disruptor.BlockingWaitStrategy;
-import com.lmax.disruptor.WaitStrategy;
+import com.lmax.disruptor.*;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author Archforce
@@ -27,11 +28,71 @@ public enum WaitMode {
 
     public static WaitStrategy buildWaitStrategy(WaitStrategyProperties waitStrategyProperties) {
         WaitMode waitMode = waitStrategyProperties.getWaitMode();
+        Long spinTimeout = waitStrategyProperties.getSpinTimeout();
+        Long timeout = waitStrategyProperties.getTimeout();
+        TimeUnit timeUnit = waitStrategyProperties.getTimeUnit();
+        WaitMode fallbackWaitMode = waitStrategyProperties.getFallbackWaitMode();
         switch (waitMode) {
             case BLOCKING:
                 return new BlockingWaitStrategy();
+            case TIMEOUT_BLOCKING:
+                checkTimeout(waitMode, timeout);
+                checkTimeUnit(waitMode, timeUnit);
+                return new TimeoutBlockingWaitStrategy(timeout, timeUnit);
+            case SLEEPING:
+                return new SleepingWaitStrategy();
+            case YIELDING:
+                return new YieldingWaitStrategy();
+            case BUSY_SPIN:
+                return new BusySpinWaitStrategy();
+            case LITE_BLOCKING:
+                return new LiteBlockingWaitStrategy();
+            case LITE_TIMEOUT_BLOCKING:
+                checkTimeout(waitMode, timeout);
+                checkTimeUnit(waitMode, timeUnit);
+                return new LiteTimeoutBlockingWaitStrategy(timeout, timeUnit);
+            case PHASED_BACKOFF:
+                checkSpinTimeout(waitMode, spinTimeout);
+                checkTimeout(waitMode, timeout);
+                checkTimeUnit(waitMode, timeUnit);
+                checkFallbackWaitMode(waitMode, fallbackWaitMode);
+                switch (fallbackWaitMode) {
+                    case BLOCKING:
+                        return PhasedBackoffWaitStrategy.withLock(spinTimeout,timeout,timeUnit);
+                    case LITE_BLOCKING:
+                        return PhasedBackoffWaitStrategy.withLiteLock(spinTimeout,timeout,timeUnit);
+                    case SLEEPING:
+                        return PhasedBackoffWaitStrategy.withSleep(spinTimeout,timeout,timeUnit);
+                    default:
+                        throw new PipelineException(String.format("%s mode not support,except BLOCKING,LITE_BLOCKING,SLEEPING", waitMode.name()));
+                }
             default:
                 throw new PipelineException(String.format("Error wait mode:%s", waitMode.name()));
         }
     }
+
+    private static void checkSpinTimeout(WaitMode waitMode, Long spinTimeout) {
+        if (spinTimeout == null) {
+            throw new PipelineException(String.format("SpinTimeout is null at %s mode.", waitMode.name()));
+        }
+    }
+
+    private static void checkTimeout(WaitMode waitMode, Long timeout) {
+        if (timeout == null) {
+            throw new PipelineException(String.format("Timeout is null at %s mode.", waitMode.name()));
+        }
+    }
+
+    private static void checkTimeUnit(WaitMode waitMode, TimeUnit timeUnit) {
+        if (timeUnit == null) {
+            throw new PipelineException(String.format("TimeUnit is null at %s mode.", waitMode.name()));
+        }
+    }
+
+    private static void checkFallbackWaitMode(WaitMode waitMode, WaitMode fallbackWaitMode) {
+        if (fallbackWaitMode == null) {
+            throw new PipelineException(String.format("FallbackWaitMode is null at %s mode.", waitMode.name()));
+        }
+    }
+
 }

@@ -1,7 +1,7 @@
 package com.jyx.infra.pipeline.disruptor;
 
 import com.jyx.infra.pipeline.PipelineEvent;
-import com.jyx.infra.pipeline.Stage;
+import com.jyx.infra.pipeline.StageDefinition;
 import com.lmax.disruptor.WorkHandler;
 
 /**
@@ -10,15 +10,15 @@ import com.lmax.disruptor.WorkHandler;
  */
 public class StageHandler<T> implements WorkHandler<PipelineEvent<T>> {
 
-    private final Stage<T> stage;
+    private final StageDefinition<T> stageDefinition;
 
-    public StageHandler(Stage<T> stage) {
-        this.stage = stage;
+    public StageHandler(StageDefinition<T> stageDefinition) {
+        this.stageDefinition = stageDefinition;
     }
 
     @Override
     public void onEvent(PipelineEvent<T> event) throws Exception {
-        event.stage(stage);
-        stage.consumer().accept(event);
+        event.stage(stageDefinition);
+        stageDefinition.consumer().accept(event);
     }
 }

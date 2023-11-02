@@ -1,10 +1,10 @@
 package com.jyx.infra.pipeline.disruptor;
 
 import com.jyx.infra.log.Logs;
-import com.jyx.infra.pipeline.AbstractPipeline;
+import com.jyx.infra.pipeline.AbstractPipelineExecutor;
 import com.jyx.infra.pipeline.PipelineEvent;
 import com.jyx.infra.pipeline.PipelineException;
-import com.jyx.infra.pipeline.Stage;
+import com.jyx.infra.pipeline.StageDefinition;
 import com.jyx.infra.thread.NamingThreadFactory;
 import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.Disruptor;
@@ -20,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @since 2023/11/1 10:36
  */
 @Slf4j
-public class PipelineImpl<T> extends AbstractPipeline<T> {
+public class PipelineExecutorImpl<T> extends AbstractPipelineExecutor<T> {
 
     private final Disruptor<PipelineEvent<T>> disruptor;
 
@@ -33,7 +33,7 @@ public class PipelineImpl<T> extends AbstractPipeline<T> {
 
     private final EventTranslatorOneArg<PipelineEvent<T>, T> EVENT_TRANSLATOR = (event, sequence, arg0) -> event.load(sequence, arg0);
 
-    public PipelineImpl(String name, int bufferSize, WaitStrategyProperties waitStrategyProperties) {
+    public PipelineExecutorImpl(String name, int bufferSize, WaitStrategyProperties waitStrategyProperties) {
         super(name);
 
         EventFactory<PipelineEvent<T>> eventFactory = PipelineEvent::new;
@@ -45,21 +45,21 @@ public class PipelineImpl<T> extends AbstractPipeline<T> {
 
     @Override
     protected void start0() {
-        if (stageChain == null || stageChain.isEmpty()) {
+        if (stageDefinitionChain == null || stageDefinitionChain.isEmpty()) {
             throw PipelineException.of(String.format("At least one stage is required: %s", name));
         }
 
         EventHandlerGroup<PipelineEvent<T>> handlerGroup = disruptor.handleEventsWithWorkerPool(HEAD_HANDLER);
-        while (!stageChain.isEmpty()) {
-            Stage<T> stage = stageChain.poll();
-            int parallel = stage.parallel();
+        while (!stageDefinitionChain.isEmpty()) {
+            StageDefinition<T> stageDefinition = stageDefinitionChain.poll();
+            int parallel = stageDefinition.parallel();
 
             StageHandler<T>[] workHandlers = new StageHandler[parallel];
             for (int i = 0; i < parallel; i++) {
                 if (parallel > 1) {
-                    workHandlers[i] = new StageHandler<>(stage.fork());
+                    workHandlers[i] = new StageHandler<>(stageDefinition.fork());
                 } else {
-                    workHandlers[i] = new StageHandler<>(stage);
+                    workHandlers[i] = new StageHandler<>(stageDefinition);
                 }
 
             }

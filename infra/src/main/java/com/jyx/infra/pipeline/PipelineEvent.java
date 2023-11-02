@@ -8,7 +8,7 @@ public class PipelineEvent<T> {
 
     private Long sequence;
 
-    private Stage stage;
+    private StageDefinition stageDefinition;
 
     private T data;
 
@@ -17,13 +17,13 @@ public class PipelineEvent<T> {
         this.data = data;
     }
 
-    public void stage(Stage stage) {
-        this.stage = stage;
+    public void stage(StageDefinition stageDefinition) {
+        this.stageDefinition = stageDefinition;
     }
 
     public void clear() {
         this.sequence = null;
-        this.stage = null;
+        this.stageDefinition = null;
         this.data = null;
     }
 
@@ -33,8 +33,8 @@ public class PipelineEvent<T> {
     }
 
 
-    public Stage stage() {
-        return stage;
+    public StageDefinition stage() {
+        return stageDefinition;
     }
 
     public T data() {

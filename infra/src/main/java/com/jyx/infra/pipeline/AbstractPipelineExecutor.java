@@ -11,17 +11,17 @@ import java.util.concurrent.TimeUnit;
  * @since 2023/11/1 10:59
  */
 @Slf4j
-public abstract class AbstractPipeline<T> implements Pipeline<T> {
+public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T> {
 
     protected final String name;
 
-    protected final LinkedList<Stage<T>> stageChain;
+    protected final LinkedList<StageDefinition<T>> stageDefinitionChain;
 
     protected PipelineState pipelineState;
 
-    public AbstractPipeline(String name) {
+    public AbstractPipelineExecutor(String name) {
         this.name = name;
-        this.stageChain = new LinkedList<>();
+        this.stageDefinitionChain = new LinkedList<>();
         this.pipelineState = PipelineState.READY;
     }
 
@@ -82,10 +82,10 @@ public abstract class AbstractPipeline<T> implements Pipeline<T> {
     }
 
     @Override
-    public void addStage(Iterable<Stage<T>> stageIterable) {
+    public void addStage(Iterable<StageDefinition<T>> stageIterable) {
         switch (pipelineState) {
             case READY:
-                stageIterable.forEach(stageChain::offer);
+                stageIterable.forEach(stageDefinitionChain::offer);
                 break;
             case RUNNING:
                 throw new PipelineException(String.format("Pipeline already started,cannot add stage: %s", name));

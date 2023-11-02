@@ -1,7 +1,7 @@
 package com.jyx.infra.pipeline.disruptor;
 
 import com.jyx.infra.pipeline.PipelineEvent;
-import com.jyx.infra.pipeline.Stage;
+import com.jyx.infra.pipeline.StageDefinition;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * @author Archforce
  * @since 2023/11/1 14:51
  */
-public class StageImpl<T> implements Stage<T> {
+public class StageDefinitionImpl<T> implements StageDefinition<T> {
 
     private AtomicInteger index = new AtomicInteger(0);
 
@@ -18,7 +18,7 @@ public class StageImpl<T> implements Stage<T> {
     private final int parallel;
     private final Consumer<PipelineEvent<T>> consumer;
 
-    public StageImpl(String name, int parallel, Consumer<PipelineEvent<T>> consumer) {
+    public StageDefinitionImpl(String name, int parallel, Consumer<PipelineEvent<T>> consumer) {
         this.name = name;
         this.parallel = parallel;
         this.consumer = consumer;
@@ -39,7 +39,7 @@ public class StageImpl<T> implements Stage<T> {
     }
 
     @Override
-    public Stage<T> fork() {
-        return new StageImpl<>(name + "-" + index.incrementAndGet(), parallel, consumer);
+    public StageDefinition<T> fork() {
+        return new StageDefinitionImpl<>(name + "-" + index.incrementAndGet(), parallel, consumer);
     }
 }

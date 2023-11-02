@@ -6,7 +6,7 @@ import java.util.function.Consumer;
  * @author Archforce
  * @since 2023/11/1 10:33
  */
-public interface Stage<T> {
+public interface StageDefinition<T> {
 
     String name();
 
@@ -14,5 +14,5 @@ public interface Stage<T> {
 
     Consumer<PipelineEvent<T>> consumer();
 
-    Stage<T> fork();
+    StageDefinition<T> fork();
 }
