@@ -1,6 +1,7 @@
 server:
   port: 30029
 
+
 mybatis-generator:
   enable: true
   datasource:
@@ -116,3 +117,10 @@ app:
     enabled-cached-id-generator: false
     data-center-id: 1
     worker-id: 1
+
+pipeline:
+  enable: true
+  config:
+    log-pipeline:
+      buffer-size: 1024
+      wait-mode: BLOCKING

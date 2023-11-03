@@ -19,10 +19,16 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
 
     protected PipelineState pipelineState;
 
-    public AbstractPipelineExecutor(String name) {
+    protected long stopTimeout;
+
+    protected TimeUnit stopTimeUnit;
+
+    public AbstractPipelineExecutor(String name, long stopTimeout, TimeUnit stopTimeUnit) {
         this.name = name;
         this.stageDefinitionChain = new LinkedList<>();
         this.pipelineState = PipelineState.READY;
+        this.stopTimeout = stopTimeout;
+        this.stopTimeUnit = stopTimeUnit;
     }
 
     protected abstract void start0();
@@ -63,14 +69,14 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
     }
 
     @Override
-    public void stop(long timeout, TimeUnit timeUnit) {
+    public void stop() {
         switch (pipelineState) {
             case READY:
                 Logs.warn(log, "Pipeline not started,not need to stop: {}", name);
                 break;
             case RUNNING:
                 pipelineState = pipelineState.nextState();
-                stop0(timeout, timeUnit);
+                stop0(stopTimeout, stopTimeUnit);
                 Logs.info(log, "Pipeline is stopped:{}", name);
                 break;
             case STOP:

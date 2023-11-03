@@ -1,7 +1,5 @@
 package com.jyx.infra.pipeline;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author Archforce
  * @since 2023/11/1 10:10
@@ -14,7 +12,8 @@ public interface PipelineExecutor<T> {
 
     void start();
 
-    void stop(long timeout, TimeUnit timeUnit);
+
+    void stop();
 
     void addStage(Iterable<StageDefinition<T>> stageIterable);
 
