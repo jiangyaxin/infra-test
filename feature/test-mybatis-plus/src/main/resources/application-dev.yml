@@ -122,5 +122,18 @@ pipeline:
   enable: true
   config:
     log-pipeline:
+      enable: true
       buffer-size: 1024
-      wait-mode: BLOCKING
+      stop-timeout: 10
+      stop-time-unit: MILLISECONDS
+      wait-strategy:
+        wait-mode: PHASED_BACKOFF
+        spin-timeout: 10
+        timeout: 20
+        time-unit: MILLISECONDS
+        fallback-wait-mode: BLOCKING
+      stage-config:
+        stage1:
+          parallel: 4
+        stage2:
+          parallel: 1

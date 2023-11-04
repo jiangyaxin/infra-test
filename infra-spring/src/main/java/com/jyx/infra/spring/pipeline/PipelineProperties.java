@@ -13,13 +13,15 @@ import java.util.concurrent.TimeUnit;
 @Data
 public class PipelineProperties {
 
-    int bufferSize;
+    private Boolean enable;
+
+    private Integer bufferSize;
 
     private Long stopTimeout;
 
     private TimeUnit stopTimeUnit;
 
-    WaitStrategyProperties waitStrategy;
+    private WaitStrategyProperties waitStrategy;
 
-    Map<String, StageProperties> stageConfig;
+    private Map<String, StageProperties> stageConfig;
 }

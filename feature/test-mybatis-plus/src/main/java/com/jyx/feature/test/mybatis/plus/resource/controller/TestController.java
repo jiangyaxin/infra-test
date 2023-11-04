@@ -3,6 +3,7 @@ package com.jyx.feature.test.mybatis.plus.resource.controller;
 import com.jyx.feature.test.mybatis.plus.domain.entity.Channel;
 import com.jyx.feature.test.mybatis.plus.domain.entity.LightGroup;
 import com.jyx.feature.test.mybatis.plus.domain.entity.Stage;
+import com.jyx.feature.test.mybatis.plus.pipeline.LogPipeline;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.ChannelMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.ChannelService;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.StageService;
@@ -10,10 +11,12 @@ import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMappe
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
 import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
+import com.jyx.infra.spring.pipeline.PipelineHolder;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -41,6 +44,8 @@ public class TestController {
 
     private final StageService stageService;
 
+    private final PipelineHolder pipelineHolder;
+
 
     @ApiOperation(value = "测试接口")
     @GetMapping
@@ -53,5 +58,11 @@ public class TestController {
 
         List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
         log.error("1");
+    }
+
+    @ApiOperation(value = "Pipeline测试接口")
+    @GetMapping("/pipeline/{logId}")
+    public void pipelineTest(@PathVariable Integer logId) {
+        pipelineHolder.getPipeline(LogPipeline.class).submit(logId);
     }
 }

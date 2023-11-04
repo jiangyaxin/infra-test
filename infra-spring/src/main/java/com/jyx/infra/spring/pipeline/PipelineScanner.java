@@ -1,16 +1,18 @@
 package com.jyx.infra.spring.pipeline;
 
+import com.jyx.infra.collection.Tuple2;
+import com.jyx.infra.collection.Tuples;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.pipeline.PipelineException;
 import com.jyx.infra.pipeline.PipelineExecuteException;
-import com.jyx.infra.pipeline.PipelineExecutor;
 import com.jyx.infra.pipeline.StageDefinition;
-import com.jyx.infra.pipeline.disruptor.PipelineExecutorImpl;
 import com.jyx.infra.pipeline.disruptor.StageDefinitionImpl;
 import com.jyx.infra.pipeline.disruptor.WaitStrategyProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.context.properties.bind.DataObjectPropertyName;
 import org.springframework.context.ApplicationContext;
@@ -51,32 +53,40 @@ public class PipelineScanner implements ApplicationListener<ContextRefreshedEven
         Map<String, Object> beanMap = applicationContext.getBeansWithAnnotation(Pipeline.class);
         Map<String, PipelineProperties> pipelineConfigMap = Optional.ofNullable(properties.getConfig()).orElse(new HashMap<>());
 
+        Set<String> registerPipelineSet = new HashSet<>();
         Set<Map.Entry<String, Object>> beanEntrySet = beanMap.entrySet();
         for (Map.Entry<String, Object> beanEntry : beanEntrySet) {
             String beanName = beanEntry.getKey();
             String dashedFormBeanName = DataObjectPropertyName.toDashedForm(beanName);
             Object bean = beanEntry.getValue();
+            Class<?> clazz = bean.getClass();
+
+            Pipeline pipeline = clazz.getAnnotation(Pipeline.class);
             PipelineProperties pipelineProperties = pipelineConfigMap.getOrDefault(beanName, pipelineConfigMap.get(dashedFormBeanName));
+            if ((pipelineProperties != null && pipelineProperties.getEnable() != null && !pipelineProperties.getEnable())
+                    || !pipeline.enable()) {
+                Logs.warn(log, "Pipeline disabled: {}", beanName);
+                continue;
+            }
 
-            PipelineExecutor pipelineExecutor;
+            BeanDefinition beanDefinition;
             if (pipelineProperties == null) {
-                List<StageDefinition> stageDefinitionList = parseStage(bean, new HashMap<>());
-                pipelineExecutor = parsePipeline(bean, beanName, null);
-                pipelineExecutor.addStage(stageDefinitionList);
+                Tuple2<Class<?>, List<StageDefinition<?>>> stageDefinition = parseStage(bean, new HashMap<>());
 
-                pipelineHolder.registerPipeline(bean.getClass(), pipelineExecutor);
+                beanDefinition = parsePipeline(bean, beanName, null, stageDefinition);
             } else {
                 Map<String, StageProperties> stageConfig = pipelineProperties.getStageConfig();
-                List<StageDefinition> stageDefinitionList = parseStage(bean, stageConfig);
-                pipelineExecutor = parsePipeline(bean, beanName, pipelineProperties);
-                pipelineExecutor.addStage(stageDefinitionList);
+                Tuple2<Class<?>, List<StageDefinition<?>>> stageDefinition = parseStage(bean, stageConfig);
 
-                pipelineHolder.registerPipeline(bean.getClass(), pipelineExecutor);
+                beanDefinition = parsePipeline(bean, beanName, pipelineProperties, stageDefinition);
             }
+            pipelineHolder.registerPipeline(clazz, beanDefinition);
+            registerPipelineSet.add(beanName);
         }
+        Logs.info(log, "Registered {} pipelines: {} ", registerPipelineSet.size(), registerPipelineSet);
     }
 
-    public PipelineExecutor parsePipeline(Object bean, String beanName, PipelineProperties pipelineProperties) {
+    public BeanDefinition parsePipeline(Object bean, String beanName, PipelineProperties pipelineProperties, Tuple2<Class<?>, List<StageDefinition<?>>> stageDefinition) {
         Class<?> clazz = bean.getClass();
         Pipeline pipeline = clazz.getAnnotation(Pipeline.class);
         String name = pipeline.name();
@@ -113,26 +123,33 @@ public class PipelineScanner implements ApplicationListener<ContextRefreshedEven
             }
         }
 
-        PipelineExecutor<Object> pipelineExecutor = new PipelineExecutorImpl<>(name, bufferSize, waitStrategyProperties, stopTimeout, stopTimeUnit);
-        return pipelineExecutor;
+        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(SpringPipelineExecutor.class)
+                .addConstructorArgValue(name)
+                .addConstructorArgValue(bufferSize)
+                .addConstructorArgValue(waitStrategyProperties)
+                .addConstructorArgValue(stopTimeout)
+                .addConstructorArgValue(stopTimeUnit)
+                .addConstructorArgValue(stageDefinition.getKey())
+                .addConstructorArgValue(stageDefinition.getValue());
+        return beanDefinitionBuilder.getBeanDefinition();
     }
 
-    public List<StageDefinition> parseStage(Object bean, Map<String, StageProperties> stageConfig) {
+    public Tuple2<Class<?>, List<StageDefinition<?>>> parseStage(Object bean, Map<String, StageProperties> stageConfig) {
         Class<?> clazz = bean.getClass();
         stageConfig = Optional.ofNullable(stageConfig).orElse(new HashMap<>());
 
         List<Method> stageMethodList = fetchStageMethod(clazz);
 
         checkStageName(stageMethodList, clazz);
-        checkStageParameter(stageMethodList, clazz);
+        Class<?> dataClass = checkStageParameter(stageMethodList, clazz);
 
-        List<StageDefinition> stageDefinitionList = buildStageDefinition(bean, stageConfig, stageMethodList);
+        List<StageDefinition<?>> stageDefinitionList = buildStageDefinition(bean, stageConfig, stageMethodList);
 
-        return stageDefinitionList;
+        return Tuples.of(dataClass, stageDefinitionList);
     }
 
-    private List<StageDefinition> buildStageDefinition(Object bean, Map<String, StageProperties> stageConfig, List<Method> stageMethodList) {
-        List<StageDefinition> stageDefinitionList = new LinkedList<>();
+    private List<StageDefinition<?>> buildStageDefinition(Object bean, Map<String, StageProperties> stageConfig, List<Method> stageMethodList) {
+        List<StageDefinition<?>> stageDefinitionList = new LinkedList<>();
         stageMethodList.sort(Comparator.comparingInt(method -> method.getAnnotation(Stage.class).order()));
         for (Method method : stageMethodList) {
             Stage stageAnnotation = method.getAnnotation(Stage.class);
@@ -148,9 +165,9 @@ public class PipelineScanner implements ApplicationListener<ContextRefreshedEven
                 parallel = stageProperties.getParallel() > 0 ? stageProperties.getParallel() : parallel;
             }
 
-            StageDefinition<Object> stageDefinition = new StageDefinitionImpl<>(stageName, parallel, event -> {
+            StageDefinition<?> stageDefinition = new StageDefinitionImpl<>(stageName, parallel, event -> {
                 try {
-                    method.invoke(bean, event);
+                    method.invoke(bean, event.data());
                 } catch (Exception e) {
                     throw new PipelineExecuteException(e);
                 }
@@ -160,7 +177,7 @@ public class PipelineScanner implements ApplicationListener<ContextRefreshedEven
         return stageDefinitionList;
     }
 
-    private void checkStageParameter(List<Method> stageMethodList, Class<?> clazz) {
+    private Class<?> checkStageParameter(List<Method> stageMethodList, Class<?> clazz) {
         Map<? extends Class<?>, List<Method>> parametersToMethodMap = stageMethodList.stream()
                 .collect(Collectors.groupingBy(method -> method.getParameterTypes()[0]));
         if (parametersToMethodMap.size() > 1) {
@@ -169,6 +186,7 @@ public class PipelineScanner implements ApplicationListener<ContextRefreshedEven
                     .collect(Collectors.joining(","));
             throw new PipelineException(String.format("Parameter type of stages must be the same class：%s , %s", clazz.getName(), detailErrorMsg));
         }
+        return parametersToMethodMap.keySet().toArray(new Class[0])[0];
     }
 
     private List<Method> fetchStageMethod(Class<?> clazz) {

@@ -1,13 +1,5 @@
 package com.jyx.infra.collection;
 
-/**
- * Tuple 2 class
- *
- * @param <T1> the 1st element type
- * @param <T2> the 2nd element type
- * @author JYX
- * @since 2021/11/5 17:05
- */
 public class Tuple2<T1, T2> {
     T1 first;
     T2 second;
@@ -21,6 +13,14 @@ public class Tuple2<T1, T2> {
     Tuple2(T1 first, T2 second) {
         this.first = first;
         this.second = second;
+    }
+
+    public T1 getKey() {
+        return first;
+    }
+
+    public T2 getValue() {
+        return second;
     }
 
     public T1 getFirst() {

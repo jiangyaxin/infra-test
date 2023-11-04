@@ -16,6 +16,8 @@ import java.util.concurrent.TimeUnit;
 @Component
 public @interface Pipeline {
 
+    boolean enable() default true;
+
     String name() default "";
 
     int bufferSize() default 1024;

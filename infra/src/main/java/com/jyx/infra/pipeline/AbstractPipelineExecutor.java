@@ -35,6 +35,10 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
 
     protected abstract void stop0(long timeout, TimeUnit timeUnit);
 
+    protected void preSubmit(T data) {
+
+    }
+
     protected abstract boolean submit0(T data);
 
     protected abstract boolean trySubmit0(T data);
@@ -91,6 +95,9 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
     public void addStage(Iterable<StageDefinition<T>> stageIterable) {
         switch (pipelineState) {
             case READY:
+                if (stageIterable == null) {
+                    break;
+                }
                 stageIterable.forEach(stageDefinitionChain::offer);
                 break;
             case RUNNING:
@@ -108,6 +115,7 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
             case READY:
                 throw new PipelineException(String.format("Pipeline not started,cannot submit data: %s , %s", name, data));
             case RUNNING:
+                preSubmit(data);
                 return submit0(data);
             case STOP:
                 throw new PipelineException(String.format("Pipeline already stopped,cannot submit data: %s , %s", name, data));
@@ -122,6 +130,7 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
             case READY:
                 throw new PipelineException(String.format("Pipeline not started,cannot trySubmit data: %s , %s", name, data));
             case RUNNING:
+                preSubmit(data);
                 return trySubmit0(data);
             case STOP:
                 throw new PipelineException(String.format("Pipeline already stopped,cannot trySubmit data: %s , %s", name, data));

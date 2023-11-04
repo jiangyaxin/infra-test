@@ -31,7 +31,7 @@ public class PipelineExecutorImpl<T> extends AbstractPipelineExecutor<T> {
         event.clear();
     };
 
-    private final EventTranslatorOneArg<PipelineEvent<T>, T> EVENT_TRANSLATOR = (event, sequence, arg0) -> event.load(sequence, arg0);
+    private final EventTranslatorOneArg<PipelineEvent<T>, T> EVENT_TRANSLATOR = PipelineEvent::load;
 
     public PipelineExecutorImpl(String name, int bufferSize, WaitStrategyProperties waitStrategyProperties) {
         this(name, bufferSize, waitStrategyProperties, -1);
