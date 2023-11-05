@@ -1,5 +1,7 @@
 package com.jyx.infra.pipeline;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * @author Archforce
  * @since 2023/11/1 15:26
@@ -12,9 +14,12 @@ public class PipelineEvent<T> {
 
     private T data;
 
-    public void load(Long sequence, T data) {
+    private CompletableFuture<Void> future;
+
+    public void load(Long sequence, T data, CompletableFuture<Void> future) {
         this.sequence = sequence;
         this.data = data;
+        this.future = future;
     }
 
     public void stage(StageDefinition stageDefinition) {
@@ -25,6 +30,7 @@ public class PipelineEvent<T> {
         this.sequence = null;
         this.stageDefinition = null;
         this.data = null;
+        this.future = null;
     }
 
 
@@ -39,5 +45,9 @@ public class PipelineEvent<T> {
 
     public T data() {
         return data;
+    }
+
+    public CompletableFuture<Void> future() {
+        return future;
     }
 }

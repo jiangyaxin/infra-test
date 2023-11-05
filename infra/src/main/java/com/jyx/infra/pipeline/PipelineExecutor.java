@@ -1,5 +1,7 @@
 package com.jyx.infra.pipeline;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * @author Archforce
  * @since 2023/11/1 10:10
@@ -17,8 +19,8 @@ public interface PipelineExecutor<T> {
 
     void addStage(Iterable<StageDefinition<T>> stageIterable);
 
-    boolean submit(T data);
+    CompletableFuture<Void> submit(T data);
 
-    boolean trySubmit(T data);
+    CompletableFuture<Void> trySubmit(T data);
 
 }

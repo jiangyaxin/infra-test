@@ -4,6 +4,7 @@ import com.jyx.infra.log.Logs;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.LinkedList;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,9 +40,9 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
 
     }
 
-    protected abstract boolean submit0(T data);
+    protected abstract CompletableFuture<Void> submit0(T data);
 
-    protected abstract boolean trySubmit0(T data);
+    protected abstract CompletableFuture<Void> trySubmit0(T data);
 
     @Override
     public String name() {
@@ -110,7 +111,7 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
     }
 
     @Override
-    public boolean submit(T data) {
+    public CompletableFuture<Void> submit(T data) {
         switch (pipelineState) {
             case READY:
                 throw new PipelineException(String.format("Pipeline not started,cannot submit data: %s , %s", name, data));
@@ -125,7 +126,7 @@ public abstract class AbstractPipelineExecutor<T> implements PipelineExecutor<T>
     }
 
     @Override
-    public boolean trySubmit(T data) {
+    public CompletableFuture<Void> trySubmit(T data) {
         switch (pipelineState) {
             case READY:
                 throw new PipelineException(String.format("Pipeline not started,cannot trySubmit data: %s , %s", name, data));

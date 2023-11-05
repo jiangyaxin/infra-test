@@ -1,10 +1,7 @@
 package com.jyx.infra.pipeline.disruptor;
 
 import com.jyx.infra.log.Logs;
-import com.jyx.infra.pipeline.AbstractPipelineExecutor;
-import com.jyx.infra.pipeline.PipelineEvent;
-import com.jyx.infra.pipeline.PipelineException;
-import com.jyx.infra.pipeline.StageDefinition;
+import com.jyx.infra.pipeline.*;
 import com.jyx.infra.thread.NamingThreadFactory;
 import com.lmax.disruptor.*;
 import com.lmax.disruptor.dsl.Disruptor;
@@ -12,6 +9,7 @@ import com.lmax.disruptor.dsl.EventHandlerGroup;
 import com.lmax.disruptor.dsl.ProducerType;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
@@ -28,10 +26,11 @@ public class PipelineExecutorImpl<T> extends AbstractPipelineExecutor<T> {
 
     private final WorkHandler<PipelineEvent<T>> TAIL_HANDLER = event -> {
         Logs.debug(log, "Finish process sequence:{} data:{}", event.sequence(), event.data());
+        event.future().complete(null);
         event.clear();
     };
 
-    private final EventTranslatorOneArg<PipelineEvent<T>, T> EVENT_TRANSLATOR = PipelineEvent::load;
+    private final EventTranslatorTwoArg<PipelineEvent<T>, T, CompletableFuture<Void>> EVENT_TRANSLATOR = PipelineEvent::load;
 
     public PipelineExecutorImpl(String name, int bufferSize, WaitStrategyProperties waitStrategyProperties) {
         this(name, bufferSize, waitStrategyProperties, -1);
@@ -67,9 +66,9 @@ public class PipelineExecutorImpl<T> extends AbstractPipelineExecutor<T> {
             StageHandler<T>[] workHandlers = new StageHandler[parallel];
             for (int i = 0; i < parallel; i++) {
                 if (parallel > 1) {
-                    workHandlers[i] = new StageHandler<>(stageDefinition.fork());
+                    workHandlers[i] = new StageHandler<>(this, stageDefinition.fork());
                 } else {
-                    workHandlers[i] = new StageHandler<>(stageDefinition);
+                    workHandlers[i] = new StageHandler<>(this, stageDefinition);
                 }
 
             }
@@ -94,14 +93,20 @@ public class PipelineExecutorImpl<T> extends AbstractPipelineExecutor<T> {
     }
 
     @Override
-    public boolean submit0(T data) {
-        disruptor.publishEvent(EVENT_TRANSLATOR, data);
-        return true;
+    public CompletableFuture<Void> submit0(T data) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
+        disruptor.publishEvent(EVENT_TRANSLATOR, data, future);
+        return future;
     }
 
     @Override
-    public boolean trySubmit0(T data) {
+    public CompletableFuture<Void> trySubmit0(T data) {
+        CompletableFuture<Void> future = new CompletableFuture<>();
         RingBuffer<PipelineEvent<T>> ringBuffer = disruptor.getRingBuffer();
-        return ringBuffer.tryPublishEvent(EVENT_TRANSLATOR, data);
+        boolean submitSuccess = ringBuffer.tryPublishEvent(EVENT_TRANSLATOR, data, future);
+        if (!submitSuccess) {
+            future.completeExceptionally(new PipelineExecuteException(String.format("Pipeline try submit data failed:%s", name)));
+        }
+        return future;
     }
 }

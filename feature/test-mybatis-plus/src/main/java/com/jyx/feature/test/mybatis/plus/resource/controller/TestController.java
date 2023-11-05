@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * @author Archforce
@@ -54,7 +55,7 @@ public class TestController {
         LightGroup lightGroup = lightGroupMapper.selectById(1L);
         Channel channelServiceById = channelService.getById(2L);
         LightGroup lightGroupServiceById = lightGroupService.getById(1L);
-        Stage stageServiceById= stageService.getById(3L);
+        Stage stageServiceById = stageService.getById(3L);
 
         List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
         log.error("1");
@@ -63,6 +64,8 @@ public class TestController {
     @ApiOperation(value = "Pipeline测试接口")
     @GetMapping("/pipeline/{logId}")
     public void pipelineTest(@PathVariable Integer logId) {
-        pipelineHolder.getPipeline(LogPipeline.class).submit(logId);
+        CompletableFuture<Void> submit = pipelineHolder.getPipeline(LogPipeline.class).submit(logId);
+        submit.join();
+        log.info("执行完成");
     }
 }
