@@ -8,7 +8,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.jyx.infra.collection.Maps;
+import com.jyx.infra.collection.MapUtil;
 import com.jyx.infra.exception.AppException;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
@@ -61,8 +61,8 @@ public class DbHolder {
 
         int dbServiceSize = dbServiceList.size();
         this.tableNameToClassMap = HashBiMap.create(dbServiceSize);
-        this.classToDbServiceMap = Maps.newHashMap(dbServiceSize);
-        this.classToDatasourceMap = Maps.newHashMap(dbServiceSize);
+        this.classToDbServiceMap = MapUtil.newHashMap(dbServiceSize);
+        this.classToDatasourceMap = MapUtil.newHashMap(dbServiceSize);
         this.columnInfoCache = CacheBuilder.newBuilder()
                 .maximumSize(128)
                 .expireAfterAccess(Duration.ofMinutes(5))

@@ -11,7 +11,7 @@ import java.util.function.BiPredicate;
  * @author asa
  * @since 2021/11/5 23:33
  */
-public class Maps {
+public class MapUtil {
 
     public static int evaluateMapSize(int demandSize) {
         return (int) (demandSize / 0.75 + 1);

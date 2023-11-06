@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * @since 2023/11/6 9:28
  */
 @Slf4j
-public class Constructors {
+public class ConstructorUtil {
 
     public static <T> Constructor<T> findMostArgConstructor(Class<T> clazz) {
         Constructor<?>[] constructors = clazz.getConstructors();

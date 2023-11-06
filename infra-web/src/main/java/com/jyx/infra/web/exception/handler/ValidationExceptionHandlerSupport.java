@@ -1,6 +1,6 @@
 package com.jyx.infra.web.exception.handler;
 
-import com.jyx.infra.collection.Maps;
+import com.jyx.infra.collection.MapUtil;
 import com.jyx.infra.exception.AppException;
 import com.jyx.infra.exception.BusinessException;
 import org.springframework.validation.BindException;
@@ -59,12 +59,12 @@ public class ValidationExceptionHandlerSupport {
                 .map(error -> {
                     if (error instanceof FieldError) {
                         FieldError fieldError = (FieldError) error;
-                        return Maps.<String, String>builder()
+                        return MapUtil.<String, String>builder()
                                 .put(VALIDATION_EXCEPTION_MESSAGE_FIELD_KEY, fieldError.getField())
                                 .put(VALIDATION_EXCEPTION_MESSAGE_MESSAGE_KEY, fieldError.getDefaultMessage())
                                 .build();
                     } else {
-                        return Maps.<String, String>builder()
+                        return MapUtil.<String, String>builder()
                                 .put(VALIDATION_EXCEPTION_MESSAGE_FIELD_KEY, error.getObjectName())
                                 .put(VALIDATION_EXCEPTION_MESSAGE_MESSAGE_KEY, error.getDefaultMessage())
                                 .build();
@@ -78,7 +78,7 @@ public class ValidationExceptionHandlerSupport {
                 .map(msg -> {
                     String[] fieldAndMsg = msg.split(CONSTRAINT_VIOLATION_EXCEPTION_MESSAGE_SPLIT);
                     String fieldValue = fieldAndMsg[0].contains(CONSTRAINT_VIOLATION_EXCEPTION_FIELD_METHOD_SPLIT) ? fieldAndMsg[0].split(CONSTRAINT_VIOLATION_EXCEPTION_FIELD_METHOD_SPLIT)[1] : fieldAndMsg[0];
-                    return Maps.<String, String>builder()
+                    return MapUtil.<String, String>builder()
                             .put(VALIDATION_EXCEPTION_MESSAGE_FIELD_KEY, fieldValue)
                             .put(VALIDATION_EXCEPTION_MESSAGE_MESSAGE_KEY, fieldAndMsg[1])
                             .build();

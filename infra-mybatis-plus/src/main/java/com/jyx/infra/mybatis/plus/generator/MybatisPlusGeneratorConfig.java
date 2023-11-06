@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.jyx.infra.datetime.DateTimeConstant;
-import com.jyx.infra.env.Systems;
+import com.jyx.infra.env.SystemUtil;
 import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.generator.properties.GlobalProperties;
 import com.jyx.infra.mybatis.plus.generator.properties.MybatisPlusGeneratorProperties;
@@ -48,7 +48,7 @@ public class MybatisPlusGeneratorConfig {
         PROJECT_ROOT_PATH = MybatisPlusGeneratorConfig.class.getResource("/").getPath()
                 .replace("/target/classes/", "")
                 .replace("/target/test-classes/", "");
-        if (Systems.isWindows()) {
+        if (SystemUtil.isWindows()) {
             if (PROJECT_ROOT_PATH.startsWith("/")) {
                 PROJECT_ROOT_PATH = PROJECT_ROOT_PATH.substring(1);
             }

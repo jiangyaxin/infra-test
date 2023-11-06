@@ -1,8 +1,7 @@
 package com.jyx.feature.test.jdk.collection;
 
-import com.google.common.base.Stopwatch;
 import com.jyx.feature.test.jdk.FlowNorm;
-import com.jyx.infra.collection.Collections;
+import com.jyx.infra.collection.CollectionUtil;
 import com.jyx.infra.datetime.StopWatch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -48,7 +47,7 @@ public class StreamTest {
         stopWatch.stop();
 
         stopWatch.start("任务二");
-        Map<String, FlowNorm> map = Collections.toMap(flowList, Collectors.toMap(FlowNorm::getOrderId, Function.identity()));
+        Map<String, FlowNorm> map = CollectionUtil.toMap(flowList, Collectors.toMap(FlowNorm::getOrderId, Function.identity()));
         stopWatch.stop();
 
         log.info(stopWatch.prettyPrint());

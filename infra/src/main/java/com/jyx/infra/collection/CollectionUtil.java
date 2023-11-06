@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * @author Archforce
  * @since 2023/9/18 17:01
  */
-public class Collections {
+public class CollectionUtil {
 
     public static <T> Collector<T, ?, T> reducing(Supplier<T> supplier, BinaryOperator<T> reduceOp) {
         return Collector.of(
@@ -41,7 +41,7 @@ public class Collections {
 
         Map<K, List<T>> result = stream.collect(Collectors.groupingBy(
                 keyFunction,
-                () -> Maps.newHashMap(size),
+                () -> MapUtil.newHashMap(size),
                 Collectors.toList()
         ));
         return result;
@@ -63,7 +63,7 @@ public class Collections {
 
         Collector<T, Map, Map<K, U>> collector = (Collector<T, Map, Map<K, U>>) toMapCollector;
         Collector<T, ?, Map<K, U>> newCollector = Collector.of(
-                () -> Maps.newHashMap(size),
+                () -> MapUtil.newHashMap(size),
                 collector.accumulator(),
                 collector.combiner(),
                 collector.finisher(),

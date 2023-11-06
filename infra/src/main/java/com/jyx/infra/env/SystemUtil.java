@@ -4,7 +4,7 @@ package com.jyx.infra.env;
  * @author Archforce
  * @since 2023/11/6 9:23
  */
-public class Systems {
+public class SystemUtil {
 
     interface Constants {
         String OS_NAME = "os.name";
