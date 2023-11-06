@@ -2,7 +2,7 @@ package com.jyx.infra.web.result;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.jyx.infra.exception.Exceptions;
+import com.jyx.infra.util.ExceptionUtil;
 import com.jyx.infra.exception.MessageCode;
 import com.jyx.infra.spring.context.AppConstant;
 import lombok.Data;
@@ -38,6 +38,6 @@ public class ErrorResult {
         this.cause = cause;
         this.code = messageCode.getCode();
         this.message = messageCode.getMessage();
-        this.trace = Exceptions.getTrace(cause);
+        this.trace = ExceptionUtil.getTrace(cause);
     }
 }

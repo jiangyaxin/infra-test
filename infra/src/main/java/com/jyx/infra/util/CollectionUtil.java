@@ -1,4 +1,4 @@
-package com.jyx.infra.collection;
+package com.jyx.infra.util;
 
 import java.util.Collection;
 import java.util.HashMap;

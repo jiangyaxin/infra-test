@@ -1,6 +1,6 @@
 package com.jyx.infra.web.exception.handler;
 
-import com.jyx.infra.collection.MapUtil;
+import com.jyx.infra.util.MapUtil;
 import com.jyx.infra.exception.AppException;
 import com.jyx.infra.exception.BusinessException;
 import org.springframework.validation.BindException;

@@ -12,7 +12,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.jyx.infra.datetime.DateTimeConstant;
-import com.jyx.infra.env.SystemUtil;
+import com.jyx.infra.util.SystemUtil;
 import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.generator.properties.GlobalProperties;
 import com.jyx.infra.mybatis.plus.generator.properties.MybatisPlusGeneratorProperties;

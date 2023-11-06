@@ -1,4 +1,4 @@
-package com.jyx.infra.reflection;
+package com.jyx.infra.util;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -8,7 +8,7 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.jyx.infra.collection.MapUtil;
+import com.jyx.infra.util.MapUtil;
 import com.jyx.infra.exception.AppException;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;

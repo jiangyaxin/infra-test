@@ -1,4 +1,4 @@
-package com.jyx.infra.env;
+package com.jyx.infra.util;
 
 /**
  * @author Archforce

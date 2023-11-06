@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jdk.collection;
 
 import com.jyx.feature.test.jdk.FlowNorm;
-import com.jyx.infra.collection.CollectionUtil;
+import com.jyx.infra.util.CollectionUtil;
 import com.jyx.infra.datetime.StopWatch;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;

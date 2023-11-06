@@ -1,4 +1,4 @@
-package com.jyx.infra.collection;
+package com.jyx.infra.util;
 
 import com.google.common.collect.Lists;
 import com.jyx.infra.exception.TransferException;

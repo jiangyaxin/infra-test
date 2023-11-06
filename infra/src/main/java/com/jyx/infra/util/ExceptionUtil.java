@@ -1,4 +1,4 @@
-package com.jyx.infra.exception;
+package com.jyx.infra.util;
 
 import com.jyx.infra.collection.Tuples;
 import com.jyx.infra.collection.Tuple2;
@@ -12,7 +12,7 @@ import java.util.function.Supplier;
  * @author JYX
  * @since 2021/11/5 16:48
  */
-public class Exceptions {
+public class ExceptionUtil {
 
     /**
      * Get throwable trace

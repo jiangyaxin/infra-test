@@ -1,4 +1,4 @@
-package com.jyx.infra.collection;
+package com.jyx.infra.util;
 
 import com.jyx.infra.asserts.Asserts;
 
