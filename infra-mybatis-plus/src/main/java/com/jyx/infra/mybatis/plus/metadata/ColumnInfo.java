@@ -20,6 +20,8 @@ public class ColumnInfo {
 
     private int scale;
 
+    private int order;
+
     private String remarks;
 
     private String defaultValue;

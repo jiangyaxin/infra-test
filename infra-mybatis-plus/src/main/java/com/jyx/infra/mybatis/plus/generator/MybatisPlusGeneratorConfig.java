@@ -12,6 +12,7 @@ import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.IColumnType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.jyx.infra.datetime.DateTimeConstant;
+import com.jyx.infra.env.Systems;
 import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.generator.properties.GlobalProperties;
 import com.jyx.infra.mybatis.plus.generator.properties.MybatisPlusGeneratorProperties;
@@ -21,7 +22,6 @@ import com.jyx.infra.mybatis.plus.mapper.BizBaseMapper;
 import com.jyx.infra.mybatis.plus.query.PageRequest;
 import com.jyx.infra.mybatis.plus.service.DbService;
 import com.jyx.infra.mybatis.plus.service.DbServiceImpl;
-import com.jyx.infra.util.OsUtil;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -48,7 +48,7 @@ public class MybatisPlusGeneratorConfig {
         PROJECT_ROOT_PATH = MybatisPlusGeneratorConfig.class.getResource("/").getPath()
                 .replace("/target/classes/", "")
                 .replace("/target/test-classes/", "");
-        if (OsUtil.isWindows()) {
+        if (Systems.isWindows()) {
             if (PROJECT_ROOT_PATH.startsWith("/")) {
                 PROJECT_ROOT_PATH = PROJECT_ROOT_PATH.substring(1);
             }

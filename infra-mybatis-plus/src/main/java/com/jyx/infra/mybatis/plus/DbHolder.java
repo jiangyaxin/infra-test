@@ -156,6 +156,7 @@ public class DbHolder {
                     ColumnInfo columnInfo = new ColumnInfo();
                     String column = resultSet.getString("COLUMN_NAME");
                     columnInfo.setColumn(column);
+                    columnInfo.setOrder(resultSet.getInt("ORDINAL_POSITION"));
                     columnInfo.setPrimaryKey(primaryKeySet.contains(column));
                     columnInfo.setTypeName(resultSet.getString("TYPE_NAME"));
                     columnInfo.setJdbcType(JdbcType.forCode(resultSet.getInt("DATA_TYPE")));
