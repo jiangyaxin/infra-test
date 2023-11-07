@@ -173,6 +173,7 @@ public class DbHolder {
             } catch (SQLException e) {
                 throw new AppException("Parse column error.", e);
             }
+            columnInfoList.sort(Comparator.comparingInt(ColumnInfo::getOrder));
             return List.of(columnInfoList.toArray(new ColumnInfo[0]));
         } catch (Exception ex) {
             throw new AppException(String.format("%s get column info error.", tableName), ex);

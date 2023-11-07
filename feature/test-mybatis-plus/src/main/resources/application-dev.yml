@@ -20,7 +20,7 @@ mybatis-generator:
   strategy:
     file-override: true
     includes:
-      - "stage"
+      - "tbl_dbf"
     super-entity-class: ""
 
 mybatis-plus:

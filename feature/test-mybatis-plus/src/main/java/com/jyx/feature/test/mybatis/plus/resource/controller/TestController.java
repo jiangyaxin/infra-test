@@ -3,24 +3,35 @@ package com.jyx.feature.test.mybatis.plus.resource.controller;
 import com.jyx.feature.test.mybatis.plus.domain.entity.Channel;
 import com.jyx.feature.test.mybatis.plus.domain.entity.LightGroup;
 import com.jyx.feature.test.mybatis.plus.domain.entity.Stage;
+import com.jyx.feature.test.mybatis.plus.domain.entity.TblDbf;
 import com.jyx.feature.test.mybatis.plus.pipeline.LogPipeline;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.ChannelMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.ChannelService;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.StageService;
+import com.jyx.feature.test.mybatis.plus.repository.repo1.service.TblDbfService;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
+import com.jyx.infra.dbf.DbfException;
+import com.jyx.infra.dbf.DbfField;
+import com.jyx.infra.dbf.DbfFieldTypeEnum;
+import com.jyx.infra.dbf.DbfWriter;
 import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.type.JdbcType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -45,6 +56,8 @@ public class TestController {
 
     private final StageService stageService;
 
+    private final TblDbfService tblDbfService;
+
     private final PipelineHolder pipelineHolder;
 
 
@@ -67,5 +80,91 @@ public class TestController {
         CompletableFuture<Void> submit = pipelineHolder.getPipeline(LogPipeline.class).submit(logId);
         submit.join();
         log.info("执行完成");
+    }
+
+    @ApiOperation(value = "DBF测试接口")
+    @GetMapping("/dbf")
+    public void dbfTest() {
+        List<ColumnInfo> columnInfoList = dbHolder.columnInfo(TblDbf.class);
+
+        List<DbfField> dbfFields = new ArrayList<>(columnInfoList.size());
+        int offset = 1;
+        for (ColumnInfo columnInfo : columnInfoList) {
+            JdbcType jdbcType = columnInfo.getJdbcType();
+            switch (jdbcType) {
+                case BIT:
+                case TINYINT:
+                case SMALLINT:
+                case INTEGER:
+                case BIGINT:
+                    DbfField dbfField = new DbfField(
+                            columnInfo.getOrder(),
+                            columnInfo.getField().getName(),
+                            DbfFieldTypeEnum.INTEGER,
+                            columnInfo.getLength(),
+                            columnInfo.getScale(),
+                            offset);
+                    dbfFields.add(dbfField);
+                    offset += columnInfo.getLength();
+                    break;
+                case NUMERIC:
+                case DECIMAL:
+                    dbfField = new DbfField(
+                            columnInfo.getOrder(),
+                            columnInfo.getField().getName(),
+                            DbfFieldTypeEnum.NUMERIC,
+                            columnInfo.getLength(),
+                            columnInfo.getScale(),
+                            offset);
+                    dbfFields.add(dbfField);
+                    offset += columnInfo.getLength();
+                    break;
+                case CHAR:
+                case VARCHAR:
+                    dbfField = new DbfField(
+                            columnInfo.getOrder(),
+                            columnInfo.getField().getName(),
+                            DbfFieldTypeEnum.CHARACTER,
+                            columnInfo.getLength(),
+                            columnInfo.getScale(),
+                            offset);
+                    dbfFields.add(dbfField);
+                    offset += columnInfo.getLength();
+                    break;
+                case TIMESTAMP:
+                case DATE:
+                    dbfField = new DbfField(
+                            columnInfo.getOrder(),
+                            columnInfo.getField().getName(),
+                            DbfFieldTypeEnum.DATE,
+                            columnInfo.getLength(),
+                            columnInfo.getScale(),
+                            offset);
+                    dbfFields.add(dbfField);
+                    offset += columnInfo.getLength();
+                    break;
+                default:
+                    throw DbfException.of("Not support");
+            }
+        }
+
+        List<TblDbf> list = tblDbfService.list();
+
+        try (DbfWriter dbfWriter = new DbfWriter("D:\\application\\test.dbf", () -> dbfFields)) {
+            Map<String, Object> map = new HashMap<>();
+
+            for (TblDbf tblDbf : list) {
+                for (ColumnInfo columnInfo : columnInfoList) {
+                    Field field = columnInfo.getField();
+                    field.setAccessible(true);
+                    JdbcType jdbcType = columnInfo.getJdbcType();
+                    Object object = field.get(tblDbf);
+                    map.put(field.getName(), jdbcType == JdbcType.BIGINT ? Integer.parseInt(String.valueOf(object)) : object);
+                }
+                dbfWriter.write(map);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
