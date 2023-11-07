@@ -6,9 +6,7 @@ import com.jyx.infra.util.HexUtil;
 
 import java.math.BigDecimal;
 import java.nio.charset.Charset;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DbfRecord {
 
@@ -16,6 +14,8 @@ public class DbfRecord {
     private final DbfMetadata metadata;
     private final Charset charset;
     private final int recordNumber;
+
+    private List<Object> dataList;
 
     private Map<String, Object> dataMap;
 
@@ -26,7 +26,26 @@ public class DbfRecord {
         this.charset = charset;
     }
 
-    public Map<String, Object> data() {
+    public List<Object> toList() {
+        if (dataList != null) {
+            return dataList;
+        }
+
+        Map<String, Object> dataMap = toMap();
+        List<Object> dataList = new ArrayList<>(dataMap.size());
+
+        List<DbfField> fieldList = metadata.sortedField();
+        for (DbfField field : fieldList) {
+            String name = field.getName();
+            Object object = dataMap.get(name);
+            dataList.add(object);
+        }
+
+        this.dataList = dataList;
+        return dataList;
+    }
+
+    public Map<String, Object> toMap() {
         if (dataMap != null) {
             return dataMap;
         }

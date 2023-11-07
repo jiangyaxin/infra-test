@@ -24,7 +24,7 @@ public class DbfTest {
          try(DbfReader dbfReader = new DbfReader(new File(path))) {
             DbfRecord dbfRecord = null;
             while ((dbfRecord = dbfReader.read()) !=null) {
-                Map<String, Object> data = dbfRecord.data();
+                Map<String, Object> data = dbfRecord.toMap();
                 dbfRecordList.add(dbfRecord);
             }
              System.out.println(dbfReader.metadata());
