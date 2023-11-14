@@ -1,17 +1,17 @@
 #!/bin/bash
 
-base_dir="$(dirname "$0")"
+cd "$(dirname "$0")" || exit
+base_dir=$(pwd)
 env_path="$base_dir/env.ini"
 pid_path="$base_dir/pid"
 java_io_tmp_dir="$base_dir/tmp"
 default_debug_port=5005
 default_jmx_port=7091
 jar_path="$(find "$base_dir" -name '*.jar' | head -n 1)"
-cd "$base_dir"
 
 if test -f "$env_path"
 then
-  export $(cut -d= -f1 "$env_path"|grep -v '^#')
+  export "$(cut -d= -f1 "$env_path"|grep -v '^#')"
   source "$env_path"
   echo "--------------------ENV INI--------------------"
   echo "source $env_path"
@@ -35,7 +35,7 @@ fi
 
 if test -z "$JAVA_OPTS"
 then
-  JAVA_OPTS="-Dfile.encoding=UTF-8 -Duser.timezone=Asia/Shanghai -Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Djava.io.tmpdir=$java_io_tmp_dir"
+  JAVA_OPTS="\"-Dfile.encoding=UTF-8\" -Duser.timezone=Asia/Shanghai -Djava.net.preferIPv4Stack=true -Djava.awt.headless=true -Djava.io.tmpdir=$java_io_tmp_dir"
 fi
 
 if test -z "$HEAP_OPTS"
@@ -50,7 +50,7 @@ fi
 
 if test -z "$GC_OPTS"
 then
-  GC_OPTS="-XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:G1HeapRegionSize=2M -XX:+PrintGCDetails -Xloggc:$LOG_PATH/gc-pid%p.log"
+  GC_OPTS="-XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:G1HeapRegionSize=2M -Xlog:gc* -Xlog:gc:$LOG_PATH/gc-pid%p.log"
 fi
 
 if test -z "$DEBUG_OPTS"
@@ -106,8 +106,8 @@ function print_env(){
 
 function run(){
   print_env
-  echo "$_run_java -jar $jar_path $_java_opts"
-  "$_run_java" -jar "$jar_path" "$_java_opts"
+  echo "$_run_java $_java_opts -jar $jar_path"
+  cd "$base_dir" && eval "$_run_java $_java_opts -jar $jar_path"
 }
 
 function start(){
@@ -127,14 +127,16 @@ function start(){
 
   if test -d "$java_io_tmp_dir"
   then
-    rm "$java_io_tmp_dir" -rf
-    echo "Deleted java.io.tmpdir $pid_path"
+    rm "$java_io_tmp_dir/*" -rf
+    echo "Clean java.io.tmpdir $java_io_tmp_dir"
+  else
+    mkdir -p "$java_io_tmp_dir"
   fi
 
   if [ "$start_mode" = "debug" ]; then
-    _exec_str="nohup $_run_java $DEBUG_OPTS $JMX_OPTS -jar $jar_path $_java_opts >/dev/null 2>&1 &"
+    _exec_str="cd "$base_dir" && nohup $_run_java $DEBUG_OPTS $JMX_OPTS $_java_opts -jar $jar_path  >/dev/null 2>&1 &"
   else
-    _exec_str="nohup $_run_java -jar $jar_path $_java_opts >/dev/null 2>&1 &"
+    _exec_str="cd "$base_dir" && nohup $_run_java $_java_opts -jar $jar_path >/dev/null 2>&1 &"
   fi
 
   echo "$_exec_str"
@@ -162,21 +164,21 @@ function start(){
 }
 
 function debug(){
-  print_env
+  echo "--------------------DEBUG OPTS--------------------"
   echo "DEBUG_OPTS: $DEBUG_OPTS"
   echo "JMX_OPTS: $JMX_OPTS"
+  echo "--------------------DEBUG OPTS--------------------"
+  echo ""
   start
 }
 
 function stop(){
   print_env
-  if test ! -f "$pid_path"
+  if test -f "$pid_path"
   then
-    printf "\nPid file missing,stop failed\n"
-    exit 1
+    _pid=$(cat "$pid_path")
   fi
 
-  _pid=$(cat "$pid_path")
   if test -z "$_pid"
   then
     _pid=$(ps -ef|grep "$jar_path"|grep -v grep|awk '{print $2}')
@@ -184,7 +186,7 @@ function stop(){
 
   if test -z "$_pid"
   then
-    printf "\nInstance with pid %s already stopped\n" "$_pid"
+    printf "\nInstance already stopped\n"
     exit 0
   fi
 
@@ -192,7 +194,7 @@ function stop(){
   echo $_ps_result
   if test -z "$_ps_result"
   then
-    printf "\nInstance with pid %s already stopped\n" "$_pid"
+    printf "\nInstance already stopped\n"
     exit 0
   fi
 
