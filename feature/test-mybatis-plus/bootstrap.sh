@@ -8,6 +8,7 @@ java_io_tmp_dir="$base_dir/tmp"
 default_debug_port=5005
 default_jmx_port=7091
 jar_path="$(find "$base_dir" -name '*.jar' | head -n 1)"
+jar_name="$(basename "$jar_path" .jar)"
 
 if test -f "$env_path"
 then
@@ -45,12 +46,12 @@ fi
 
 if test -z "$HEAP_DUMP_OPTS"
 then
-  HEAP_DUMP_OPTS="-XX:ErrorFile=$LOG_PATH/hs_err_pid%p.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$LOG_PATH/heap_dump-pid%p.hprof"
+  HEAP_DUMP_OPTS="-XX:ErrorFile=$LOG_PATH/hs_err_pid%p.log -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=$LOG_PATH/heap_dump-$jar_name-pid%p.hprof"
 fi
 
 if test -z "$GC_OPTS"
 then
-  GC_OPTS="-XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:G1HeapRegionSize=2M -Xlog:gc* -Xlog:gc:$LOG_PATH/gc-pid%p.log"
+  GC_OPTS="-XX:+UseG1GC -XX:MaxGCPauseMillis=100 -XX:G1HeapRegionSize=2M -Xlog:gc* -Xlog:gc:$LOG_PATH/gc-$jar_name-pid%p.log"
 fi
 
 if test -z "$DEBUG_OPTS"
@@ -90,6 +91,11 @@ fi
 if test ! -d "$java_io_tmp_dir"
 then
   mkdir -p "$java_io_tmp_dir"
+fi
+
+if test ! -d "$LOG_PATH"
+then
+  mkdir -p "$LOG_PATH"
 fi
 
 function print_env(){
