@@ -140,9 +140,9 @@ function start(){
   fi
 
   if [ "$start_mode" = "debug" ]; then
-    _exec_str="cd "$base_dir" && nohup $_run_java $DEBUG_OPTS $JMX_OPTS $_java_opts -jar $jar_path  >/dev/null 2>&1 &"
+    _exec_str="cd $base_dir && nohup $_run_java $DEBUG_OPTS $JMX_OPTS $_java_opts -jar $jar_path  >/dev/null 2>&1 &"
   else
-    _exec_str="cd "$base_dir" && nohup $_run_java $_java_opts -jar $jar_path >/dev/null 2>&1 &"
+    _exec_str="cd $base_dir && nohup $_run_java $_java_opts -jar $jar_path >/dev/null 2>&1 &"
   fi
 
   echo "$_exec_str"
@@ -158,7 +158,7 @@ function start(){
           printf "\nStart instance failed with pid %s\n" "$_pid"
           exit 1
       fi
-      up_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep $_pid | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
+      up_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep "$_pid" | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
       if [ -n "$up_port_list" ]; then
           printf "\nStart instance with pid %s,listen port: %s\n" "$_pid" "$(echo $up_port_list)"
           exit 0
