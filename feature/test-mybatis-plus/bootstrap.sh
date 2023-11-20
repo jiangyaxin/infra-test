@@ -200,6 +200,11 @@ function stop(){
   if test -f "$pid_path"
   then
     _pid=$(cat "$pid_path")
+    _ps_result=$(ps -ef|grep "$_pid"|grep -v grep)
+    if test -z "$_ps_result"
+    then
+      _pid=""
+    fi
   fi
 
   if test -z "$_pid"
@@ -208,14 +213,6 @@ function stop(){
   fi
 
   if test -z "$_pid"
-  then
-    printf "\nInstance already stopped\n"
-    exit 0
-  fi
-
-  _ps_result=$(ps -ef|grep "$jar_path"|grep -v grep)
-  echo $_ps_result
-  if test -z "$_ps_result"
   then
     printf "\nInstance already stopped\n"
     exit 0
