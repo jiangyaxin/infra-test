@@ -158,8 +158,25 @@ function start(){
           printf "\nStart instance failed with pid %s\n" "$_pid"
           exit 1
       fi
-      up_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep "$_pid" | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
+
+      if [ "$start_mode" = "debug" ]; then
+        _debug_port_list_reg_str="$DEBUG_PORT|$JMX_PORT"
+        if [ -z "$_debug_port_list" ]; then
+          _debug_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep "$_pid" | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
+          for var in "${_debug_port_list[@]}"
+          do
+            _debug_port_list_reg_str="$_debug_port_list_reg_str|$var"
+          done
+        fi
+        _debug_port_list_reg_str="\"$_debug_port_list_reg_str\""
+        up_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep "$_pid" | grep -vE "$_debug_port_list" | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
+      else
+        up_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep "$_pid" | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
+      fi
+
+
       if [ -n "$up_port_list" ]; then
+          up_port_list=$(for line in $(netstat -tlpn | grep LISTEN | grep "$_pid" | awk '{print $4}');do echo "${line##*:}"; done | sort | uniq)
           printf "\nStart instance with pid %s,listen port: %s\n" "$_pid" "$(echo $up_port_list)"
           exit 0
       fi
