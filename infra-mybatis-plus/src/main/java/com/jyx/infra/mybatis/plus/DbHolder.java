@@ -8,18 +8,19 @@ import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
-import com.jyx.infra.util.MapUtil;
 import com.jyx.infra.exception.AppException;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.mybatis.plus.metadata.MetadataUtil;
 import com.jyx.infra.mybatis.plus.service.DbService;
 import com.jyx.infra.mybatis.plus.service.DbServiceImpl;
+import com.jyx.infra.util.MapUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
 import org.springframework.aop.framework.Advised;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.core.ResolvableType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -49,9 +50,13 @@ public class DbHolder {
 
     private final Map<Class<?>, DataSource> classToDatasourceMap;
 
+    private final Map<Class<?>, String> classToDatasourceNameMap;
+
     private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
     private final Cache<Class<?>, List<ColumnInfo>> columnInfoCache;
+
+    private final Cache<String, JdbcTemplate> jdbcTemplateCache;
 
     public DbHolder(DataSource dataSource, List<DbService<?>> dbServiceList) {
         if (!(dataSource instanceof DynamicRoutingDataSource)) {
@@ -63,8 +68,13 @@ public class DbHolder {
         this.tableNameToClassMap = HashBiMap.create(dbServiceSize);
         this.classToDbServiceMap = MapUtil.newHashMap(dbServiceSize);
         this.classToDatasourceMap = MapUtil.newHashMap(dbServiceSize);
+        this.classToDatasourceNameMap = MapUtil.newHashMap(dbServiceSize);
         this.columnInfoCache = CacheBuilder.newBuilder()
                 .maximumSize(128)
+                .expireAfterAccess(Duration.ofMinutes(5))
+                .build();
+        this.jdbcTemplateCache = CacheBuilder.newBuilder()
+                .maximumSize(32)
                 .expireAfterAccess(Duration.ofMinutes(5))
                 .build();
 
@@ -87,6 +97,14 @@ public class DbHolder {
         return clazz;
     }
 
+    public String datasourceName(Class<?> clazz) {
+        String datasourceName = classToDatasourceNameMap.get(clazz);
+        if (datasourceName == null) {
+            throw AppException.of(String.format("%s not associated with DbService.", clazz.getName()));
+        }
+        return datasourceName;
+    }
+
     public DataSource datasource(Class<?> clazz) {
         DataSource datasource = classToDatasourceMap.get(clazz);
         if (datasource == null) {
@@ -101,6 +119,19 @@ public class DbHolder {
             throw AppException.of(String.format("Cannot find datasource: .", datasourceName));
         }
         return datasource;
+    }
+
+    public JdbcTemplate jdbcTemplate(Class<?> clazz) {
+        return jdbcTemplate(datasourceName(clazz));
+    }
+
+
+    public JdbcTemplate jdbcTemplate(String datasourceName) {
+        try {
+            return jdbcTemplateCache.get(datasourceName, () -> new JdbcTemplate(datasource(datasourceName)));
+        } catch (ExecutionException e) {
+            throw AppException.of(String.format("%s get JdbcTemplate error.", datasourceName));
+        }
     }
 
     public <T> DbService<T> dbService(Class<T> clazz) {
@@ -224,5 +255,6 @@ public class DbHolder {
             throw AppException.of(String.format("%s datasource not exist,%s config error DS annotation.", datasourceStr, mapperClass.getName()));
         }
         this.classToDatasourceMap.put(entityClass, dataSource);
+        this.classToDatasourceNameMap.put(entityClass, datasourceStr);
     }
 }
