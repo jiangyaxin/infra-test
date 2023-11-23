@@ -10,9 +10,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
-import lombok.Getter;
-import lombok.Setter;
-#if(${chainModel})
+import lombok.*;
+  #if(${chainModel})
 import lombok.experimental.Accessors;
 #end
 #end
@@ -22,11 +21,12 @@ import lombok.experimental.Accessors;
  * @since ${date}
  */
 #if(${entityLombokModel})
-@Getter
-@Setter
+@Data
   #if(${chainModel})
 @Accessors(chain = true)
   #end
+@NoArgsConstructor
+@AllArgsConstructor
 #end
 #if(${springdoc})
 @Schema(name = "${entity}", description = "$!{table.comment}")

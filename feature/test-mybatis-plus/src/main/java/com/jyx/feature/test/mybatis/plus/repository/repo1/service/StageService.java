@@ -5,7 +5,7 @@ import com.jyx.infra.mybatis.plus.service.DbService;
 
 /**
  * @author CodeGenerator
- * @since 2023-10-30 18:23:55
+ * @since 2023-11-23 13:25:05
  */
 public interface StageService extends DbService<Stage> {
 

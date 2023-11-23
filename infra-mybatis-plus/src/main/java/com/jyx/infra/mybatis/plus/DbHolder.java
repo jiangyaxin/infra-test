@@ -44,6 +44,8 @@ import java.util.stream.Collectors;
 @DependsOn({"dataSource"})
 public class DbHolder {
 
+    private final DynamicRoutingDataSource dynamicRoutingDataSource;
+
     private final BiMap<String, Class<?>> tableNameToClassMap;
 
     private final Map<Class<?>, DbService<?>> classToDbServiceMap;
@@ -51,8 +53,6 @@ public class DbHolder {
     private final Map<Class<?>, DataSource> classToDatasourceMap;
 
     private final Map<Class<?>, String> classToDatasourceNameMap;
-
-    private final DynamicRoutingDataSource dynamicRoutingDataSource;
 
     private final Cache<Class<?>, List<ColumnInfo>> columnInfoCache;
 

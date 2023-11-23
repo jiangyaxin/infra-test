@@ -17,8 +17,17 @@ import java.util.stream.Collectors;
  */
 public class ListUtil {
 
-    public <IN, OUT> List<OUT> parallelTransfer(List<IN> dataList, Function<IN, OUT> transferFunction,
-                                                int batchSize, ExecutorService executorService) {
+    public static <T> List<T> flatList(List<List<T>> twoDimensionalList) {
+        int sum = twoDimensionalList.stream()
+                .mapToInt(List::size)
+                .sum();
+        List<T> result = new ArrayList<>(sum);
+        twoDimensionalList.forEach(result::addAll);
+        return result;
+    }
+
+    public static <IN, OUT> List<OUT> parallelTransfer(List<IN> dataList, Function<IN, OUT> transferFunction,
+                                                       int batchSize, ExecutorService executorService) {
         Function<List<IN>, List<OUT>> partitionTransferFunction = partition -> {
             List<OUT> partitionResult = new ArrayList<>(partition.size());
             for (IN record : partition) {
@@ -31,22 +40,13 @@ public class ListUtil {
             return partitionResult;
         };
 
-        Function<List<List<OUT>>, List<OUT>> resultMergeFunction = partitionResultList -> {
-            int sum = partitionResultList.stream()
-                    .mapToInt(List::size)
-                    .sum();
-            List<OUT> result = new ArrayList<>(sum);
-            partitionResultList.forEach(result::addAll);
-            return result;
-        };
-
-        List<OUT> result = parallelTransfer(dataList, partitionTransferFunction, resultMergeFunction, batchSize, executorService);
+        List<OUT> result = parallelTransfer(dataList, partitionTransferFunction, ListUtil::flatList, batchSize, executorService);
         return result;
     }
 
-    public <IN, MID, OUT> List<OUT> parallelTransfer(List<IN> dataList, Function<List<IN>, MID> partitionTransferFunction,
-                                                     Function<List<MID>, List<OUT>> resultMergeFunction,
-                                                     int batchSize, ExecutorService executorService) {
+    public static <IN, MID, OUT> List<OUT> parallelTransfer(List<IN> dataList, Function<List<IN>, MID> partitionTransferFunction,
+                                                            Function<List<MID>, List<OUT>> resultMergeFunction,
+                                                            int batchSize, ExecutorService executorService) {
         List<List<IN>> partitionList = Lists.partition(dataList, batchSize);
 
         CopyOnWriteArrayList<Throwable> errorList = new CopyOnWriteArrayList<>();

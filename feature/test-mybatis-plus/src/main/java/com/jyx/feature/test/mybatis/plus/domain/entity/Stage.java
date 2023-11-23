@@ -5,15 +5,15 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author CodeGenerator
- * @since 2023-10-30 18:23:55
+ * @since 2023-11-23 13:25:05
  */
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("stage")
 public class Stage implements Serializable {
 

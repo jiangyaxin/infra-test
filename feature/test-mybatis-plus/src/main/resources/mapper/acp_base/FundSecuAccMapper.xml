@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.FundSecuAccMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jyx.feature.test.mybatis.plus.domain.entity.FundSecuAcc">
+        <id column="id" property="id" />
+        <result column="branch_id" property="branchId" />
+        <result column="fund_acc_id" property="fundAccId" />
+        <result column="currency" property="currency" />
+        <result column="secu_acc_id" property="secuAccId" />
+        <result column="market" property="market" />
+        <result column="cust_id" property="custId" />
+        <result column="secu_acc_type" property="secuAccType" />
+        <result column="fund_acc_type" property="fundAccType" />
+        <result column="fee_group_id" property="feeGroupId" />
+        <result column="trade_sys" property="tradeSys" />
+        <result column="partition_no" property="partitionNo" />
+        <result column="trade_pbu" property="tradePbu" />
+        <result column="clear_pbu" property="clearPbu" />
+        <result column="secu_acc_status" property="secuAccStatus" />
+        <result column="one_code_id" property="oneCodeId" />
+        <result column="rt_clear_flag" property="rtClearFlag" />
+        <result column="entrust_way" property="entrustWay" />
+        <result column="fund_check_flag" property="fundCheckFlag" />
+        <result column="secu_check_flag" property="secuCheckFlag" />
+        <result column="blacklist_flag" property="blacklistFlag" />
+        <result column="risky_flag" property="riskyFlag" />
+        <result column="trade_forbid_flag" property="tradeForbidFlag" />
+        <result column="secu_forbid_flag" property="secuForbidFlag" />
+        <result column="senior_flag" property="seniorFlag" />
+        <result column="user_add" property="userAdd" />
+        <result column="user_check" property="userCheck" />
+        <result column="auth_biz" property="authBiz" />
+        <result column="auth_acc" property="authAcc" />
+        <result column="comment" property="comment" />
+        <result column="acc_unit" property="accUnit" />
+        <result column="asset_unit" property="assetUnit" />
+        <result column="default_acc_unit" property="defaultAccUnit" />
+        <result column="source_id" property="sourceId" />
+        <result column="executor" property="executor" />
+        <result column="sharding" property="sharding" />
+        <result column="time_add" property="timeAdd" />
+        <result column="time_mod" property="timeMod" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, branch_id, fund_acc_id, currency, secu_acc_id, market, cust_id, secu_acc_type, fund_acc_type, fee_group_id, trade_sys, partition_no, trade_pbu, clear_pbu, secu_acc_status, one_code_id, rt_clear_flag, entrust_way, fund_check_flag, secu_check_flag, blacklist_flag, risky_flag, trade_forbid_flag, secu_forbid_flag, senior_flag, user_add, user_check, auth_biz, auth_acc, comment, acc_unit, asset_unit, default_acc_unit, source_id, executor, sharding, time_add, time_mod
+    </sql>
+
+</mapper>

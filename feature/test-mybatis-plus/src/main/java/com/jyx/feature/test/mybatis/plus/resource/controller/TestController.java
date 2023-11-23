@@ -1,9 +1,6 @@
 package com.jyx.feature.test.mybatis.plus.resource.controller;
 
-import com.jyx.feature.test.mybatis.plus.domain.entity.Channel;
-import com.jyx.feature.test.mybatis.plus.domain.entity.LightGroup;
-import com.jyx.feature.test.mybatis.plus.domain.entity.Stage;
-import com.jyx.feature.test.mybatis.plus.domain.entity.TblDbf;
+import com.jyx.feature.test.mybatis.plus.domain.entity.*;
 import com.jyx.feature.test.mybatis.plus.pipeline.LogPipeline;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.ChannelMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.ChannelService;
@@ -11,13 +8,19 @@ import com.jyx.feature.test.mybatis.plus.repository.repo1.service.StageService;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.TblDbfService;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
+import com.jyx.infra.datetime.StopWatch;
 import com.jyx.infra.dbf.DbfException;
 import com.jyx.infra.dbf.DbfField;
 import com.jyx.infra.dbf.DbfFieldTypeEnum;
 import com.jyx.infra.dbf.DbfWriter;
 import com.jyx.infra.mybatis.plus.DbHolder;
+import com.jyx.infra.mybatis.plus.jdbc.JdbcExecutor;
+import com.jyx.infra.mybatis.plus.jdbc.JdbcProperties;
+import com.jyx.infra.mybatis.plus.jdbc.common.ResultSetExtractPostProcessor;
+import com.jyx.feature.test.mybatis.plus.TestMySqlJdbcExecutor;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
+import com.jyx.infra.util.CheckResult;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.atomic.LongAdder;
 
 /**
  * @author Archforce
@@ -60,6 +64,12 @@ public class TestController {
 
     private final PipelineHolder pipelineHolder;
 
+    private final JdbcExecutor mySqlJdbcExecutor;
+
+    private final JdbcProperties jdbcProperties;
+
+    private final TestMySqlJdbcExecutor testMySqlJdbcExecutor;
+
 
     @ApiOperation(value = "测试接口")
     @GetMapping
@@ -71,7 +81,43 @@ public class TestController {
         Stage stageServiceById = stageService.getById(3L);
 
         List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
-        log.error("1");
+
+        LongAdder count = new LongAdder();
+        ResultSetExtractPostProcessor<FundSecuAcc, Void> postProcessor = new ResultSetExtractPostProcessor<>() {
+            @Override
+            public CheckResult canProcess(FundSecuAcc fundSecuAcc) {
+                return CheckResult.success("");
+            }
+
+            @Override
+            public Void process(FundSecuAcc fundSecuAcc) {
+                count.add(1);
+                return null;
+            }
+        };
+
+        StopWatch stopWatch = StopWatch.of();
+        mySqlJdbcExecutor.batchQueryAllAndProcess(FundSecuAcc.class, "", postProcessor, jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
+        stopWatch.stop();
+        log.error("{}=============={}", count.sum(), stopWatch.prettyPrint());
+    }
+
+    @ApiOperation(value = "测试接口2")
+    @GetMapping("/oneThread")
+    public void oneThreadTest() {
+        StopWatch stopWatch = StopWatch.of();
+        long count = testMySqlJdbcExecutor.batchQueryAll(FundSecuAcc.class, "", "", jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
+        stopWatch.stop();
+        log.error("{}=============={}", count, stopWatch.prettyPrint());
+    }
+
+    @ApiOperation(value = "测试接口3")
+    @GetMapping("/async")
+    public void asyncTest() {
+        StopWatch stopWatch = StopWatch.of();
+        long count = testMySqlJdbcExecutor.batchQueryAllAsync(FundSecuAcc.class, "", "", jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
+        stopWatch.stop();
+        log.error("{}=============={}", count, stopWatch.prettyPrint());
     }
 
     @ApiOperation(value = "Pipeline测试接口")
