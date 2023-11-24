@@ -24,7 +24,7 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
     interface Constants {
         int processors = RuntimeConstant.PROCESSORS;
 
-        int factor = 10;
+        int factor = 5;
 
         String POOL_NAME = "Jdbc-IO-Pool";
         int CORE_SIZE = processors * 2;

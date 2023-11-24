@@ -21,12 +21,10 @@ public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
     interface Constants {
         int processors = RuntimeConstant.PROCESSORS;
 
-        int factor = 2;
-
         String POOL_NAME = "Jdbc-Task-Pool";
         int CORE_SIZE = processors + 1;
-        int MAX_SIZE = processors * factor;
-        int QUEUE_SIZE = 256 * factor;
+        int MAX_SIZE = processors * 2;
+        int QUEUE_SIZE = 1024 * 50;
     }
 
     protected final ThreadPoolExecutor taskPool;

@@ -17,8 +17,8 @@ import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.jdbc.JdbcExecutor;
 import com.jyx.infra.spring.jdbc.JdbcProperties;
-import com.jyx.infra.spring.jdbc.mysql.MySqlMultiThreadJdbcExecutor;
-import com.jyx.infra.spring.jdbc.mysql.MySqlReactJdbcExecutor;
+import com.jyx.infra.spring.jdbc.mysql.MultiThreadMySqlJdbcExecutor;
+import com.jyx.infra.spring.jdbc.mysql.ReactMySqlJdbcExecutor;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
 import com.jyx.infra.util.CheckResult;
@@ -70,9 +70,9 @@ public class TestController {
 
     private final JdbcProperties jdbcProperties;
 
-    private final JdbcExecutor mySqlMultiThreadJdbcExecutor = new MySqlMultiThreadJdbcExecutor();
+    private final JdbcExecutor mySqlMultiThreadJdbcExecutor = new MultiThreadMySqlJdbcExecutor();
 
-    private final JdbcExecutor mySqlReactJdbcExecutor = new MySqlReactJdbcExecutor();
+    private final JdbcExecutor mySqlReactJdbcExecutor = new ReactMySqlJdbcExecutor();
 
 
     @ApiOperation(value = "测试接口")

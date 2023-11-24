@@ -11,7 +11,7 @@ import java.util.List;
  * @author jiangyaxin
  * @since 2023/11/21 11:24
  */
-public class MySqlMultiThreadJdbcExecutor extends MultiThreadJdbcExecutor {
+public class MultiThreadMySqlJdbcExecutor extends MultiThreadJdbcExecutor {
 
     @Override
     protected <OUT> JdbcReader<List<OUT>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {

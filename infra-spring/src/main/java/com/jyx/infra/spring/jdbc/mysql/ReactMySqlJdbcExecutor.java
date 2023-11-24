@@ -7,13 +7,12 @@ import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author jiangyaxin
  * @since 2023/11/21 11:24
  */
-public class MySqlReactJdbcExecutor extends ReactJdbcExecutor {
+public class ReactMySqlJdbcExecutor extends ReactJdbcExecutor {
 
     @Override
     protected <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {
