@@ -6,7 +6,7 @@ import com.jyx.infra.spring.converter.EnumJsonConverter;
 import javax.persistence.AttributeConverter;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 17:50
  */
 public abstract class EnumConverter<E extends Enum<E> & EnumI<Code>, Code> extends EnumJsonConverter<E, Code> implements AttributeConverter<E, Code> {

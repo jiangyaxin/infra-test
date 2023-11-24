@@ -4,7 +4,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.util.Pool;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/9/28 14:46
  */
 public class KryoPool extends Pool<Kryo> {

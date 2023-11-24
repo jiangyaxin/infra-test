@@ -4,7 +4,7 @@ import com.jyx.feature.test.mybatis.plus.domain.entity.Channel;
 import com.jyx.infra.mybatis.plus.service.DbService;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/25 18:20
  */
 

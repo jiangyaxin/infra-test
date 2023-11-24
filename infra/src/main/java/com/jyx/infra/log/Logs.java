@@ -3,7 +3,7 @@ package com.jyx.infra.log;
 import org.slf4j.Logger;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/2/27 13:03
  */
 public class Logs {

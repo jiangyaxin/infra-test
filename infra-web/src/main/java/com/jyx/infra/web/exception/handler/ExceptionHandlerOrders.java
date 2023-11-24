@@ -3,7 +3,7 @@ package com.jyx.infra.web.exception.handler;
 import org.springframework.core.Ordered;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 17:30
  */
 public interface ExceptionHandlerOrders {

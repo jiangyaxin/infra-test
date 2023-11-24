@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/7/7 15:15
  */
 public class Vertex {

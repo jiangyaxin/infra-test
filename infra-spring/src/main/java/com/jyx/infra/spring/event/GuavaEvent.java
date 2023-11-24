@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.util.Date;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/9 9:28
  */
 @Getter

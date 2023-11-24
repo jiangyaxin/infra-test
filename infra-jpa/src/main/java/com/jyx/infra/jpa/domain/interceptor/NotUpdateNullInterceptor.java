@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/7 20:09
  */
 public class NotUpdateNullInterceptor extends EmptyInterceptor {

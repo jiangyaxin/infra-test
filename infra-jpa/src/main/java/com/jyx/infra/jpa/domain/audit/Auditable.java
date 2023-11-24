@@ -17,7 +17,7 @@ import javax.persistence.Version;
 import java.util.Date;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 11:17
  */
 @Getter

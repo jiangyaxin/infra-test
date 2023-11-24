@@ -1,7 +1,7 @@
 package com.jyx.infra.util;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/7 9:55
  */
 public class HexUtil {

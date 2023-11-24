@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 22:26
  */
 @EqualsAndHashCode(callSuper = true)

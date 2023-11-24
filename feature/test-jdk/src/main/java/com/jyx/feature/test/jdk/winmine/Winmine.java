@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/7/7 11:22
  */
 public class Winmine {

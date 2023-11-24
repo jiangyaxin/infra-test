@@ -5,7 +5,7 @@ import com.jyx.infra.spring.event.GuavaEventListener;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/9 15:40
  */
 @Slf4j

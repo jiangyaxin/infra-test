@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 16:48
  */
 public class ExceptionUtil {

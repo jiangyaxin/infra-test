@@ -7,7 +7,7 @@ import com.jyx.infra.mybatis.plus.service.DbServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/26 14:51
  */
 @Service

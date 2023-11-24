@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/4/3 10:43
  */
 public class ListTest {

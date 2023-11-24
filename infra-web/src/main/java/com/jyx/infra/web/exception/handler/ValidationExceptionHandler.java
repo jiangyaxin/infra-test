@@ -16,7 +16,7 @@ import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.VALIDATION_EXCEPTION_HANDLER_ORDER;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 17:44
  */
 @Order(VALIDATION_EXCEPTION_HANDLER_ORDER)

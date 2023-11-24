@@ -7,7 +7,7 @@ import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/22 14:34
  */
 @Configuration

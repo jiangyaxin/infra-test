@@ -21,7 +21,7 @@ package com.jyx.feature.test.jdk.algorithm.dp;
  * 1 <= n <= 100
  * -100 <= matrix[i][j] <= 100
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2022/7/12 10:40
  */
 public class L931MinFallingPathSum {

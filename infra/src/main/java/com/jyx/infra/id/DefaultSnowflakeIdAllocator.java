@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  * <p>
  * 同一秒的ID数量 = 64 X 4096  X 16384
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 16:04
  */
 @Slf4j

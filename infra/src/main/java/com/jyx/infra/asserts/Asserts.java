@@ -5,7 +5,7 @@ import com.jyx.infra.exception.AppException;
 import java.util.function.Supplier;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/3/1 18:29
  */
 public class Asserts {

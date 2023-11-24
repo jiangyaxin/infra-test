@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * <p>
  * 64 bytes = 8 bytes (object reference) + 6 * 8 bytes (padded long) + 8 bytes (a long value)
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 22:11
  */
 public class PaddingAtomicLong extends AtomicLong {

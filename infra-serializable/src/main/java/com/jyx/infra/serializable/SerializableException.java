@@ -1,7 +1,7 @@
 package com.jyx.infra.serializable;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/4 15:27
  */
 public class SerializableException extends RuntimeException{

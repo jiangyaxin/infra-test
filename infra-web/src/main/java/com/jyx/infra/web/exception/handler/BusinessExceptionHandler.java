@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.BUSINESS_EXCEPTION_HANDLER_ORDER;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 17:41
  */
 @Order(BUSINESS_EXCEPTION_HANDLER_ORDER)

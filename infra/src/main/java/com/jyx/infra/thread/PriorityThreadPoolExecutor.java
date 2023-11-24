@@ -3,7 +3,7 @@ package com.jyx.infra.thread;
 import java.util.concurrent.*;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/8/1 16:31
  */
 public class PriorityThreadPoolExecutor extends ThreadPoolExecutor {

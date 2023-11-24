@@ -3,7 +3,7 @@ package com.jyx.infra.exception;
 /**
  * 带 code 的系统异常
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 15:01
  */
 public class SystemException extends AppException {

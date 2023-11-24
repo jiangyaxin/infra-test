@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc.reader;
 
 import com.jyx.infra.datetime.DateTimeConstant;
 import org.springframework.jdbc.core.RowMapper;

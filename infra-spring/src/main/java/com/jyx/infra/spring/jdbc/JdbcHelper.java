@@ -1,4 +1,4 @@
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.SQLWarningException;
@@ -9,7 +9,7 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/23 13:01
  */
 @Slf4j

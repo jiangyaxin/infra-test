@@ -16,7 +16,7 @@ import static com.jyx.infra.exception.WebMessageCodes.SERVER_ERROR_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.DEFAULT_EXCEPTION_HANDLER_ORDER;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 16:28
  */
 @Slf4j

@@ -16,7 +16,7 @@ package com.jyx.feature.test.jdk.algorithm;
  * 方案:先把两端有序的找出来，再把中间无序部分的最大最小值找出来，往两端扩。
  *
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/26 15:09
  */
 public class L16SubSort {

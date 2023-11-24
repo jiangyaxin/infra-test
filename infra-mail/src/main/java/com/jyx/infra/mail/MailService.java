@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/23 12:29
  */
 public interface MailService {

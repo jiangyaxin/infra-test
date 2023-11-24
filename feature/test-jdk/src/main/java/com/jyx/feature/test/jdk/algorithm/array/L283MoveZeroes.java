@@ -18,7 +18,7 @@ package com.jyx.feature.test.jdk.algorithm.array;
  * 1 <= nums.length <= 104
  * -231 <= nums[i] <= 231 - 1
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/29 15:49
  */
 public class L283MoveZeroes {

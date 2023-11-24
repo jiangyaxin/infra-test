@@ -4,7 +4,7 @@ package com.jyx.feature.test.jdk.algorithm.tree.rbt;
 import java.io.Serializable;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/30 9:46
  */
 public class RbtNode<K extends Comparable<K>, V> implements Serializable {

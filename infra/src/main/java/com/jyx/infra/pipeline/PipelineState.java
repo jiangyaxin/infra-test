@@ -3,7 +3,7 @@ package com.jyx.infra.pipeline;
 import lombok.Getter;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 10:32
  */
 @Getter

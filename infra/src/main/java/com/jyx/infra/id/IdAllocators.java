@@ -1,7 +1,7 @@
 package com.jyx.infra.id;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 17:02
  */
 public class IdAllocators {

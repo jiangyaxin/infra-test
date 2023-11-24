@@ -4,7 +4,7 @@ import com.jyx.infra.spring.context.AppConstant;
 import lombok.Getter;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/9 15:13
  */
 @Getter

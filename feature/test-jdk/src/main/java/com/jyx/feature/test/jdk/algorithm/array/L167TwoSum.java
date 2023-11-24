@@ -32,7 +32,7 @@ package com.jyx.feature.test.jdk.algorithm.array;
  * -1000 <= target <= 1000
  * 仅存在一个有效答案
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/29 14:41
  */
 public class L167TwoSum {

@@ -1,4 +1,4 @@
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc.reader;
 
 import com.jyx.infra.asserts.Asserts;
 import com.jyx.infra.util.CheckResult;
@@ -16,7 +16,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ForkJoinPool;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/22 16:55
  */
 public class AsyncResultSetExtractor<OUT> implements ResultSetExtractor<List<CompletableFuture<List<OUT>>>> {
@@ -53,7 +53,7 @@ public class AsyncResultSetExtractor<OUT> implements ResultSetExtractor<List<Com
 
     @Override
     public List<CompletableFuture<List<OUT>>> extractData(ResultSet rs) throws SQLException, DataAccessException {
-        List<CompletableFuture<List<OUT>>> resultList = (taskExpected > 0 ? new ArrayList<>(taskExpected) : new ArrayList<>());
+        List<CompletableFuture<List<OUT>>> resultList = (taskExpected > 0 ? new ArrayList<>(taskExpected) : new ArrayList<>(128));
 
         int batchIndex = 0;
         int rowNum = 0;

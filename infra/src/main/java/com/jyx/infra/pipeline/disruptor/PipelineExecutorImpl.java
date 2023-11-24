@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 10:36
  */
 @Slf4j

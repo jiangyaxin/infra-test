@@ -56,7 +56,7 @@ import java.util.UUID;
  * OAuth2TokenRevocationEndpointFilter
  * OidcUserInfoEndpointFilter
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2022/5/10 14:34
  */
 @Configuration

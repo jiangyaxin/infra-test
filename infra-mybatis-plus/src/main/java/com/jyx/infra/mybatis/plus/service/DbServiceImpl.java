@@ -5,7 +5,7 @@ import com.jyx.infra.mybatis.plus.mapper.BizBaseMapper;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/25 15:21
  */
 @Slf4j

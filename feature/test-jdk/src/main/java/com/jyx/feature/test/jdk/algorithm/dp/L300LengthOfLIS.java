@@ -28,7 +28,7 @@ import java.util.Arrays;
  * 进阶：
  * 你能将算法的时间复杂度降低到 O(n log(n)) 吗?
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2022/7/8 15:30
  */
 public class L300LengthOfLIS {

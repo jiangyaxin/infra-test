@@ -7,7 +7,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
- * @author asa
+ * @author jiangyaxin
  */
 @RemoteApplicationEventScan
 @SpringBootApplication

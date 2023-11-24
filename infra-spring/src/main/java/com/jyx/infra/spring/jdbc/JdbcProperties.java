@@ -1,11 +1,11 @@
-package com.jyx.infra.mybatis.plus.jdbc;
+package com.jyx.infra.spring.jdbc;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/20 15:45
  */
 @Data

@@ -1,4 +1,4 @@
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc.reader;
 
 import com.jyx.infra.asserts.Asserts;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/22 16:47
  */
 public class CursorPreparedStatementCreator implements PreparedStatementCreator, SqlProvider {

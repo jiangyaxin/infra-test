@@ -1,7 +1,7 @@
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc.reader;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/22 17:10
  */
 public class IncorrectInstanceDataAccessException extends RuntimeException {

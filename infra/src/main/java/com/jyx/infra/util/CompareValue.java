@@ -1,7 +1,7 @@
 package com.jyx.infra.util;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/5 13:47
  */
 public class CompareValue<L, R> {

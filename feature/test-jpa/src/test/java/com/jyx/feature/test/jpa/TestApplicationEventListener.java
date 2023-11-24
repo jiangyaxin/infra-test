@@ -5,7 +5,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/9 8:55
  */
 @Slf4j

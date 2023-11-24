@@ -3,7 +3,7 @@ package com.jyx.infra.spring.context;
 import lombok.Data;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 16:48
  */
 @Data

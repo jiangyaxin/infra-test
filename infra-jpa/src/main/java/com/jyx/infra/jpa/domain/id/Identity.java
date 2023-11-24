@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 17:24
  */
 @Getter

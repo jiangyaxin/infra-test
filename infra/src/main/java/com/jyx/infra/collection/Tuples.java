@@ -3,7 +3,7 @@ package com.jyx.infra.collection;
 /**
  * Tuple Utilities
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 17:04
  */
 public class Tuples {

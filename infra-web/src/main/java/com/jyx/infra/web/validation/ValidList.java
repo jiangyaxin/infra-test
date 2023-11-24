@@ -4,7 +4,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/7 10:16
  */
 public class ValidList<E> implements List<E> {

@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * 1 <= coins[i] <= 231 - 1
  * 0 <= amount <= 104
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2022/7/8 14:37
  */
 public class L32CoinChange {

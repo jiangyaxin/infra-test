@@ -6,7 +6,7 @@ import com.lmax.disruptor.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 11:37
  */
 public enum WaitMode {

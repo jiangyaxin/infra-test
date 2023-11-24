@@ -13,7 +13,7 @@ import static com.jyx.infra.exception.WebMessageCodes.OBJECT_LOCKING_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.OBJECT_OPTIMISTIC_LOCKING_FAILURE_EXCEPTION_HANDLER_ORDER;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 0:47
  */
 @Order(OBJECT_OPTIMISTIC_LOCKING_FAILURE_EXCEPTION_HANDLER_ORDER)

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.util.Converter;
 import java.lang.reflect.ParameterizedType;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 17:50
  */
 public abstract class EnumJsonConverter<E extends Enum<E> & EnumI<Code>, Code> implements Converter<Code, E> {

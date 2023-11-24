@@ -18,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static com.jyx.infra.datetime.DateTimeConstant.DateTimeFormatters.DEFAULT_DATETIME_FORMATTER;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 15:55
  */
 @Slf4j

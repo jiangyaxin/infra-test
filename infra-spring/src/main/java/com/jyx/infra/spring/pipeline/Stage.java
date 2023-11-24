@@ -3,7 +3,7 @@ package com.jyx.infra.spring.pipeline;
 import java.lang.annotation.*;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/2 15:49
  */
 @Documented

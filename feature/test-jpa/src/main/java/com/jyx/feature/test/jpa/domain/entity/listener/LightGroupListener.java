@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import javax.persistence.PostPersist;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 13:02
  */
 @Slf4j

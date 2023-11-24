@@ -14,9 +14,9 @@ import com.jyx.infra.dbf.DbfField;
 import com.jyx.infra.dbf.DbfFieldTypeEnum;
 import com.jyx.infra.dbf.DbfWriter;
 import com.jyx.infra.mybatis.plus.DbHolder;
-import com.jyx.infra.mybatis.plus.jdbc.JdbcExecutor;
-import com.jyx.infra.mybatis.plus.jdbc.JdbcProperties;
-import com.jyx.infra.mybatis.plus.jdbc.common.ResultSetExtractPostProcessor;
+import com.jyx.infra.spring.jdbc.JdbcExecutor;
+import com.jyx.infra.spring.jdbc.JdbcProperties;
+import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.feature.test.mybatis.plus.TestMySqlJdbcExecutor;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
@@ -39,7 +39,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.LongAdder;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/25 15:34
  */
 @Slf4j

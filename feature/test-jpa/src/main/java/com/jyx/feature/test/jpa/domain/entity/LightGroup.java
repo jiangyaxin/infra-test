@@ -16,7 +16,7 @@ import javax.persistence.*;
 import java.util.List;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 17:31
  */
 @Getter

@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 22:42
  */
 @Slf4j

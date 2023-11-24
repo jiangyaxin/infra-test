@@ -3,7 +3,7 @@ package com.jyx.infra.id;
 import com.jyx.infra.asserts.Asserts;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 16:42
  */
 public class SnowflakeIdFormatter {

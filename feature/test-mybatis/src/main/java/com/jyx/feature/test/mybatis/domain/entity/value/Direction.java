@@ -7,7 +7,7 @@ import com.jyx.infra.spring.converter.EnumJsonConverter;
 /**
  * 方向
  *
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 15:47
  */
 @JsonDeserialize(converter = Direction.DirectionConverter.class)

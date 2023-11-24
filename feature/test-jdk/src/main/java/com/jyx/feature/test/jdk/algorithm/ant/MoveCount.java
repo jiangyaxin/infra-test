@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jdk.algorithm.ant;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/29 10:24
  */
 public class MoveCount {

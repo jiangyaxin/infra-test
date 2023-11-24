@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 20:46
  */
 public class MetadataUtil {

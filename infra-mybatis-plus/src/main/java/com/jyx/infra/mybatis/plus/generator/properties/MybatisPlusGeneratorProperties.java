@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/29 12:02
  */
 @Data

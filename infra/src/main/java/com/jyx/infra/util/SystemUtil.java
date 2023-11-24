@@ -1,7 +1,7 @@
 package com.jyx.infra.util;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/6 9:23
  */
 public class SystemUtil {

@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.anyOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/28 17:22
  */
 public class FindPeakElementTests {

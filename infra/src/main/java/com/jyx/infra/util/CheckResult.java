@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/6 10:57
  */
 @AllArgsConstructor

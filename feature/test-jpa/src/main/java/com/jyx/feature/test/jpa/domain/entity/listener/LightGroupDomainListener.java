@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/9 11:53
  */
 @Slf4j

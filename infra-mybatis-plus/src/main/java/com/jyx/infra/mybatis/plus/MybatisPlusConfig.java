@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/25 14:56
  */
 @Configuration

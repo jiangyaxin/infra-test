@@ -38,7 +38,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
  * - SwitchUserFilter
  *
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/24 16:45
  */
 @Configuration

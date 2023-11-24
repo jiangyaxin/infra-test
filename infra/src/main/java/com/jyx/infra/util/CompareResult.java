@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/5 13:56
  */
 public class CompareResult<K, L, R> {

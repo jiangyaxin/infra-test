@@ -7,7 +7,7 @@ import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.stereotype.Component;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/15 19:12
  */
 @Slf4j

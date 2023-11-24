@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/29 11:03
  */
 public class LandonAntTests {

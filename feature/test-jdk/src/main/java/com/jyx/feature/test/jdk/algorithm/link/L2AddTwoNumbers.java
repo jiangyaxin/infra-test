@@ -26,7 +26,7 @@ package com.jyx.feature.test.jdk.algorithm.link;
  * 0 <= Node.val <= 9
  * 题目数据保证列表表示的数字不含前导零
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/6/12 17:30
  */
 public class L2AddTwoNumbers {

@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 17:44
  */
 public class ValidationExceptionHandlerSupport {

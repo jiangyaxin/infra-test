@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 14:51
  */
 public class StageDefinitionImpl<T> implements StageDefinition<T> {

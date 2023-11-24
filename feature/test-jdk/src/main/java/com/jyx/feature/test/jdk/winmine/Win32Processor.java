@@ -6,7 +6,7 @@ import com.sun.jna.platform.win32.*;
 import com.sun.jna.ptr.IntByReference;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/7/7 11:19
  */
 public class Win32Processor {

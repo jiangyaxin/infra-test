@@ -3,7 +3,7 @@ package com.jyx.infra.thread;
 import static com.jyx.infra.thread.PriorityThreadPoolExecutor.BASE_PRIORITY;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/8/1 16:20
  */
 public class PriorityRunnable extends AbstractPriorityTask<Void> implements Runnable {

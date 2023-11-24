@@ -5,7 +5,7 @@ import java.util.concurrent.FutureTask;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/8/2 9:42
  */
 public abstract class AbstractPriorityTask<V> extends FutureTask<V> implements Comparable<AbstractPriorityTask<V>> {

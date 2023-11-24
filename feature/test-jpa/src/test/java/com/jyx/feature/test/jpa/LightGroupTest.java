@@ -30,7 +30,7 @@ import static com.jyx.feature.test.jpa.domain.entity.value.FlowDirection.TURN_RO
 import static com.jyx.feature.test.jpa.domain.entity.value.LightGroupType.VEHICLE;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 18:03
  */
 @SpringBootTest

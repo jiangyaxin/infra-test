@@ -3,7 +3,7 @@ package com.jyx.infra.exception;
 /**
  * 带 code 的业务异常
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 14:51
  */
 public class BusinessException extends AppException {

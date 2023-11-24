@@ -1,7 +1,7 @@
 package com.jyx.feature.test.jdk.algorithm.ant;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/29 9:33
  */
 public enum Direction {

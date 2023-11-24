@@ -7,7 +7,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 17:27
  */
 public class DateTimeUtil {

@@ -1,7 +1,7 @@
 package com.jyx.infra.exception;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 17:23
  */
 public interface WebMessageCodes {

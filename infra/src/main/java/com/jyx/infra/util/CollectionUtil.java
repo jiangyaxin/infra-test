@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/9/18 17:01
  */
 public class CollectionUtil {

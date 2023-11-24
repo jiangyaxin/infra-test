@@ -23,7 +23,7 @@ import java.util.Arrays;
  * envelopes[i].length == 2
  * 1 <= wi, hi <= 105
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2022/7/8 17:20
  */
 public class L354MaxEnvelopes {

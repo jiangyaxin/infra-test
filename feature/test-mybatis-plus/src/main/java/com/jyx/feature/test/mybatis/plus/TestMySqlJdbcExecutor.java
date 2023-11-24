@@ -1,10 +1,10 @@
 package com.jyx.feature.test.mybatis.plus;
 
 import com.jyx.infra.mybatis.plus.DbHolder;
-import com.jyx.infra.mybatis.plus.jdbc.common.CursorPreparedStatementCreator;
-import com.jyx.infra.mybatis.plus.jdbc.common.JdbcHelper;
-import com.jyx.infra.mybatis.plus.jdbc.common.ObjectArrayRowMapper;
-import com.jyx.infra.mybatis.plus.query.PageHelper;
+import com.jyx.infra.spring.jdbc.reader.CursorPreparedStatementCreator;
+import com.jyx.infra.spring.jdbc.JdbcHelper;
+import com.jyx.infra.spring.jdbc.reader.ObjectArrayRowMapper;
+import com.jyx.infra.util.PageUtil;
 import com.jyx.infra.spring.context.AppConstant;
 import com.jyx.infra.thread.FutureResult;
 import com.jyx.infra.util.ConstructorUtil;
@@ -27,7 +27,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.LongAdder;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/21 11:24
  */
 @Component
@@ -110,7 +110,7 @@ public class TestMySqlJdbcExecutor {
     private List<Long> startIdEveryWorker(JdbcTemplate jdbcTemplate,
                                           String tableName, String where,
                                           int totalCount, int taskSize) {
-        int workerSize = PageHelper.calculateNumberOfPage(totalCount, taskSize);
+        int workerSize = PageUtil.calculateNumberOfPage(totalCount, taskSize);
         String varSql = "SET @last_max_id=0;";
         StringBuilder startIdEveryWorkerSqlBuilder = new StringBuilder("SELECT 0 ");
         if (where == null || where.isEmpty()) {

@@ -1,7 +1,7 @@
 package com.jyx.infra.id;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 16:01
  */
 public interface IdAllocator<T> extends AutoCloseable {

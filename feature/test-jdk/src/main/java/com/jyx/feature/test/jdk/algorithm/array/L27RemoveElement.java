@@ -39,7 +39,7 @@ package com.jyx.feature.test.jdk.algorithm.array;
  * 0 <= nums[i] <= 50
  * 0 <= val <= 100
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/29 15:23
  */
 public class L27RemoveElement {

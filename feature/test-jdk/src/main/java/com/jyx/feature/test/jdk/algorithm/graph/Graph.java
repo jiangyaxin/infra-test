@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/7/7 15:13
  */
 public class Graph {

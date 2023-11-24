@@ -7,7 +7,7 @@ import com.jyx.infra.spring.converter.EnumI;
 import javax.persistence.Converter;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 19:51
  */
 @JsonDeserialize(converter = LightGroupType.LightGroupTypeConverter.class)

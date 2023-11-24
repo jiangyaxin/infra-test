@@ -6,7 +6,7 @@ import org.apache.ibatis.type.JdbcType;
 import java.lang.reflect.Field;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 19:54
  */
 @Data

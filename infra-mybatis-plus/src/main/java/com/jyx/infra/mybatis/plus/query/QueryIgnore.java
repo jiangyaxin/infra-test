@@ -3,7 +3,7 @@ package com.jyx.infra.mybatis.plus.query;
 import java.lang.annotation.*;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 14:42
  */
 @Documented

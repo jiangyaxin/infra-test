@@ -1,7 +1,7 @@
 package com.jyx.infra.id.buffer;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 23:58
  */
 @FunctionalInterface

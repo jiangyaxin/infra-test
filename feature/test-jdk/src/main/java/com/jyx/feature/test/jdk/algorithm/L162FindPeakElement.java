@@ -37,7 +37,7 @@ package com.jyx.feature.test.jdk.algorithm;
  * 所以 考虑使用二分法
  * 由于 nums[-1] = nums[n] = -∞ 所以二分之后往大的一方找必存在波峰，即使找不到，找至最后一个数那么最后一个数(0或n-1)就是波峰。
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/28 16:18
  */
 public class L162FindPeakElement {

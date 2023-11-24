@@ -27,7 +27,7 @@ import java.util.Map;
  * 0 <= s.length <= 5 * 104
  * s 由英文字母、数字、符号和空格组成
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/6/1 13:50
  */
 public class L3LengthOfLongestSubstring {

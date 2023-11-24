@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 注解@EntityGraph 本质上就是 left outer join 语句,注意查询结果
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 17:50
  */
 public interface LightGroupJpaRepo extends JpaRepository<LightGroup,Long>, JpaSpecificationExecutor<LightGroup> {

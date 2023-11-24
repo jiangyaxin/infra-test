@@ -24,7 +24,7 @@ import java.util.Set;
  * 数组的长度为[2, 10,000]，并且确定为偶数。
  * 数组中数字的大小在范围[-100,000, 100,000]内。
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/27 15:27
  */
 public class L162DistributeCandy {

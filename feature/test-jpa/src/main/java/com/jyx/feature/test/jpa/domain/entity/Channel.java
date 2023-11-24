@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 17:29
  */
 @Getter

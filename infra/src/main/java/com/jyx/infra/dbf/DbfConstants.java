@@ -1,7 +1,7 @@
 package com.jyx.infra.dbf;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/7 12:30
  */
 public interface DbfConstants {

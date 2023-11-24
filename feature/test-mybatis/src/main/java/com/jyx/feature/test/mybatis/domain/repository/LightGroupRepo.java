@@ -5,7 +5,7 @@ import com.jyx.feature.test.mybatis.domain.entity.LightGroup;
 import java.util.List;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 20:16
  */
 public interface LightGroupRepo {

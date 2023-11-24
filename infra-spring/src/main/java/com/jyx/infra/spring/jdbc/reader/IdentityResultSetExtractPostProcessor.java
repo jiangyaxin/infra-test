@@ -1,9 +1,9 @@
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc.reader;
 
 import com.jyx.infra.util.CheckResult;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/23 9:46
  */
 public class IdentityResultSetExtractPostProcessor implements ResultSetExtractPostProcessor<Object, Object> {

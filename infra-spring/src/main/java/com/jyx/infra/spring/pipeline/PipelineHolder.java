@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/3 21:08
  */
 @Slf4j

@@ -6,7 +6,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Processor;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/13 16:00
  */
 @SpringBootApplication

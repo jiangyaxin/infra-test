@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.util.Assert;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 21:49
  */
 @Configuration

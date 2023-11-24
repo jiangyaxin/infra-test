@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import static com.jyx.infra.spring.context.AppConstant.*;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 22:42
  */
 @Slf4j

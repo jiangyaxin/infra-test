@@ -12,7 +12,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/6 11:32
  */
 public class ListUtil {

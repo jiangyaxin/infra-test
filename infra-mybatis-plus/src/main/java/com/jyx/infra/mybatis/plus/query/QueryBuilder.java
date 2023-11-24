@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.CaseFormat;
 import com.jyx.infra.constant.CommonConstant;
+import com.jyx.infra.constant.StringConstant;
 import com.jyx.infra.datetime.DateTimeConstant;
 import com.jyx.infra.datetime.DateTimeUtil;
 import com.jyx.infra.exception.BusinessException;
@@ -17,7 +18,7 @@ import java.lang.reflect.Modifier;
 import java.util.Arrays;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 14:17
  */
 public class QueryBuilder {
@@ -138,7 +139,7 @@ public class QueryBuilder {
                 if (!(requestFieldValue instanceof String)) {
                     throw BusinessException.of(WebMessageCodes.WRONG_PARAMETER_CODE, String.format("%s is not String.", errorMsg));
                 }
-                String[] ins = ((String) requestFieldValue).split(CommonConstant.COMMA);
+                String[] ins = ((String) requestFieldValue).split(StringConstant.COMMA);
                 query.in(dbColumnName, Arrays.asList(ins));
                 break;
             case BETWEEN:
@@ -171,7 +172,7 @@ public class QueryBuilder {
                                          String dbColumnName, String requestFieldValue,
                                          String errorMsg) {
         BetweenType betweenType = queryTypeAnnotation.betweenType();
-        String[] between = requestFieldValue.split(CommonConstant.COMMA);
+        String[] between = requestFieldValue.split(StringConstant.COMMA);
 
         String from = between[0];
         String to = between.length == 1 ? "" : between[1];

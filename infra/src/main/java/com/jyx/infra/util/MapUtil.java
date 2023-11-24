@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.function.BiPredicate;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/5 23:33
  */
 public class MapUtil {

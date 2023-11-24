@@ -27,7 +27,7 @@ package com.jyx.feature.test.jdk.algorithm.dp;
  * 3 <= leaves.length <= 10^5
  * leaves 中只包含字符 'r' 和字符 'y'
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/29 16:56
  */
 public class L19MinimumOperation {

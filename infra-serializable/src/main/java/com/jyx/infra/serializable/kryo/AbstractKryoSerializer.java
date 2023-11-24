@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/9/28 14:48
  */
 public abstract class AbstractKryoSerializer extends AbstractSerializer {

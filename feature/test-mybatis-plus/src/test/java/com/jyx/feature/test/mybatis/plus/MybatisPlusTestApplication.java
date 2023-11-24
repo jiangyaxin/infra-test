@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/13 16:00
  */
 @SpringBootTest(classes = {MybatisPlusApplication.class})

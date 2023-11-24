@@ -3,7 +3,7 @@ package com.jyx.infra.id.buffer;
 import java.util.List;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 22:02
  */
 @FunctionalInterface

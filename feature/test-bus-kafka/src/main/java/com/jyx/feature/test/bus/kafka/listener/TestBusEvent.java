@@ -3,7 +3,7 @@ package com.jyx.feature.test.bus.kafka.listener;
 import com.jyx.infra.bus.event.GlobalApplicationEvent;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/18 10:56
  */
 public class TestBusEvent extends GlobalApplicationEvent {

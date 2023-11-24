@@ -20,7 +20,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
  * ExceptionTranslationFilter
  * FilterSecurityInterceptor
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/24 16:45
  */
 @Configuration

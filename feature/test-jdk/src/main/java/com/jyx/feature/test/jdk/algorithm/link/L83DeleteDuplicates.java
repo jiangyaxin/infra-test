@@ -17,7 +17,7 @@ package com.jyx.feature.test.jdk.algorithm.link;
  * -100 <= Node.val <= 100
  * 题目数据保证链表已经按升序 排列
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/30 15:05
  */
 public class L83DeleteDuplicates {

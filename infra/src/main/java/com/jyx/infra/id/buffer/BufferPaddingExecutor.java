@@ -21,7 +21,7 @@ import static com.jyx.infra.datetime.DateTimeConstant.ZoneOffsets.DEFAULT_ZONE;
 /**
  * 异步补充数据
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 0:23
  */
 @Slf4j

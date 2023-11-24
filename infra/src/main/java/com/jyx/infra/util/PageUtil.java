@@ -1,10 +1,10 @@
-package com.jyx.infra.mybatis.plus.query;
+package com.jyx.infra.util;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/22 18:38
  */
-public class PageHelper {
+public class PageUtil {
 
     public static int calculateNumberOfPage(int totalCount, int pageSize) {
         int remain = totalCount % pageSize;

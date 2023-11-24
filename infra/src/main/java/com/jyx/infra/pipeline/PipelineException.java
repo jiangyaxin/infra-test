@@ -1,7 +1,7 @@
 package com.jyx.infra.pipeline;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 10:44
  */
 public class PipelineException extends RuntimeException {

@@ -4,7 +4,7 @@ import com.jyx.feature.test.mybatis.domain.entity.LightGroup;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/19 12:31
  */
 @Mapper

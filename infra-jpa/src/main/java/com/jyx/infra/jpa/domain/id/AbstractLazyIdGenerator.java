@@ -9,7 +9,7 @@ import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 16:30
  */
 public abstract class AbstractLazyIdGenerator<T extends Serializable> implements IdentifierGenerator {

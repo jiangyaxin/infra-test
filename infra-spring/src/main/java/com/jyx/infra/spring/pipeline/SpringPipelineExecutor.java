@@ -10,7 +10,7 @@ import org.springframework.beans.factory.InitializingBean;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/4 14:57
  */
 public class SpringPipelineExecutor extends PipelineExecutorImpl<Object> implements InitializingBean, DisposableBean {

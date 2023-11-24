@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 每次重新启动需要更换workid，因为 CachedSnowflakeIdAllocator 会借用未来时间
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 1:07
  */
 @Slf4j

@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/30 13:43
  */
 public interface View {

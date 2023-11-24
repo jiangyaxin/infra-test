@@ -15,7 +15,7 @@ import static com.jyx.infra.spring.context.AppConstant.ID_ALLOCATOR;
 
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/22 16:14
  */
 @Slf4j

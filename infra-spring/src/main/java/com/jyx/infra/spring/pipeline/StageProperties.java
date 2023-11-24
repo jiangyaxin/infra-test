@@ -3,7 +3,7 @@ package com.jyx.infra.spring.pipeline;
 import lombok.Data;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/3 16:02
  */
 @Data

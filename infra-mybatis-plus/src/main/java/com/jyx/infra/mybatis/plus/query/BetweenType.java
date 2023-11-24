@@ -1,7 +1,7 @@
 package com.jyx.infra.mybatis.plus.query;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 14:48
  */
 public enum BetweenType {

@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean;
 import javax.jms.ConnectionFactory;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/11 11:26
  */
 public class ActiveMqConfig {

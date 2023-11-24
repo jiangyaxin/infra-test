@@ -3,7 +3,7 @@ package com.jyx.infra.pipeline;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 15:26
  */
 public class PipelineEvent<T> {

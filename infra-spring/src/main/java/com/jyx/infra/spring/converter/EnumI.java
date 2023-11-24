@@ -7,7 +7,7 @@ import java.util.EnumSet;
 import java.util.Objects;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 16:15
  */
 public interface EnumI<Code> {

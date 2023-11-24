@@ -1,4 +1,4 @@
-package com.jyx.infra.mybatis.plus.jdbc.common;
+package com.jyx.infra.spring.jdbc.reader;
 
 import com.jyx.infra.util.CheckResult;
 import com.jyx.infra.util.ConstructorUtil;
@@ -6,7 +6,7 @@ import com.jyx.infra.util.ConstructorUtil;
 import java.lang.reflect.Constructor;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/23 9:46
  */
 public class InstancePostProcessorResultSet<T, OUT> implements ResultSetExtractPostProcessor<Object[], OUT> {

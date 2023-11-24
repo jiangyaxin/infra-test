@@ -4,7 +4,7 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/19 17:37
  */
 public interface DateTimeConstant {

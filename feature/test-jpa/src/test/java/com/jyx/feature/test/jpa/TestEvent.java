@@ -3,7 +3,7 @@ package com.jyx.feature.test.jpa;
 import com.jyx.infra.spring.event.LocalApplicationEvent;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/9 8:53
  */
 public class TestEvent extends LocalApplicationEvent {

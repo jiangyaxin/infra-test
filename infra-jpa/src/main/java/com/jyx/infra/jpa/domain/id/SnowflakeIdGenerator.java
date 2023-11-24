@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import static com.jyx.infra.spring.context.AppConstant.ID_ALLOCATOR;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/10/20 16:34
  */
 @Slf4j

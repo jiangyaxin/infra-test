@@ -7,7 +7,7 @@ import java.util.Set;
 /**
  * Redis对象类型: 字符串对象、列表对象、哈希对象、集合对象、有序集合对象
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/22 15:09
  */
 @SuppressWarnings({"all"})

@@ -8,7 +8,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/9/28 14:19
  */
 public interface Serializer {

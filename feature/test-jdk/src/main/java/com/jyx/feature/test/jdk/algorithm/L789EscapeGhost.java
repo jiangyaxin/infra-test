@@ -62,7 +62,7 @@ package com.jyx.feature.test.jdk.algorithm;
  * 如果鬼魂可以拦截到 那么鬼魂最好的做法就是在终点等着
  * 而不是去中间拦截
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/27 16:46
  */
 public class L789EscapeGhost {

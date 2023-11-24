@@ -18,7 +18,7 @@ package com.jyx.feature.test.jdk.algorithm.string;
  * 1 <= s.length <= 1000
  * s 仅由数字和英文字母组成
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/29 16:08
  */
 public class L5LongestPalindrome {

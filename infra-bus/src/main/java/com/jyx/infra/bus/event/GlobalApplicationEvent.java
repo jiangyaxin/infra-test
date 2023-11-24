@@ -9,7 +9,7 @@ import java.util.Date;
 import static com.jyx.infra.spring.context.AppConstant.ID_ALLOCATOR;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/18 10:44
  */
 @Getter

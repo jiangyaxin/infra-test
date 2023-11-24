@@ -8,7 +8,7 @@ import javax.persistence.Converter;
 
 /**
  * 方向
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 15:47
  */
 @JsonDeserialize(converter = Direction.DirectionConverter.class)

@@ -1,7 +1,7 @@
 package com.jyx.infra.thread;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/1 10:44
  */
 public class FutureException extends RuntimeException {

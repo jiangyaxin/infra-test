@@ -17,7 +17,7 @@ package com.jyx.feature.test.jdk.algorithm.string;
  * 1 <= s.length <= 105
  * s[i] 都是 ASCII 码表中的可打印字符
  *
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/29 15:59
  */
 public class L344ReverseString {

@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.cloud.bus.ServiceMatcher;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/18 10:55
  */
 @Slf4j

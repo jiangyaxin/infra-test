@@ -6,7 +6,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 20:56
  */
 public class LightGroupAssembler {

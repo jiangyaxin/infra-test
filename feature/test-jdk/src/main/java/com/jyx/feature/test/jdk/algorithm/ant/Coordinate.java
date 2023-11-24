@@ -3,7 +3,7 @@ package com.jyx.feature.test.jdk.algorithm.ant;
 import java.util.Objects;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/29 10:02
  */
 public class Coordinate{

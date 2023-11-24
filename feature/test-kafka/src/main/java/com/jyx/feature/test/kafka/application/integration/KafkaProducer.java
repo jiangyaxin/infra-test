@@ -8,7 +8,7 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/15 19:15
  */
 @Slf4j

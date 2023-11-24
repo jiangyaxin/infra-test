@@ -12,7 +12,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/6 21:48
  */
 @EqualsAndHashCode(callSuper = true)

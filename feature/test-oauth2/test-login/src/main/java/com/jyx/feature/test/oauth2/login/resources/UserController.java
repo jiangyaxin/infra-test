@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.security.Principal;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/12/9 17:13
  */
 @RestController

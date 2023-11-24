@@ -4,15 +4,15 @@ package com.jyx.infra.spring.context;
 import com.jyx.infra.id.SnowflakeIdAllocator;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 15:25
  */
 public interface AppConstant {
 
-    char SEPARATOR = '#';
-
     String IO_POOL_NAME = "IO-Pool";
     String CALCULATE_POOL_NAME = "Calculate-Pool";
+
+    int PROCESSORS = Runtime.getRuntime().availableProcessors();
 
     AppContext APP_CONTEXT = SpringContextHolder.getBean(AppContext.class);
 

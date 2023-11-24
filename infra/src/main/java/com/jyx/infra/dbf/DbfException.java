@@ -1,7 +1,7 @@
 package com.jyx.infra.dbf;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/6 10:24
  */
 public class DbfException extends RuntimeException {

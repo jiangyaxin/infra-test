@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/1/27 15:36
  */
 public class DistributeCandyTests {

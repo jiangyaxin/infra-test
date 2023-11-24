@@ -34,7 +34,7 @@ import java.util.*;
 import java.util.function.BiConsumer;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/29 12:02
  */
 @Configuration

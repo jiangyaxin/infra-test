@@ -3,7 +3,7 @@ package com.jyx.infra.exception;
 /**
  * 不含错误码的异常
  *
- * @author JYX
+ * @author jiangyaxin
  * @since 2021/11/5 14:46
  */
 public class AppException extends RuntimeException {

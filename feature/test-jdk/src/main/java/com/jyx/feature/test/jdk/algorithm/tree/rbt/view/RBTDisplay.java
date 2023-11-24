@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.Objects;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/5/30 9:46
  */
 public class RBTDisplay extends JApplet {

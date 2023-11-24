@@ -1,7 +1,7 @@
 package com.jyx.infra.thread;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/8/1 16:36
  */
 public class PriorityFutureTask<V> extends AbstractPriorityTask<V> {

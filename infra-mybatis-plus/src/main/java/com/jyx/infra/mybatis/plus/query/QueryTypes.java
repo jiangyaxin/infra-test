@@ -1,7 +1,7 @@
 package com.jyx.infra.mybatis.plus.query;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/10/30 15:03
  */
 public enum QueryTypes {

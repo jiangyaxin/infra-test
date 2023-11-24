@@ -22,7 +22,7 @@ import static com.jyx.feature.test.jpa.domain.entity.value.LightGroupType.PEDEST
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/7 10:58
  */
 @Slf4j

@@ -12,7 +12,7 @@ import static com.jyx.infra.exception.WebMessageCodes.WRONG_PARAMETER_CODE;
 import static com.jyx.infra.web.exception.handler.ExceptionHandlerOrders.HTTP_MESSAGE_NOT_READABLE_EXCEPTION_ORDER;
 
 /**
- * @author asa
+ * @author jiangyaxin
  * @since 2021/11/7 19:05
  */
 @Order(HTTP_MESSAGE_NOT_READABLE_EXCEPTION_ORDER)
