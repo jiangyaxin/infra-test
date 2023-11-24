@@ -60,17 +60,16 @@ public class AsyncResultSetExtractor<OUT> implements ResultSetExtractor<List<Com
 
         List<Object[]> rowBatchList = new ArrayList<>(batchSize);
         while (rs.next()) {
-            rowNum++;
-            batchIndex++;
-
             Object[] objects = rowMapper.mapRow(rs, rowNum);
-            if (rowNum == 1) {
+            if (rowNum == 0) {
                 CheckResult checkResult = extractPostProcessor.canProcess(objects);
                 if (!checkResult.isSuccess()) {
                     throw new IncorrectInstanceDataAccessException(checkResult.getMessage());
                 }
             }
             rowBatchList.add(objects);
+            rowNum++;
+            batchIndex++;
 
             if (batchIndex == batchSize) {
                 CompletableFuture<List<OUT>> future = submit(rowBatchList);

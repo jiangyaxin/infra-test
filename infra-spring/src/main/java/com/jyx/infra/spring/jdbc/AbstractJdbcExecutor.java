@@ -1,6 +1,6 @@
 package com.jyx.infra.spring.jdbc;
 
-import com.jyx.infra.spring.context.AppConstant;
+import com.jyx.infra.constant.RuntimeConstant;
 import com.jyx.infra.spring.jdbc.reader.InstancePostProcessorResultSet;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.thread.FutureResult;
@@ -22,7 +22,7 @@ import static com.jyx.infra.spring.jdbc.AbstractJdbcExecutor.Constants.*;
 public abstract class AbstractJdbcExecutor implements JdbcExecutor {
 
     interface Constants {
-        int processors = AppConstant.PROCESSORS;
+        int processors = RuntimeConstant.PROCESSORS;
 
         int factor = 10;
 
@@ -35,7 +35,11 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
     protected final ThreadPoolExecutor ioPool;
 
     public AbstractJdbcExecutor() {
-        this.ioPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
+        if (ThreadPoolExecutors.threadPoolExist(POOL_NAME)) {
+            this.ioPool = ThreadPoolExecutors.getThreadPool(POOL_NAME);
+        } else {
+            this.ioPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
+        }
     }
 
     @Override
@@ -44,9 +48,9 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
     }
 
     @Override
-    public <T, OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,
-                                            String tableName, String select, String where, Object[] args, Constructor<T> constructor,
-                                            int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
+    public <OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,
+                                         String tableName, String select, String where, Object[] args, Constructor<OUT> constructor,
+                                         int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
         List<CompletableFuture<List<OUT>>> futureList = batchQueryAllAsync(jdbcTemplate,
                 tableName, select, where, args, constructor,
                 taskSizeOfEachWorker, onceBatchSizeOfEachWorker

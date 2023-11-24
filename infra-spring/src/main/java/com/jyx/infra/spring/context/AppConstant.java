@@ -12,8 +12,6 @@ public interface AppConstant {
     String IO_POOL_NAME = "IO-Pool";
     String CALCULATE_POOL_NAME = "Calculate-Pool";
 
-    int PROCESSORS = Runtime.getRuntime().availableProcessors();
-
     AppContext APP_CONTEXT = SpringContextHolder.getBean(AppContext.class);
 
     ClusterContext CLUSTER_CONTEXT = APP_CONTEXT.getCluster();

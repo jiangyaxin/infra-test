@@ -1,11 +1,13 @@
 package com.jyx.infra.spring.jdbc.mysql.reader;
 
 import com.jyx.infra.collection.Tuple2;
+import com.jyx.infra.log.Logs;
 import com.jyx.infra.spring.jdbc.reader.CursorPreparedStatementCreator;
 import com.jyx.infra.spring.jdbc.reader.IncorrectInstanceDataAccessException;
 import com.jyx.infra.spring.jdbc.reader.ObjectArrayRowMapper;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.util.CheckResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.*;
 
 import java.util.List;
@@ -35,7 +37,7 @@ public class MultiThreadMysqlJdbcReader<T> extends AbstractMysqlJdbcReader<List<
 
         RowMapper<T> objectRowMapper = (rs, rowNum) -> {
             Object[] objects = objectArrayRowMapper.mapRow(rs, rowNum);
-            if (rowNum == 1) {
+            if (rowNum == 0) {
                 CheckResult checkResult = extractPostProcessor.canProcess(objects);
                 if (!checkResult.isSuccess()) {
                     throw new IncorrectInstanceDataAccessException(checkResult.getMessage());

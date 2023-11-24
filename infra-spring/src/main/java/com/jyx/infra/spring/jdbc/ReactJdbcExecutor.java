@@ -1,6 +1,6 @@
 package com.jyx.infra.spring.jdbc;
 
-import com.jyx.infra.spring.context.AppConstant;
+import com.jyx.infra.constant.RuntimeConstant;
 import com.jyx.infra.spring.jdbc.reader.JdbcReader;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.thread.ThreadPoolExecutors;
@@ -19,7 +19,7 @@ import static com.jyx.infra.spring.jdbc.ReactJdbcExecutor.Constants.*;
 public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
 
     interface Constants {
-        int processors = AppConstant.PROCESSORS;
+        int processors = RuntimeConstant.PROCESSORS;
 
         int factor = 2;
 
@@ -33,7 +33,11 @@ public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
 
     public ReactJdbcExecutor() {
         super();
-        this.taskPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
+        if (ThreadPoolExecutors.threadPoolExist(POOL_NAME)) {
+            this.taskPool = ThreadPoolExecutors.getThreadPool(POOL_NAME);
+        } else {
+            this.taskPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
+        }
     }
 
     protected abstract <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor);

@@ -16,8 +16,8 @@ public interface JdbcExecutor {
     <T> void batchInsert(List<T> dataList);
 
 
-    <T, OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,
-                                     String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+    <OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,
+                                     String tableName, String select, String where, Object[] args, Constructor<OUT> constructor,
                                      int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 
     <T, OUT> List<OUT> batchQueryAllAndProcess(JdbcTemplate jdbcTemplate,

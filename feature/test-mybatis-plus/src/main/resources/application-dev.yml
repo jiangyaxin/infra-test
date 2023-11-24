@@ -148,9 +148,6 @@ app:
     enabled-cached-id-generator: false
     data-center-id: 1
     worker-id: 1
-  pool:
-    enabled-io-pool: true
-    enabled-calculate-pool: true
 
 pipeline:
   enable: true

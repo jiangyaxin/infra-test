@@ -14,22 +14,26 @@ import com.jyx.infra.dbf.DbfField;
 import com.jyx.infra.dbf.DbfFieldTypeEnum;
 import com.jyx.infra.dbf.DbfWriter;
 import com.jyx.infra.mybatis.plus.DbHolder;
+import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.jdbc.JdbcExecutor;
 import com.jyx.infra.spring.jdbc.JdbcProperties;
+import com.jyx.infra.spring.jdbc.mysql.MySqlMultiThreadJdbcExecutor;
+import com.jyx.infra.spring.jdbc.mysql.MySqlReactJdbcExecutor;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
-import com.jyx.feature.test.mybatis.plus.TestMySqlJdbcExecutor;
-import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
 import com.jyx.infra.util.CheckResult;
+import com.jyx.infra.util.ConstructorUtil;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.type.JdbcType;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -64,11 +68,11 @@ public class TestController {
 
     private final PipelineHolder pipelineHolder;
 
-    private final JdbcExecutor mySqlJdbcExecutor;
-
     private final JdbcProperties jdbcProperties;
 
-    private final TestMySqlJdbcExecutor testMySqlJdbcExecutor;
+    private final JdbcExecutor mySqlMultiThreadJdbcExecutor = new MySqlMultiThreadJdbcExecutor();
+
+    private final JdbcExecutor mySqlReactJdbcExecutor = new MySqlReactJdbcExecutor();
 
 
     @ApiOperation(value = "测试接口")
@@ -81,7 +85,12 @@ public class TestController {
         Stage stageServiceById = stageService.getById(3L);
 
         List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
+        log.info("------------------");
+    }
 
+    @ApiOperation(value = "测试接口2")
+    @GetMapping("/react")
+    public void oneThreadTest() {
         LongAdder count = new LongAdder();
         ResultSetExtractPostProcessor<FundSecuAcc, Void> postProcessor = new ResultSetExtractPostProcessor<>() {
             @Override
@@ -96,28 +105,46 @@ public class TestController {
             }
         };
 
+
+        JdbcTemplate jdbcTemplate = dbHolder.jdbcTemplate(FundSecuAcc.class);
+        String tableName = dbHolder.tableName(FundSecuAcc.class);
+        Constructor<FundSecuAcc> mostArgConstructor = ConstructorUtil.findMostArgConstructor(FundSecuAcc.class);
         StopWatch stopWatch = StopWatch.of();
-        mySqlJdbcExecutor.batchQueryAllAndProcess(FundSecuAcc.class, "", postProcessor, jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
+        mySqlReactJdbcExecutor.batchQueryAllAndProcess(jdbcTemplate,
+                tableName, "", "", new Object[0], mostArgConstructor,
+                postProcessor,
+                jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
         stopWatch.stop();
         log.error("{}=============={}", count.sum(), stopWatch.prettyPrint());
     }
 
-    @ApiOperation(value = "测试接口2")
-    @GetMapping("/oneThread")
-    public void oneThreadTest() {
-        StopWatch stopWatch = StopWatch.of();
-        long count = testMySqlJdbcExecutor.batchQueryAll(FundSecuAcc.class, "", "", jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
-        stopWatch.stop();
-        log.error("{}=============={}", count, stopWatch.prettyPrint());
-    }
-
     @ApiOperation(value = "测试接口3")
-    @GetMapping("/async")
+    @GetMapping("/multiThread")
     public void asyncTest() {
+        LongAdder count = new LongAdder();
+        ResultSetExtractPostProcessor<FundSecuAcc, Void> postProcessor = new ResultSetExtractPostProcessor<>() {
+            @Override
+            public CheckResult canProcess(FundSecuAcc fundSecuAcc) {
+                return CheckResult.success("");
+            }
+
+            @Override
+            public Void process(FundSecuAcc fundSecuAcc) {
+                count.add(1);
+                return null;
+            }
+        };
+
+        JdbcTemplate jdbcTemplate = dbHolder.jdbcTemplate(FundSecuAcc.class);
+        String tableName = dbHolder.tableName(FundSecuAcc.class);
+        Constructor<FundSecuAcc> mostArgConstructor = ConstructorUtil.findMostArgConstructor(FundSecuAcc.class);
         StopWatch stopWatch = StopWatch.of();
-        long count = testMySqlJdbcExecutor.batchQueryAllAsync(FundSecuAcc.class, "", "", jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
+        mySqlMultiThreadJdbcExecutor.batchQueryAllAndProcess(jdbcTemplate,
+                tableName, "", "", new Object[0], mostArgConstructor,
+                postProcessor,
+                jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
         stopWatch.stop();
-        log.error("{}=============={}", count, stopWatch.prettyPrint());
+        log.error("{}=============={}", count.sum(), stopWatch.prettyPrint());
     }
 
     @ApiOperation(value = "Pipeline测试接口")

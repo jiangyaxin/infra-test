@@ -2,11 +2,11 @@ package com.jyx.infra.spring.jdbc.mysql.reader;
 
 import com.jyx.infra.collection.Tuple2;
 import com.jyx.infra.collection.Tuples;
-import com.jyx.infra.constant.StringConstant;
+import com.jyx.infra.log.Logs;
 import com.jyx.infra.spring.jdbc.JdbcHelper;
 import com.jyx.infra.spring.jdbc.reader.JdbcReader;
-import com.jyx.infra.thread.FutureResult;
 import com.jyx.infra.util.PageUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.UncategorizedSQLException;
 import org.springframework.jdbc.core.*;
@@ -15,7 +15,6 @@ import org.springframework.jdbc.support.JdbcUtils;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -27,12 +26,17 @@ import static com.jyx.infra.spring.jdbc.mysql.reader.AbstractMysqlJdbcReader.Con
  * @author jiangyaxin
  * @since 2023/11/24 13:57
  */
+@Slf4j
 public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
 
     interface Constants {
         String ALL_SELECT = "*";
 
+        String EMPTY = " ";
+
         String WHERE = "WHERE";
+
+        String AND = "AND";
 
         String UNION_ALL = "UNION ALL";
 
@@ -59,6 +63,7 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
         List<Long> startIdOfEachWorkerList = queryStartIdOfEachWorker(jdbcTemplate,
                 tableName, where, args,
                 totalCount, taskSizeOfEachWorker);
+        Logs.debug(log, "Start id of each worker:{}", startIdOfEachWorkerList);
 
         List<CompletableFuture<T>> futureList = new ArrayList<>(startIdOfEachWorkerList.size());
         String queryByIdRangeSql = buildQueryByIdRangeSql(tableName, select, where);
@@ -69,7 +74,11 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
             Object[] actualArgs = buildQueryByIdRangeArgs(args, lowId, highId);
             Tuple2<String, Object[]> sqlPair = Tuples.of(queryByIdRangeSql, actualArgs);
 
-            CompletableFuture<T> future = CompletableFuture.supplyAsync(() -> queryByIdRange(jdbcTemplate, sqlPair, onceBatchSizeOfEachWorker), ioPool);
+            CompletableFuture<T> future = CompletableFuture.supplyAsync(() -> {
+                T result = queryByIdRange(jdbcTemplate, sqlPair, onceBatchSizeOfEachWorker);
+                Logs.debug(log, "SQL:{} ==> PARAM:{}", sqlPair.getKey(), sqlPair.getValue());
+                return result;
+            }, ioPool);
 
             futureList.add(future);
         }
@@ -95,17 +104,15 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
 
         List<Long> startIdList = jdbcTemplate.execute(
                 (ConnectionCallback<List<Long>>) con -> {
-                    Statement stmt = null;
                     PreparedStatement pstmt = null;
                     ResultSet rs = null;
                     try {
-                        stmt = con.createStatement();
-                        stmt.execute(varSql);
-
                         pstmt = con.prepareStatement(startIdOfEachWorkerSql);
+                        pstmt.execute(varSql);
+
                         preparedStatementSetter.setValues(pstmt);
                         rs = pstmt.executeQuery();
-                        JdbcHelper.handleWarnings(stmt, jdbcTemplate.isIgnoreWarnings());
+                        JdbcHelper.handleWarnings(pstmt, jdbcTemplate.isIgnoreWarnings());
 
                         RowMapperResultSetExtractor<Long> rse = new RowMapperResultSetExtractor<>(new SingleColumnRowMapper<>(Long.class));
                         return rse.extractData(rs);
@@ -117,10 +124,8 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
                         throw (dae != null ? dae : new UncategorizedSQLException(task, sql, ex));
                     } finally {
                         JdbcUtils.closeResultSet(rs);
-                        JdbcUtils.closeStatement(stmt);
                         JdbcUtils.closeStatement(pstmt);
                         rs = null;
-                        stmt = null;
                         pstmt = null;
                     }
                 }
@@ -132,6 +137,11 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
     private String buildQueryByIdRangeSql(String tableName, String select, String where) {
         String tmpSelect = formatSelect(select);
         String tmpWhere = formatWhere(where);
+        if (!tmpWhere.toUpperCase().contains(WHERE)) {
+            tmpWhere = WHERE;
+        } else {
+            tmpWhere += AND;
+        }
 
         String idRangeSql = String.format(ID_RANGE_SQL_TEMPLATE, tmpSelect, tableName, tmpWhere);
         return idRangeSql;
@@ -148,12 +158,17 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
 
     private Tuple2<String, Object[]> buildStartIdOfEachWorkerSql(String tableName, String where, Object[] args, int workerSize, int taskSizeOfEachWorker) {
         String tmpWhere = formatWhere(where);
-        StringBuilder startIdEachWorkerSqlBuilder = new StringBuilder(START_ID_OF_EACH_WORKER_SQL_2).append(StringConstant.EMPTY);
+        if (!tmpWhere.toUpperCase().contains(WHERE)) {
+            tmpWhere = WHERE;
+        } else {
+            tmpWhere += AND;
+        }
+        StringBuilder startIdEachWorkerSqlBuilder = new StringBuilder(START_ID_OF_EACH_WORKER_SQL_2).append(EMPTY);
         String oneIdSql = String.format(START_ID_OF_EACH_WORKER_SQL_3, tableName, tmpWhere, taskSizeOfEachWorker);
         int argLength = args.length;
         Object[] actualArgs = new Object[argLength * workerSize];
         for (int i = 0; i < workerSize; i++) {
-            startIdEachWorkerSqlBuilder.append(StringConstant.EMPTY).append(UNION_ALL).append(StringConstant.EMPTY)
+            startIdEachWorkerSqlBuilder.append(EMPTY).append(UNION_ALL).append(EMPTY)
                     .append(oneIdSql);
             System.arraycopy(args, 0, actualArgs, i * argLength, argLength);
         }
@@ -175,14 +190,14 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
         if (tmpWhere.startsWith(WHERE)) {
             return where;
         } else {
-            return WHERE + StringConstant.EMPTY + where;
+            return WHERE + EMPTY + where;
         }
     }
 
     protected String formatSelect(String select) {
         if (select == null || select.trim().isEmpty()) {
-            return StringConstant.EMPTY + ALL_SELECT + StringConstant.EMPTY;
+            return EMPTY + ALL_SELECT + EMPTY;
         }
-        return StringConstant.EMPTY + select + StringConstant.EMPTY;
+        return EMPTY + select + EMPTY;
     }
 }

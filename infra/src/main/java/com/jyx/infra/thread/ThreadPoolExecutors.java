@@ -17,6 +17,10 @@ public class ThreadPoolExecutors {
 
     private static final Map<String, ThreadPoolExecutor> CURRENT_POOL_MAP = new ConcurrentHashMap<>();
 
+    public static boolean threadPoolExist(String poolName) {
+        return CURRENT_POOL_MAP.containsKey(poolName);
+    }
+
     public static ThreadPoolExecutor getThreadPool(String poolName) {
         ThreadPoolExecutor pool = CURRENT_POOL_MAP.get(poolName);
         if (pool == null) {
