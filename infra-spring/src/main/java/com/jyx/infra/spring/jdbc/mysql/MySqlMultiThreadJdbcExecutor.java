@@ -6,7 +6,6 @@ import com.jyx.infra.spring.jdbc.reader.JdbcReader;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 
 import java.util.List;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * @author jiangyaxin
@@ -15,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class MySqlMultiThreadJdbcExecutor extends MultiThreadJdbcExecutor {
 
     @Override
-    protected <OUT> JdbcReader<List<OUT>> buildJdbcReader(ThreadPoolExecutor ioPool, ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {
+    protected <OUT> JdbcReader<List<OUT>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {
         return new MultiThreadMysqlJdbcReader<>(ioPool, extractPostProcessor);
     }
 }

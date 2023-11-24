@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class MySqlReactJdbcExecutor extends ReactJdbcExecutor {
 
     @Override
-    protected <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ThreadPoolExecutor ioPool, ThreadPoolExecutor taskPool, ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {
+    protected <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {
         return new ReactMysqlJdbcReader<>(ioPool, taskPool, extractPostProcessor);
     }
 }

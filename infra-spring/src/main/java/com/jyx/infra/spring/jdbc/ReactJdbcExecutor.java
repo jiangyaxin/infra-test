@@ -16,7 +16,7 @@ import static com.jyx.infra.spring.jdbc.ReactJdbcExecutor.Constants.*;
  * @author jiangyaxin
  * @since 2023/11/24 12:27
  */
-public abstract class ReactJdbcExecutor extends MultiThreadJdbcExecutor {
+public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
 
     interface Constants {
         int processors = AppConstant.PROCESSORS;
@@ -36,12 +36,7 @@ public abstract class ReactJdbcExecutor extends MultiThreadJdbcExecutor {
         this.taskPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
     }
 
-    @Override
-    protected <OUT> JdbcReader<List<OUT>> buildJdbcReader(ThreadPoolExecutor ioPool, ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor) {
-        throw new UnsupportedOperationException();
-    }
-
-    protected abstract <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ThreadPoolExecutor ioPool, ThreadPoolExecutor taskPool, ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor);
+    protected abstract <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor);
 
 
     @Override
@@ -49,7 +44,7 @@ public abstract class ReactJdbcExecutor extends MultiThreadJdbcExecutor {
                                                                                   String tableName, String select, String where, Object[] args,
                                                                                   ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor,
                                                                                   int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
-        JdbcReader<List<CompletableFuture<List<OUT>>>> jdbcReader = buildJdbcReader(ioPool, taskPool, extractPostProcessor);
+        JdbcReader<List<CompletableFuture<List<OUT>>>> jdbcReader = buildJdbcReader(extractPostProcessor);
 
         List<CompletableFuture<List<CompletableFuture<List<OUT>>>>> futureList = jdbcReader.batchQueryAsync(jdbcTemplate,
                 tableName, select, where, args,
