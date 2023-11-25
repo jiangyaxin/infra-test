@@ -1,13 +1,11 @@
 package com.jyx.infra.spring.jdbc.mysql.reader;
 
 import com.jyx.infra.collection.Tuple2;
-import com.jyx.infra.log.Logs;
 import com.jyx.infra.spring.jdbc.reader.CursorPreparedStatementCreator;
 import com.jyx.infra.spring.jdbc.reader.IncorrectInstanceDataAccessException;
 import com.jyx.infra.spring.jdbc.reader.ObjectArrayRowMapper;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.util.CheckResult;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.*;
 
 import java.util.List;

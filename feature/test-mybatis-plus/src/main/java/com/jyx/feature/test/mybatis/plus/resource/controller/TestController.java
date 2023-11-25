@@ -17,6 +17,7 @@ import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.jdbc.JdbcExecutor;
 import com.jyx.infra.spring.jdbc.JdbcProperties;
+import com.jyx.infra.spring.jdbc.Query;
 import com.jyx.infra.spring.jdbc.mysql.MultiThreadMySqlJdbcExecutor;
 import com.jyx.infra.spring.jdbc.mysql.ReactMySqlJdbcExecutor;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
@@ -109,10 +110,11 @@ public class TestController {
         JdbcTemplate jdbcTemplate = dbHolder.jdbcTemplate(FundSecuAcc.class);
         String tableName = dbHolder.tableName(FundSecuAcc.class);
         Constructor<FundSecuAcc> mostArgConstructor = ConstructorUtil.findMostArgConstructor(FundSecuAcc.class);
+
+        Query query = new Query(tableName);
         StopWatch stopWatch = StopWatch.of();
-        mySqlReactJdbcExecutor.batchQueryAllAndProcess(jdbcTemplate,
-                tableName, "", "", new Object[0], mostArgConstructor,
-                postProcessor,
+        mySqlReactJdbcExecutor.batchQueryAllAndProcess(jdbcTemplate, query,
+                mostArgConstructor, postProcessor,
                 jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
         stopWatch.stop();
         log.error("{}=============={}", count.sum(), stopWatch.prettyPrint());
@@ -138,10 +140,10 @@ public class TestController {
         JdbcTemplate jdbcTemplate = dbHolder.jdbcTemplate(FundSecuAcc.class);
         String tableName = dbHolder.tableName(FundSecuAcc.class);
         Constructor<FundSecuAcc> mostArgConstructor = ConstructorUtil.findMostArgConstructor(FundSecuAcc.class);
+        Query query = new Query(tableName, "", new Object[0]);
         StopWatch stopWatch = StopWatch.of();
-        mySqlMultiThreadJdbcExecutor.batchQueryAllAndProcess(jdbcTemplate,
-                tableName, "", "", new Object[0], mostArgConstructor,
-                postProcessor,
+        mySqlMultiThreadJdbcExecutor.batchQueryAllAndProcess(jdbcTemplate, query,
+                mostArgConstructor, postProcessor,
                 jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
         stopWatch.stop();
         log.error("{}=============={}", count.sum(), stopWatch.prettyPrint());

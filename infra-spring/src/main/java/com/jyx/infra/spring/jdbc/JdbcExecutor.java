@@ -17,25 +17,24 @@ public interface JdbcExecutor {
 
 
     <OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,
-                                     String tableName, String select, String where, Object[] args, Constructor<OUT> constructor,
-                                     int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
+                                  Query query, Constructor<OUT> constructor,
+                                  int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 
     <T, OUT> List<OUT> batchQueryAllAndProcess(JdbcTemplate jdbcTemplate,
-                                               String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+                                               Query query, Constructor<T> constructor,
                                                ResultSetExtractPostProcessor<T, OUT> instancePostProcessor,
                                                int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 
     <T, OUT> List<CompletableFuture<List<OUT>>> batchQueryAllAsync(JdbcTemplate jdbcTemplate,
-                                                                   String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+                                                                   Query query, Constructor<T> constructor,
                                                                    int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 
     <T, OUT> List<CompletableFuture<List<OUT>>> batchQueryAllAndProcessAsync(JdbcTemplate jdbcTemplate,
-                                                                             String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+                                                                             Query query, Constructor<T> constructor,
                                                                              ResultSetExtractPostProcessor<T, OUT> instancePostProcessor,
                                                                              int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 
     <OUT> List<CompletableFuture<List<OUT>>> batchQueryAllNotInstanceAsync(JdbcTemplate jdbcTemplate,
-                                                                         String tableName, String select, String where, Object[] args,
-                                                                         ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor,
+                                                                           Query query, ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor,
                                                                            int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 }

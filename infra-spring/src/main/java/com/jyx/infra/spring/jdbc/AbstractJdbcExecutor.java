@@ -49,10 +49,10 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
 
     @Override
     public <OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,
-                                         String tableName, String select, String where, Object[] args, Constructor<OUT> constructor,
+                                         Query query, Constructor<OUT> constructor,
                                          int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
         List<CompletableFuture<List<OUT>>> futureList = batchQueryAllAsync(jdbcTemplate,
-                tableName, select, where, args, constructor,
+                query, constructor,
                 taskSizeOfEachWorker, onceBatchSizeOfEachWorker
         );
         return mergeFuture(futureList);
@@ -60,11 +60,11 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
 
     @Override
     public <T, OUT> List<OUT> batchQueryAllAndProcess(JdbcTemplate jdbcTemplate,
-                                                      String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+                                                      Query query, Constructor<T> constructor,
                                                       ResultSetExtractPostProcessor<T, OUT> instancePostProcessor,
                                                       int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
         List<CompletableFuture<List<OUT>>> futureList = batchQueryAllAndProcessAsync(jdbcTemplate,
-                tableName, select, where, args, constructor,
+                query, constructor,
                 instancePostProcessor,
                 taskSizeOfEachWorker, onceBatchSizeOfEachWorker
         );
@@ -73,24 +73,20 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
 
     @Override
     public <T, OUT> List<CompletableFuture<List<OUT>>> batchQueryAllAsync(JdbcTemplate jdbcTemplate,
-                                                                          String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+                                                                          Query query, Constructor<T> constructor,
                                                                           int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
         InstancePostProcessorResultSet<T, OUT> extractPostProcessor = new InstancePostProcessorResultSet<>(constructor);
-        return batchQueryAllNotInstanceAsync(jdbcTemplate,
-                tableName, select, where, args,
-                extractPostProcessor,
+        return batchQueryAllNotInstanceAsync(jdbcTemplate, query, extractPostProcessor,
                 taskSizeOfEachWorker, onceBatchSizeOfEachWorker);
     }
 
     @Override
     public <T, OUT> List<CompletableFuture<List<OUT>>> batchQueryAllAndProcessAsync(JdbcTemplate jdbcTemplate,
-                                                                                    String tableName, String select, String where, Object[] args, Constructor<T> constructor,
+                                                                                    Query query, Constructor<T> constructor,
                                                                                     ResultSetExtractPostProcessor<T, OUT> instancePostProcessor,
                                                                                     int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
         InstancePostProcessorResultSet<T, OUT> extractPostProcessor = new InstancePostProcessorResultSet<>(constructor, instancePostProcessor, true);
-        return batchQueryAllNotInstanceAsync(jdbcTemplate,
-                tableName, select, where, args,
-                extractPostProcessor,
+        return batchQueryAllNotInstanceAsync(jdbcTemplate, query, extractPostProcessor,
                 taskSizeOfEachWorker, onceBatchSizeOfEachWorker);
     }
 

@@ -1,5 +1,6 @@
 package com.jyx.infra.spring.jdbc.reader;
 
+import com.jyx.infra.spring.jdbc.Query;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface JdbcReader<T> {
 
-    List<CompletableFuture<T>> batchQueryAsync(JdbcTemplate jdbcTemplate,
-                                               String tableName, String select, String where, Object[] args,
+    List<CompletableFuture<T>> batchQueryAsync(JdbcTemplate jdbcTemplate, Query query,
                                                int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 }

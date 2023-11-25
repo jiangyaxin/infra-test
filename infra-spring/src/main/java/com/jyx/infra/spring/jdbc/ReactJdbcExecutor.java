@@ -43,13 +43,11 @@ public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
 
     @Override
     public <OUT> List<CompletableFuture<List<OUT>>> batchQueryAllNotInstanceAsync(JdbcTemplate jdbcTemplate,
-                                                                                  String tableName, String select, String where, Object[] args,
-                                                                                  ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor,
+                                                                                  Query query, ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor,
                                                                                   int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
         JdbcReader<List<CompletableFuture<List<OUT>>>> jdbcReader = buildJdbcReader(extractPostProcessor);
 
-        List<CompletableFuture<List<CompletableFuture<List<OUT>>>>> futureList = jdbcReader.batchQueryAsync(jdbcTemplate,
-                tableName, select, where, args,
+        List<CompletableFuture<List<CompletableFuture<List<OUT>>>>> futureList = jdbcReader.batchQueryAsync(jdbcTemplate, query,
                 taskSizeOfEachWorker, onceBatchSizeOfEachWorker);
 
         List<CompletableFuture<List<OUT>>> result = mergeFuture(futureList);

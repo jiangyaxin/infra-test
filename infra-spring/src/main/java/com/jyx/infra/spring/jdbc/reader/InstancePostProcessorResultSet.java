@@ -23,7 +23,7 @@ public class InstancePostProcessorResultSet<T, OUT> implements ResultSetExtractP
         this.clearInstanceAfterPost = false;
     }
 
-    public InstancePostProcessorResultSet(Constructor<T> constructor, ResultSetExtractPostProcessor<T, OUT> nextPostProcessor,boolean clearInstanceAfterPost) {
+    public InstancePostProcessorResultSet(Constructor<T> constructor, ResultSetExtractPostProcessor<T, OUT> nextPostProcessor, boolean clearInstanceAfterPost) {
         this.constructor = constructor;
         this.nextPostProcessor = nextPostProcessor;
         this.clearInstanceAfterPost = clearInstanceAfterPost;

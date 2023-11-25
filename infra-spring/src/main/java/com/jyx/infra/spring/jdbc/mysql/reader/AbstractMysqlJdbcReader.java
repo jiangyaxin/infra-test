@@ -4,6 +4,7 @@ import com.jyx.infra.collection.Tuple2;
 import com.jyx.infra.collection.Tuples;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.spring.jdbc.JdbcHelper;
+import com.jyx.infra.spring.jdbc.Query;
 import com.jyx.infra.spring.jdbc.reader.JdbcReader;
 import com.jyx.infra.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -55,9 +56,13 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
         this.ioPool = ioPool;
     }
 
-    public List<CompletableFuture<T>> batchQueryAsync(JdbcTemplate jdbcTemplate,
-                                                      String tableName, String select, String where, Object[] args,
+    public List<CompletableFuture<T>> batchQueryAsync(JdbcTemplate jdbcTemplate, Query query,
                                                       int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
+        String tableName = query.getTableName();
+        String select = query.getSelect();
+        String where = query.getWhere();
+        Object[] args = query.getArgs();
+
         Integer totalCount = count(jdbcTemplate,
                 tableName, where, args);
         List<Long> startIdOfEachWorkerList = queryStartIdOfEachWorker(jdbcTemplate,
