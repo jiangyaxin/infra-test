@@ -3,7 +3,8 @@ package com.jyx.infra.mybatis.plus;
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import lombok.RequiredArgsConstructor;
+import com.jyx.infra.spring.jdbc.JdbcExecutor;
+import com.jyx.infra.spring.jdbc.mysql.ReactMySqlJdbcExecutor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,6 +14,11 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class MybatisPlusConfig {
+
+    @Bean
+    public JdbcExecutor jdbcExecutor() {
+        return new ReactMySqlJdbcExecutor();
+    }
 
     @Bean
     public MybatisPlusInterceptor mybatisPlusInterceptor() {

@@ -49,9 +49,6 @@ public abstract class InterruptBatchInsertArgsSetter implements InterruptibleBat
         if (values.length != columns.length) {
             throw new IncorrectInsertDataException(String.format("Batch insert set PreparedStatement args error,data length [%s] != columns length [%s]", i, values.length, columns.length));
         }
-        if (Objects.equals(values[0],1330000L) && i == 0) {
-            throw new RuntimeException("wo shi gu yi de");
-        }
 
         int colIndex = 0;
         for (Object value : values) {
