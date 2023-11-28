@@ -1,7 +1,7 @@
 package com.jyx.infra.spring.jdbc;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/25 12:24
  */
 public interface KeyWorkConstant {

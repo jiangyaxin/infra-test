@@ -11,7 +11,7 @@ import java.util.concurrent.CancellationException;
 import java.util.concurrent.CompletableFuture;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/25 17:11
  */
 @Slf4j

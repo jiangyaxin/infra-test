@@ -12,7 +12,7 @@ import static com.jyx.infra.spring.jdbc.KeyWorkConstant.PLACEHOLDER;
 import static com.jyx.infra.spring.jdbc.mysql.writer.AbstractMysqlJdbcWriter.Constants.INSERT_SQL;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/27 17:28
  */
 public abstract class AbstractMysqlJdbcWriter extends AbstractJdbcWriter {

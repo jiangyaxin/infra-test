@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/25 15:32
  */
 public class InterruptBatchInsertPreparedStatementCallBack implements PreparedStatementCallback<Integer> {

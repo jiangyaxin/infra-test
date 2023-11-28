@@ -4,7 +4,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/27 16:02
  */
 public class ReactMysqlJdbcWriter extends AbstractMysqlJdbcWriter {

@@ -3,7 +3,7 @@ package com.jyx.infra.spring.jdbc.writer;
 import java.util.List;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/27 14:59
  */
 public interface InsertDataExtractor<OUT> {

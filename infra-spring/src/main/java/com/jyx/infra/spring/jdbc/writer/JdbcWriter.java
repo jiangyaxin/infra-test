@@ -7,7 +7,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/25 11:03
  */
 public interface JdbcWriter {

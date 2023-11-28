@@ -4,7 +4,7 @@ import static com.jyx.infra.spring.jdbc.KeyWorkConstant.*;
 import static com.jyx.infra.spring.jdbc.KeyWorkConstant.EMPTY;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/25 12:31
  */
 public class SqlHelper {
