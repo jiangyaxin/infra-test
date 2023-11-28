@@ -13,7 +13,7 @@ public class InsertProperties {
 
         int DEFAULT_INSERT_TASK_SIZE_OF_EACH_WORKER = 5_000;
 
-        int DEFAULT_INSERT_ONCE_BATCH_SIZE_OF_EACH_WORKER = 5_00;
+        int DEFAULT_INSERT_ONCE_BATCH_SIZE_OF_EACH_WORKER = 500;
     }
 
     /**
