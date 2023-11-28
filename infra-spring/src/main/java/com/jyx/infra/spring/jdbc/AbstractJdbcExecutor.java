@@ -3,12 +3,15 @@ package com.jyx.infra.spring.jdbc;
 import com.jyx.infra.constant.RuntimeConstant;
 import com.jyx.infra.spring.jdbc.reader.InstancePostProcessorResultSet;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
+import com.jyx.infra.spring.jdbc.writer.BatchInsertResult;
+import com.jyx.infra.spring.jdbc.writer.JdbcWriter;
 import com.jyx.infra.thread.FutureResult;
 import com.jyx.infra.thread.ThreadPoolExecutors;
 import com.jyx.infra.util.ListUtil;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -34,17 +37,47 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
 
     protected final ThreadPoolExecutor ioPool;
 
+    protected JdbcWriter jdbcWriter;
+
     public AbstractJdbcExecutor() {
         if (ThreadPoolExecutors.threadPoolExist(POOL_NAME)) {
             this.ioPool = ThreadPoolExecutors.getThreadPool(POOL_NAME);
         } else {
             this.ioPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
         }
+        this.jdbcWriter = buildJdbcWriter();
+    }
+
+    protected abstract JdbcWriter buildJdbcWriter();
+
+    @Override
+    public void truncate(JdbcTemplate jdbcTemplate, String tableName) {
+        String truncateSql = KeyWorkConstant.TRUNCATE + KeyWorkConstant.EMPTY + tableName;
+        jdbcTemplate.execute(truncateSql);
     }
 
     @Override
-    public <T> void batchInsert(List<T> dataList) {
+    public <T> int batchInsert(JdbcTemplate jdbcTemplate,
+                               List<T> dataList, Field[] fields,
+                               Insert insert,
+                               int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
+        int rowsAffected = jdbcWriter.batchInsert(jdbcTemplate,
+                dataList, fields,
+                insert,
+                taskSizeOfEachWorker, onceBatchSizeOfEachWorker);
+        return rowsAffected;
+    }
 
+    @Override
+    public <T> BatchInsertResult batchInsertAsync(JdbcTemplate jdbcTemplate,
+                                                  List<T> dataList, Field[] fields,
+                                                  Insert insert,
+                                                  int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker) {
+        BatchInsertResult batchInsertResult = jdbcWriter.batchInsertAsync(jdbcTemplate,
+                dataList, fields,
+                insert,
+                taskSizeOfEachWorker, onceBatchSizeOfEachWorker);
+        return batchInsertResult;
     }
 
     @Override

@@ -36,6 +36,7 @@ public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
         } else {
             this.taskPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
         }
+        this.jdbcWriter = buildJdbcWriter();
     }
 
     protected abstract <OUT> JdbcReader<List<CompletableFuture<List<OUT>>>> buildJdbcReader(ResultSetExtractPostProcessor<Object[], OUT> extractPostProcessor);

@@ -16,6 +16,43 @@ import java.util.concurrent.*;
 @Slf4j
 public class ThreadTest {
 
+    @Test
+    public void completableFutureTest() throws InterruptedException {
+        CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(3_000);
+                log.info("我是Future1");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        future1.thenRun(() -> log.info("我是Future1的大儿子"));
+        future1.thenRun(() -> log.info("我是Future1的二儿子"));
+        CompletableFuture<Void> future2 = CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(5_000);
+                log.info("我是Future2");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        CompletableFuture<Void> future3 = CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(10_000);
+                log.info("我是Future3");
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        Thread.sleep(2_000);
+        future1.cancel(true);
+        future2.cancel(true);
+        future3.cancel(true);
+
+        Thread.sleep(20_000);
+    }
+
     public static void main(String[] args) {
         Executors.newFixedThreadPool(1).submit(() -> {
             while (true) {

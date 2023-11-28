@@ -15,12 +15,14 @@ import com.jyx.infra.dbf.DbfFieldTypeEnum;
 import com.jyx.infra.dbf.DbfWriter;
 import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
+import com.jyx.infra.spring.jdbc.Insert;
 import com.jyx.infra.spring.jdbc.JdbcExecutor;
 import com.jyx.infra.spring.jdbc.JdbcProperties;
 import com.jyx.infra.spring.jdbc.Query;
 import com.jyx.infra.spring.jdbc.mysql.MultiThreadMySqlJdbcExecutor;
 import com.jyx.infra.spring.jdbc.mysql.ReactMySqlJdbcExecutor;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
+import com.jyx.infra.spring.jdbc.writer.BatchInsertResult;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
 import com.jyx.infra.util.CheckResult;
 import com.jyx.infra.util.ConstructorUtil;
@@ -36,10 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.LongAdder;
 
@@ -91,7 +90,7 @@ public class TestController {
 
     @ApiOperation(value = "测试接口2")
     @GetMapping("/react")
-    public void oneThreadTest() {
+    public void reactTest() {
         LongAdder count = new LongAdder();
         ResultSetExtractPostProcessor<FundSecuAcc, Void> postProcessor = new ResultSetExtractPostProcessor<>() {
             @Override
@@ -118,6 +117,49 @@ public class TestController {
                 jdbcProperties.getTaskSize(), jdbcProperties.getBatchSize());
         stopWatch.stop();
         log.error("{}=============={}", count.sum(), stopWatch.prettyPrint());
+    }
+
+    @ApiOperation(value = "测试接口4")
+    @GetMapping("/reactInsert")
+    public void reactInsertTest() {
+        JdbcTemplate jdbcTemplate = dbHolder.jdbcTemplate(Stage.class);
+        String tableName = dbHolder.tableName(Stage.class);
+
+        List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
+
+        mySqlReactJdbcExecutor.truncate(jdbcTemplate, tableName);
+
+        int size = 1000_0000;
+        List<Stage> dataList = new ArrayList<>(size);
+        for (long i = 0; i < size; i++) {
+            Stage stage = new Stage(i, "阶段名称", i, new Date(), i, new Date());
+            dataList.add(stage);
+        }
+
+        String[] columns = new String[columnInfoList.size()];
+        int[] columnTypes = new int[columnInfoList.size()];
+        Field[] fields = new Field[columnInfoList.size()];
+        columnInfoList.sort(Comparator.comparingInt(ColumnInfo::getOrder));
+        for (int i = 0; i < columnInfoList.size(); i++) {
+            ColumnInfo columnInfo = columnInfoList.get(i);
+            fields[i] = columnInfo.getField();
+            columnTypes[i] = columnInfo.getJdbcType().TYPE_CODE;
+            columns[i] = columnInfo.getColumn();
+        }
+        Insert insert = new Insert(tableName, columns, columnTypes);
+
+
+        StopWatch stopWatch = StopWatch.ofTask("任务一");
+        BatchInsertResult batchInsertResult = mySqlReactJdbcExecutor.batchInsertAsync(jdbcTemplate,
+                dataList, fields,
+                insert,
+                5000, 500);
+        stopWatch.stop();
+        stopWatch.start("任务二");
+        int rowsAffected = batchInsertResult.getResult();
+        stopWatch.stop();
+
+        log.error("{}=============={}", rowsAffected, stopWatch.prettyPrint());
     }
 
     @ApiOperation(value = "测试接口3")

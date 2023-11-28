@@ -144,7 +144,8 @@ public class DbHolder {
 
     public List<ColumnInfo> columnInfo(Class<?> clazz) {
         try {
-            return columnInfoCache.get(clazz, () -> loadColumnInfo(clazz));
+            List<ColumnInfo> columnInfoList = columnInfoCache.get(clazz, () -> loadColumnInfo(clazz));
+            return new ArrayList<>(columnInfoList);
         } catch (ExecutionException e) {
             throw AppException.of(String.format("%s get column info error.", clazz.getName()));
         }

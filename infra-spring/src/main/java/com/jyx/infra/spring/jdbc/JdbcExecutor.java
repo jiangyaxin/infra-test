@@ -1,9 +1,11 @@
 package com.jyx.infra.spring.jdbc;
 
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
+import com.jyx.infra.spring.jdbc.writer.BatchInsertResult;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -13,7 +15,17 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface JdbcExecutor {
 
-    <T> void batchInsert(List<T> dataList);
+    void truncate(JdbcTemplate jdbcTemplate, String tableName);
+
+    <T> int batchInsert(JdbcTemplate jdbcTemplate,
+                        List<T> dataList, Field[] fields,
+                        Insert insert,
+                        int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
+
+    <T> BatchInsertResult batchInsertAsync(JdbcTemplate jdbcTemplate,
+                                           List<T> dataList, Field[] fields,
+                                           Insert insert,
+                                           int taskSizeOfEachWorker, int onceBatchSizeOfEachWorker);
 
 
     <OUT> List<OUT> batchQueryAll(JdbcTemplate jdbcTemplate,

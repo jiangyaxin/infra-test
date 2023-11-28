@@ -43,7 +43,7 @@ spring:
       strict: true
       datasource:
         test1:
-          url: jdbc:mysql://127.0.0.1:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true&useCursorFetch=true&allowMultiQueries=true
+          url: jdbc:mysql://127.0.0.1:3306/jpa_test?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true&useCursorFetch=true&allowMultiQueries=true&rewriteBatchedStatements=true
           username: root
           password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
@@ -70,11 +70,11 @@ spring:
             # 该值不要设置，默认与 maximumPoolSize 保持一致
             # minimumIdle
             # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
-            maximumPoolSize: 20
+            maximumPoolSize: 200
             data-source-properties:
               logger: com.mysql.cj.log.Slf4JLogger
         test2:
-          url: jdbc:mysql://127.0.0.1:3306/jpa_test2?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true&useCursorFetch=true&allowMultiQueries=true
+          url: jdbc:mysql://127.0.0.1:3306/jpa_test2?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true&useCursorFetch=true&allowMultiQueries=true&rewriteBatchedStatements=true
           username: root
           password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver
@@ -105,7 +105,7 @@ spring:
             data-source-properties:
               logger: com.mysql.cj.log.Slf4JLogger
         acp_base:
-          url: jdbc:mysql://127.0.0.1:3306/acp_base?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true&useCursorFetch=true&allowMultiQueries=true
+          url: jdbc:mysql://127.0.0.1:3306/acp_base?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true&useCursorFetch=true&allowMultiQueries=true&rewriteBatchedStatements=true
           username: root
           password: 123456
           driver-class-name: com.mysql.cj.jdbc.Driver

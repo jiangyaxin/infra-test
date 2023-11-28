@@ -5,6 +5,7 @@ import com.jyx.infra.collection.Tuples;
 import com.jyx.infra.log.Logs;
 import com.jyx.infra.spring.jdbc.JdbcHelper;
 import com.jyx.infra.spring.jdbc.Query;
+import com.jyx.infra.spring.jdbc.mysql.SqlHelper;
 import com.jyx.infra.spring.jdbc.reader.JdbcReader;
 import com.jyx.infra.util.PageUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 
+import static com.jyx.infra.spring.jdbc.KeyWorkConstant.*;
 import static com.jyx.infra.spring.jdbc.mysql.reader.AbstractMysqlJdbcReader.Constants.*;
 
 /**
@@ -31,15 +33,6 @@ import static com.jyx.infra.spring.jdbc.mysql.reader.AbstractMysqlJdbcReader.Con
 public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
 
     interface Constants {
-        String ALL_SELECT = "*";
-
-        String EMPTY = " ";
-
-        String WHERE = "WHERE";
-
-        String AND = "AND";
-
-        String UNION_ALL = "UNION ALL";
 
         String COUNT_SQL_TEMPLATE = "SELECT COUNT(id) FROM %s %s";
 
@@ -80,9 +73,15 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
             Tuple2<String, Object[]> sqlPair = Tuples.of(queryByIdRangeSql, actualArgs);
 
             CompletableFuture<T> future = CompletableFuture.supplyAsync(() -> {
-                T result = queryByIdRange(jdbcTemplate, sqlPair, onceBatchSizeOfEachWorker);
-                Logs.debug(log, "SQL:{} ==> PARAM:{}", sqlPair.getKey(), sqlPair.getValue());
-                return result;
+                try {
+                    T result = queryByIdRange(jdbcTemplate, sqlPair, onceBatchSizeOfEachWorker);
+                    Logs.debug(log, "SQL:{} ==> PARAM:{}", sqlPair.getKey(), sqlPair.getValue());
+                    return result;
+                } catch (Exception e) {
+                    Logs.error(log, "Query id range error,SQL:{} ==> PARAM:{}",
+                            sqlPair.getKey(), sqlPair.getValue(), e);
+                    throw e;
+                }
             }, ioPool);
 
             futureList.add(future);
@@ -140,8 +139,8 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
     }
 
     private String buildQueryByIdRangeSql(String tableName, String select, String where) {
-        String tmpSelect = formatSelect(select);
-        String tmpWhere = formatWhere(where);
+        String tmpSelect = SqlHelper.formatSelect(select);
+        String tmpWhere = SqlHelper.formatWhere(where);
         if (!tmpWhere.toUpperCase().contains(WHERE)) {
             tmpWhere = WHERE;
         } else {
@@ -162,7 +161,7 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
 
 
     private Tuple2<String, Object[]> buildStartIdOfEachWorkerSql(String tableName, String where, Object[] args, int workerSize, int taskSizeOfEachWorker) {
-        String tmpWhere = formatWhere(where);
+        String tmpWhere = SqlHelper.formatWhere(where);
         if (!tmpWhere.toUpperCase().contains(WHERE)) {
             tmpWhere = WHERE;
         } else {
@@ -182,27 +181,8 @@ public abstract class AbstractMysqlJdbcReader<T> implements JdbcReader<T> {
 
 
     private String buildCountSql(String tableName, String where) {
-        String tmpWhere = formatWhere(where);
+        String tmpWhere = SqlHelper.formatWhere(where);
         String countSql = String.format(COUNT_SQL_TEMPLATE, tableName, tmpWhere);
         return countSql;
-    }
-
-    protected String formatWhere(String where) {
-        if (where == null || where.trim().isEmpty()) {
-            return "";
-        }
-        String tmpWhere = where.trim().toUpperCase();
-        if (tmpWhere.startsWith(WHERE)) {
-            return where;
-        } else {
-            return WHERE + EMPTY + where;
-        }
-    }
-
-    protected String formatSelect(String select) {
-        if (select == null || select.trim().isEmpty()) {
-            return EMPTY + ALL_SELECT + EMPTY;
-        }
-        return EMPTY + select + EMPTY;
     }
 }
