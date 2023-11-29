@@ -23,6 +23,13 @@ public class DateTimeUtil {
         return dateStr;
     }
 
+    public static String formatDateTime(Date date, DateTimeFormatter dateTimeFormatter) {
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(date.toInstant(), DateTimeConstant.ZoneOffsets.DEFAULT_ZONE);
+        String dateStr = localDateTime.format(dateTimeFormatter);
+
+        return dateStr;
+    }
+
     public static Date parseDate(String dateStr, DateTimeFormatter dateTimeFormatter) {
         LocalDate localDate = LocalDate.parse(dateStr, dateTimeFormatter);
         return Date.from(localDate.atStartOfDay().atZone(DateTimeConstant.ZoneOffsets.DEFAULT_ZONE).toInstant());

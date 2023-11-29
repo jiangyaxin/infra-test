@@ -13,6 +13,7 @@ public interface DateTimeConstant {
         String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
         String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
         String NO_HORIZONTAL_DATE_PATTERN = "yyyyMMdd";
+        String NO_HORIZONTAL_DATE_TIME_PATTERN = "yyyyMMddHHmmss";
     }
 
     interface ZoneOffsets {
@@ -23,5 +24,6 @@ public interface DateTimeConstant {
         DateTimeFormatter DEFAULT_DATETIME_FORMATTER = DateTimeFormatter.ofPattern(Patterns.DEFAULT_DATETIME_PATTERN);
         DateTimeFormatter DEFAULT_DATE_FORMATTER = DateTimeFormatter.ofPattern(Patterns.DEFAULT_DATE_PATTERN);
         DateTimeFormatter NO_HORIZONTAL_DATE_FORMATTER = DateTimeFormatter.ofPattern(Patterns.NO_HORIZONTAL_DATE_PATTERN);
+        DateTimeFormatter NO_HORIZONTAL_DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(Patterns.NO_HORIZONTAL_DATE_TIME_PATTERN);
     }
 }

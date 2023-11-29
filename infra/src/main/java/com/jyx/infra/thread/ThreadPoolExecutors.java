@@ -17,6 +17,16 @@ public class ThreadPoolExecutors {
 
     private static final Map<String, ThreadPoolExecutor> CURRENT_POOL_MAP = new ConcurrentHashMap<>();
 
+
+    public static ThreadPoolExecutor getOrCreateThreadPool(String poolName, int corePoolSize, int maxPoolSize, int queueCapacity) {
+        ThreadPoolExecutor pool;
+        if (threadPoolExist(poolName)) {
+            return getThreadPool(poolName);
+        } else {
+            return newThreadPool(poolName, corePoolSize, maxPoolSize, queueCapacity);
+        }
+    }
+
     public static boolean threadPoolExist(String poolName) {
         return CURRENT_POOL_MAP.containsKey(poolName);
     }
@@ -29,7 +39,7 @@ public class ThreadPoolExecutors {
         return pool;
     }
 
-    public static synchronized ThreadPoolExecutor newThreadPool(int corePoolSize, int maxPoolSize, int queueCapacity, String poolName) {
+    public static synchronized ThreadPoolExecutor newThreadPool(String poolName, int corePoolSize, int maxPoolSize, int queueCapacity) {
         if (CURRENT_POOL_MAP.containsKey(poolName)) {
             throw new AppException(String.format("ThreadPool(%s) already existed", poolName));
         }

@@ -40,11 +40,7 @@ public abstract class AbstractJdbcExecutor implements JdbcExecutor {
     protected JdbcWriter jdbcWriter;
 
     public AbstractJdbcExecutor() {
-        if (ThreadPoolExecutors.threadPoolExist(POOL_NAME)) {
-            this.ioPool = ThreadPoolExecutors.getThreadPool(POOL_NAME);
-        } else {
-            this.ioPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
-        }
+        this.ioPool = ThreadPoolExecutors.getOrCreateThreadPool(POOL_NAME, CORE_SIZE, MAX_SIZE, QUEUE_SIZE);
         this.jdbcWriter = buildJdbcWriter();
     }
 

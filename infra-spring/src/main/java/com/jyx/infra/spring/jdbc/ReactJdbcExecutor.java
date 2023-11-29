@@ -31,11 +31,7 @@ public abstract class ReactJdbcExecutor extends AbstractJdbcExecutor {
 
     public ReactJdbcExecutor() {
         super();
-        if (ThreadPoolExecutors.threadPoolExist(POOL_NAME)) {
-            this.taskPool = ThreadPoolExecutors.getThreadPool(POOL_NAME);
-        } else {
-            this.taskPool = ThreadPoolExecutors.newThreadPool(CORE_SIZE, MAX_SIZE, QUEUE_SIZE, POOL_NAME);
-        }
+        this.taskPool = ThreadPoolExecutors.getOrCreateThreadPool(POOL_NAME, CORE_SIZE, MAX_SIZE, QUEUE_SIZE);
         this.jdbcWriter = buildJdbcWriter();
     }
 

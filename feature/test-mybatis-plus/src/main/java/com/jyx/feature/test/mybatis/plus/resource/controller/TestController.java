@@ -11,6 +11,7 @@ import com.jyx.feature.test.mybatis.plus.repository.repo1.service.StageService;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.TblDbfService;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.mapper.LightGroupMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo2.service.LightGroupService;
+import com.jyx.infra.constant.RuntimeConstant;
 import com.jyx.infra.datetime.StopWatch;
 import com.jyx.infra.dbf.DbfException;
 import com.jyx.infra.dbf.DbfField;
@@ -20,7 +21,9 @@ import com.jyx.infra.mybatis.plus.DbHolder;
 import com.jyx.infra.mybatis.plus.metadata.ColumnInfo;
 import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
+import com.jyx.infra.thread.ThreadPoolExecutors;
 import com.jyx.infra.util.CheckResult;
+import com.jyx.infra.web.excel.WebExcelTransporter;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,9 +33,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.LongAdder;
 
 /**
@@ -75,6 +80,21 @@ public class TestController {
 
         List<ColumnInfo> columnInfoList = dbHolder.columnInfo(Stage.class);
         log.info("------------------");
+    }
+
+    @ApiOperation(value = "测试接口")
+    @GetMapping("/excelExport")
+    public void excelExportTest(HttpServletResponse response) {
+        ThreadPoolExecutor threadPool = ThreadPoolExecutors.getOrCreateThreadPool("Test-Pool", RuntimeConstant.PROCESSORS * 2, RuntimeConstant.PROCESSORS * 2, 1024);
+        StopWatch stopWatch = StopWatch.ofTask("Query");
+        LambdaQueryWrapper<Stage> query = new QueryWrapper<Stage>().lambda()
+                .lt(Stage::getId, 5000);
+        List<Stage> stageList = stageService.batchQueryAll(query);
+        stopWatch.stop();
+        stopWatch.start("Excel");
+        WebExcelTransporter.export(response, "stage", stageList, Stage.class, null, threadPool);
+        stopWatch.stop();
+        log.info("{}------------{}", stageList.size(), stopWatch.prettyPrint());
     }
 
     @ApiOperation(value = "测试接口")

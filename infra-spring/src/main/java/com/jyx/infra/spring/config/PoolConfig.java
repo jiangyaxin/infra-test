@@ -32,10 +32,9 @@ public class PoolConfig {
         int maxSize = processors * factor;
         int queueSize = 1024 * factor;
         ThreadPoolExecutor pool = ThreadPoolExecutors.newThreadPool(
-                coreSize,
+                AppConstant.IO_POOL_NAME, coreSize,
                 maxSize,
-                queueSize,
-                AppConstant.IO_POOL_NAME
+                queueSize
         );
         return pool;
     }
@@ -50,10 +49,9 @@ public class PoolConfig {
         int maxSize = processors * factor;
         int queueSize = 256 * factor;
         ThreadPoolExecutor pool = ThreadPoolExecutors.newThreadPool(
-                coreSize,
+                AppConstant.CALCULATE_POOL_NAME, coreSize,
                 maxSize,
-                queueSize,
-                AppConstant.CALCULATE_POOL_NAME
+                queueSize
         );
         return pool;
     }
