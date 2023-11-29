@@ -8,9 +8,7 @@ import com.alibaba.excel.write.metadata.WriteSheet;
 import com.jyx.infra.excel.AsyncExcelReadListener;
 import com.jyx.infra.exception.ExcelException;
 
-import java.io.Closeable;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -30,12 +28,23 @@ public class ExcelUtil {
 
     public static <T, OUT> List<OUT> readExcel(String path, Class<T> clazz,
                                                Function<List<T>, OUT> dataProcessor, ExecutorService executorService) {
+        try (FileInputStream inputStream = new FileInputStream(path)) {
+            return readExcel(inputStream, clazz, dataProcessor, executorService);
+        } catch (Exception e) {
+            throw new ExcelException(e);
+        }
+    }
+
+    public static <T, OUT> List<OUT> readExcel(InputStream inputStream, Class<T> clazz,
+                                               Function<List<T>, OUT> dataProcessor, ExecutorService executorService) {
         AsyncExcelReadListener<T, OUT> readListener = new AsyncExcelReadListener<>(executorService, Constants.TASK_SIZE_OF_EACH_WORKER, Constants.EXCEPTED_TASK_SIZE, dataProcessor);
-        try (ExcelReader excelReader = EasyExcel.read(path, clazz, readListener).build()) {
+        try (ExcelReader excelReader = EasyExcel.read(inputStream, clazz, readListener).build()) {
             List<ReadSheet> readSheetList = excelReader.excelExecutor().sheetList();
             for (ReadSheet readSheet : readSheetList) {
                 excelReader.read(readSheet);
             }
+        } catch (Exception e) {
+            throw new ExcelException(e);
         }
         return readListener.getResult();
     }
