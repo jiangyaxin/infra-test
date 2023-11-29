@@ -23,6 +23,7 @@ import com.jyx.infra.spring.jdbc.reader.ResultSetExtractPostProcessor;
 import com.jyx.infra.spring.pipeline.PipelineHolder;
 import com.jyx.infra.thread.ThreadPoolExecutors;
 import com.jyx.infra.util.CheckResult;
+import com.jyx.infra.util.ExcelUtil;
 import com.jyx.infra.web.excel.WebExcelTransporter;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -39,6 +40,7 @@ import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.atomic.LongAdder;
+import java.util.function.Function;
 
 /**
  * @author jiangyaxin
@@ -95,6 +97,16 @@ public class TestController {
         WebExcelTransporter.export(response, "stage", stageList, Stage.class, null, threadPool);
         stopWatch.stop();
         log.info("{}------------{}", stageList.size(), stopWatch.prettyPrint());
+    }
+
+    @ApiOperation(value = "测试接口")
+    @GetMapping("/excelRead")
+    public void excelReadTest() {
+        ThreadPoolExecutor threadPool = ThreadPoolExecutors.getOrCreateThreadPool("Test-Pool", RuntimeConstant.PROCESSORS * 2, RuntimeConstant.PROCESSORS * 2, 1024);
+        StopWatch stopWatch = StopWatch.of();
+        List<List<Stage>> result = ExcelUtil.readExcel("D:\\Download\\stage (1).xlsx", Stage.class, Function.identity(), threadPool);
+        stopWatch.stop();
+        log.info("{}", stopWatch.prettyPrint());
     }
 
     @ApiOperation(value = "测试接口")

@@ -58,6 +58,9 @@ public class AsyncExcelReadListener<T, OUT> implements ReadListener<T> {
 
     @Override
     public void invoke(T t, AnalysisContext analysisContext) {
+        if (cachedDataList == null) {
+            cachedDataList = new ArrayList<>(taskSizeOfEachWorker);
+        }
         cachedDataList.add(t);
         if (cachedDataList.size() == taskSizeOfEachWorker) {
             CompletableFuture<OUT> future = submit(cachedDataList);
@@ -83,7 +86,9 @@ public class AsyncExcelReadListener<T, OUT> implements ReadListener<T> {
         List<T> localDataList = dataList;
         CompletableFuture<OUT> future = CompletableFuture.supplyAsync(() -> {
             OUT out = dataProcessor.apply(localDataList);
-            localDataList.clear();
+            if (out != localDataList) {
+                localDataList.clear();
+            }
             return out;
         }, executorService);
         return future;
