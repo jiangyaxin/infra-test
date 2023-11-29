@@ -100,7 +100,7 @@ public class WebExcelTransporter {
             String filePath = javaIoTmpdir + tmpFileName + Constants.XLSX_SUFFIX;
             List<T> partition = partitionList.get(index);
 
-            CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> ExcelUtil.writeExcelToPath(filePath, partition, sheetName, clazz, includeFieldNameCollection));
+            CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> ExcelUtil.writeExcelToPath(filePath, partition, sheetName, clazz, includeFieldNameCollection), executorService);
             futureList.add(future);
         }
 

@@ -24,6 +24,6 @@ public class FileTest {
 
     @Test
     public void deleteTest() {
-        FileUtil.delete(Paths.get("D:\\application\\spring-test-experience\\infra\\target"));
+        FileUtil.recursiveDelete(Paths.get("D:\\application\\spring-test-experience\\infra\\target"));
     }
 }
