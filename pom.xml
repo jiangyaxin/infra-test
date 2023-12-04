@@ -28,6 +28,7 @@
         <module>infra-test</module>
         <module>infra-serializable</module>
         <module>infra-mybatis-plus</module>
+        <module>infra-sharding-sphere</module>
     </modules>
 
     <properties>
@@ -137,6 +138,12 @@
             <dependency>
                 <groupId>com.jyx</groupId>
                 <artifactId>infra-mybatis-plus</artifactId>
+                <version>${spring-test-experience.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.jyx</groupId>
+                <artifactId>infra-sharding-sphere</artifactId>
                 <version>${spring-test-experience.version}</version>
             </dependency>
 
