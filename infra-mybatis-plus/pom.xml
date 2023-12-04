@@ -24,11 +24,6 @@
         </dependency>
 
         <dependency>
-            <groupId>com.jyx</groupId>
-            <artifactId>infra-sharding-sphere</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>

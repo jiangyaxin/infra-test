@@ -30,6 +30,11 @@
             <artifactId>infra-mybatis-plus</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.jyx</groupId>
+            <artifactId>infra-sharding-sphere</artifactId>
+        </dependency>
+
     </dependencies>
 
     <build>
