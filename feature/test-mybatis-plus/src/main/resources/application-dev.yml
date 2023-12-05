@@ -70,7 +70,7 @@ spring:
             # 该值不要设置，默认与 maximumPoolSize 保持一致
             # minimumIdle
             # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
-            maximumPoolSize: 200
+            maximumPoolSize: 20
             data-source-properties:
               logger: com.mysql.cj.log.Slf4JLogger
         test2:
@@ -132,9 +132,41 @@ spring:
             # 该值不要设置，默认与 maximumPoolSize 保持一致
             # minimumIdle
             # 连接池达到的最大大小，包括空闲和使用中的连接，默认值：10。
-            maximumPoolSize: 200
+            maximumPoolSize: 20
             data-source-properties:
               logger: com.mysql.cj.log.Slf4JLogger
+
+  shardingsphere:
+#    database:
+#      name:
+    mode:
+      type: Standalone
+      repository:
+        type: JDBC
+        props:
+          provider: MySQL
+          jdbc_url: jdbc:mysql://127.0.0.1:3306/acp_base?serverTimezone=GMT%2B8&characterEncoding=utf8&useSSL=false&useUnicode=true
+          username: root
+          password: 123456
+    datasource:
+      names: test1,test2
+    rules:
+      sharding:
+        tables:
+          stage:
+            actualDataNodes: test1.stage_$->{0..2},test2.stage_$->{0..2}
+            tableStrategy:
+              standard:
+                shardingColumn: id
+                shardingAlgorithmName: stage_inline
+        sharding-algorithms:
+          stage_inline:
+            type: INLINE
+            props:
+              algorithm-expression: stage_$->{id % 2}
+    props:
+      sql-show: true
+
 logging:
   file:
     name: ${spring.application.name}

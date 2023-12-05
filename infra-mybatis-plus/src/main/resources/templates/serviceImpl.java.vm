@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
  * @author ${author}
  * @since ${date}
  */
+@DS("${datasourceName}")
 @Service
 #if(${kotlin})
 open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>()#if(${table.serviceInterface}), ${table.serviceName}#end {

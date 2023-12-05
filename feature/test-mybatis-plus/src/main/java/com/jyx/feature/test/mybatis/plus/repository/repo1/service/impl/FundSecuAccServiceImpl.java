@@ -1,5 +1,6 @@
 package com.jyx.feature.test.mybatis.plus.repository.repo1.service.impl;
 
+import com.baomidou.dynamic.datasource.annotation.DS;
 import com.jyx.feature.test.mybatis.plus.domain.entity.FundSecuAcc;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.FundSecuAccMapper;
 import com.jyx.feature.test.mybatis.plus.repository.repo1.service.FundSecuAccService;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
  * @author CodeGenerator
  * @since 2023-11-23 13:24:31
  */
+@DS("acp_base")
 @Service
 public class FundSecuAccServiceImpl extends DbServiceImpl<FundSecuAccMapper, FundSecuAcc> implements FundSecuAccService {
 

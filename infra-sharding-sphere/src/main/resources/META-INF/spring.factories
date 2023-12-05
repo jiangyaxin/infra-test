@@ -1,2 +1,7 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  com.jyx.infra.sharding.sphere.InfraShardingSphereAutoConfig
+  com.jyx.infra.sharding.sphere.InfraShardingSphereAutoConfig,\
+  com.jyx.infra.sharding.sphere.mybatis.plus.MybatisPlusDynamicDatasourceConfig,\
+  com.jyx.infra.sharding.sphere.mybatis.plus.MybatisPlusShardingSphereAutoConfig
+
+org.springframework.boot.env.EnvironmentPostProcessor=\
+  com.jyx.infra.sharding.sphere.mybatis.plus.MybatisPlusShardingSphereEnvironmentPostProcessor

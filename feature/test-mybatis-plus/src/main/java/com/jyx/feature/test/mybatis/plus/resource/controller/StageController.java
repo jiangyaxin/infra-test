@@ -34,4 +34,12 @@ public class StageController {
         List<Stage> stageList = stageService.list(query);
         return stageList;
     }
+
+    @ApiOperation(value = "阶段测试接口")
+    @GetMapping("/sharding")
+    public List<Stage> shardingStageTest(StageRequest stageRequest) {
+        QueryWrapper<Stage> query = QueryBuilder.build(stageRequest, Stage.class);
+        List<Stage> stageList = stageService.shardingList(query);
+        return stageList;
+    }
 }

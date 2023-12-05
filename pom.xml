@@ -76,6 +76,7 @@
         <opencv.version>411</opencv.version>
         <kryo.version>5.5.0</kryo.version>
         <easyexcel.version>3.3.2</easyexcel.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
     </properties>
 
     <dependencyManagement>
@@ -332,6 +333,12 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>easyexcel</artifactId>
                 <version>${easyexcel.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
             </dependency>
 
         </dependencies>

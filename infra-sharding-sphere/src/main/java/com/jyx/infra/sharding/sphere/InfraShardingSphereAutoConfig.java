@@ -8,4 +8,5 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @ComponentScan("com.jyx.infra.sharding.sphere")
 public class InfraShardingSphereAutoConfig {
+
 }

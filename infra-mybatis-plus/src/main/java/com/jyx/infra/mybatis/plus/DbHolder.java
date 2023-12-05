@@ -239,21 +239,14 @@ public class DbHolder {
         this.tableNameToClassMap.put(tableNameAnnotation.value(), entityClass);
         this.classToDbServiceMap.put(entityClass, dbService);
 
-        ResolvableType superType = ResolvableType.forClass(noProxyDbServiceClass).getSuperType();
-        if (superType == ResolvableType.NONE || superType.getRawClass() != DbServiceImpl.class) {
-            throw AppException.of(String.format("%s not extends %s",
-                    noProxyDbServiceClass.getName(), DbServiceImpl.class.getName()));
-        }
-
-        Class<?> mapperClass = superType.getGeneric(0).getRawClass();
-        DS dsAnnotation = mapperClass.getAnnotation(DS.class);
+        DS dsAnnotation = noProxyDbServiceClass.getAnnotation(DS.class);
         if (dsAnnotation == null) {
-            throw AppException.of(String.format("%s miss DS annotation.", mapperClass.getName()));
+            throw AppException.of(String.format("%s miss DS annotation.", noProxyDbServiceClass.getName()));
         }
         String datasourceStr = dsAnnotation.value();
         DataSource dataSource = dynamicRoutingDataSource.getDataSources().get(datasourceStr);
         if (dataSource == null) {
-            throw AppException.of(String.format("%s datasource not exist,%s config error DS annotation.", datasourceStr, mapperClass.getName()));
+            throw AppException.of(String.format("%s datasource not exist,%s config error DS annotation.", datasourceStr, noProxyDbServiceClass.getName()));
         }
         this.classToDatasourceMap.put(entityClass, dataSource);
         this.classToDatasourceNameMap.put(entityClass, datasourceStr);
