@@ -11,6 +11,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ForkJoinPool;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -74,7 +75,7 @@ public class MailTest {
                     mimeMessageHelper.setText("Em... puta puta puta " + index);
                 })
                 .collect(Collectors.toList());
-        List<CompletableFuture<Void>> completableFutureList = mailService.asyncSend(mimeMessagePrepareList);
+        List<CompletableFuture<Void>> completableFutureList = mailService.asyncSend(ForkJoinPool.commonPool(), mimeMessagePrepareList);
         CompletableFuture.allOf(completableFutureList.toArray(new CompletableFuture[0])).join();
     }
 }

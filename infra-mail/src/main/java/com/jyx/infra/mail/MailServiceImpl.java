@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
 
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 import java.util.stream.Collectors;
 
 /**
@@ -29,17 +29,15 @@ public class MailServiceImpl implements MailService {
 
     private final JavaMailSender javaMailSender;
 
-    private final ThreadPoolTaskExecutor taskExecutor;
-
     @Override
     public MimeMessage createMimeMessage() {
         return javaMailSender.createMimeMessage();
     }
 
     @Override
-    public List<CompletableFuture<Void>> asyncSend(List<MimeMessagePreparator> mimeMessageList) {
+    public List<CompletableFuture<Void>> asyncSend(ExecutorService executorService, List<MimeMessagePreparator> mimeMessageList) {
         return mimeMessageList.stream()
-                .map(mimeMessage -> CompletableFuture.runAsync(() -> send(mimeMessage), taskExecutor)
+                .map(mimeMessage -> CompletableFuture.runAsync(() -> send(mimeMessage), executorService)
                         .exceptionally(ex -> {
                             Logs.error(log, "发送失败: {}", mimeMessage, ex);
                             return null;

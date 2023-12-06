@@ -6,6 +6,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author jiangyaxin
@@ -26,7 +27,7 @@ public interface MailService {
      * @param mimeMessageList List<MimeMessagePreparator>
      * @return List<CompletableFuture < Void>>
      */
-    List<CompletableFuture<Void>> asyncSend(List<MimeMessagePreparator> mimeMessageList);
+    List<CompletableFuture<Void>> asyncSend(ExecutorService executorService,List<MimeMessagePreparator> mimeMessageList);
 
     /**
      * mimeMessage
