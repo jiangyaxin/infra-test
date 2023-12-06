@@ -5,6 +5,7 @@ import com.jyx.infra.log.Logs;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Parameter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +47,7 @@ public class ConstructorUtil {
         }
 
         for (int index = 0; index < parameterTypes.length; index++) {
-            if (parameterTypes[index] != objects[index].getClass()) {
+            if (objects[index] == null || parameterTypes[index] != objects[index].getClass()) {
                 String errorMsg = String.format("New Instance pre check error, the %s parameter type of %s not matched, %s",
                         index + 1, className, buildConstructorParamErrorMsg(constructor, objects));
                 return CheckResult.fail(errorMsg);
@@ -72,6 +73,9 @@ public class ConstructorUtil {
         List<String> constructorParamClassStrList = Arrays.stream(constructor.getParameterTypes())
                 .map(Class::getSimpleName)
                 .collect(Collectors.toList());
+        List<String> constructorParamNameStrList = Arrays.stream(constructor.getParameters())
+                .map(Parameter::getName)
+                .collect(Collectors.toList());
         List<String> valClassStrList = Arrays.stream(objects)
                 .map(object -> object == null ? "null" : object.getClass().getSimpleName())
                 .collect(Collectors.toList());
@@ -80,11 +84,12 @@ public class ConstructorUtil {
                 .collect(Collectors.toList());
         String className = constructor.getName();
 
-        String errorMsg = String.format("class: %s \n" +
-                        "data: %s \n" +
+        String errorMsg = String.format("\nclass: %s \n" +
+                        "constructor param name: %s \n" +
                         "constructor param type: %s \n" +
-                        "data param type       : %s ",
-                className, valStrList, constructorParamClassStrList, valClassStrList);
+                        "data param type       : %s \n" +
+                        "data                  : %s ",
+                className, constructorParamNameStrList, constructorParamClassStrList, valClassStrList, valStrList);
         return errorMsg;
     }
 
