@@ -3,7 +3,7 @@ package com.jyx.infra.spring.jdbc.properties;
 import lombok.Data;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/11/28 16:30
  */
 @Data

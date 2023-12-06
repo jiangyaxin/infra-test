@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Primary;
 import javax.sql.DataSource;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/4 16:12
  */
 @ConditionalOnClass(value = {DynamicDataSourceAutoConfiguration.class})

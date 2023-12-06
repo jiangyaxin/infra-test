@@ -1,7 +1,7 @@
 package com.jyx.infra.sharding.sphere;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/5 14:43
  */
 public interface ShardingSphereContants {

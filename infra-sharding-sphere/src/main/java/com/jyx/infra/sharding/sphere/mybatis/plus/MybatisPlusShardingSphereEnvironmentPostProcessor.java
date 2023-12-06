@@ -17,7 +17,7 @@ import org.springframework.util.StringUtils;
 import java.util.Map;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/4 17:47
  */
 @ConditionalOnClass(value = {DynamicDataSourceAutoConfiguration.class})
