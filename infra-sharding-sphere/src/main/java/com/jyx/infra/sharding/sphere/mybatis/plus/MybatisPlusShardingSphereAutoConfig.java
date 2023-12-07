@@ -2,7 +2,7 @@ package com.jyx.infra.sharding.sphere.mybatis.plus;
 
 import com.baomidou.dynamic.datasource.DynamicRoutingDataSource;
 import com.baomidou.dynamic.datasource.spring.boot.autoconfigure.DynamicDataSourceAutoConfiguration;
-import com.jyx.infra.sharding.sphere.ShardingSphereContants;
+import com.jyx.infra.sharding.sphere.ShardingSphereConstants;
 import org.apache.shardingsphere.driver.api.ShardingSphereDataSourceFactory;
 import org.apache.shardingsphere.infra.config.mode.ModeConfiguration;
 import org.apache.shardingsphere.infra.config.rule.RuleConfiguration;
@@ -59,7 +59,7 @@ public class MybatisPlusShardingSphereAutoConfig implements EnvironmentAware {
     }
 
 
-    @Bean
+    @Bean(ShardingSphereConstants.SHARDING_DATASOURCE_BEAN_NAME)
     @Conditional(LocalRulesCondition.class)
     @Autowired(required = false)
     public DataSource shardingSphereDataSource(final ObjectProvider<List<RuleConfiguration>> rules, final ObjectProvider<ModeConfiguration> modeConfig) throws SQLException {
@@ -67,7 +67,7 @@ public class MybatisPlusShardingSphereAutoConfig implements EnvironmentAware {
         String databaseName = getDatabaseName();
         Map<String, DataSource> dataSourceMap = getDataSourceMap();
         DataSource dataSource = ShardingSphereDataSourceFactory.createDataSource(databaseName, modeConfig.getIfAvailable(), dataSourceMap, ruleConfigs, props.getProps());
-        dynamicRoutingDataSource.addDataSource(ShardingSphereContants.SHARDING_SPHERE_DS_NAME, dataSource);
+        dynamicRoutingDataSource.addDataSource(ShardingSphereConstants.SHARDING_SPHERE_DS_NAME, dataSource);
         return dataSource;
     }
 
@@ -79,7 +79,7 @@ public class MybatisPlusShardingSphereAutoConfig implements EnvironmentAware {
         DataSource dataSource = !dataSourceMap.isEmpty() ?
                 ShardingSphereDataSourceFactory.createDataSource(databaseName, modeConfig, dataSourceMap, Collections.emptyList(), props.getProps())
                 : ShardingSphereDataSourceFactory.createDataSource(databaseName, modeConfig);
-        dynamicRoutingDataSource.addDataSource(ShardingSphereContants.SHARDING_SPHERE_DS_NAME, dataSource);
+        dynamicRoutingDataSource.addDataSource(ShardingSphereConstants.SHARDING_SPHERE_DS_NAME, dataSource);
         return dataSource;
     }
 

@@ -152,13 +152,13 @@ spring:
       names: test1,test2
     rules:
       sharding:
-        tables:
-          stage:
-            actualDataNodes: test1.stage_$->{0..2},test2.stage_$->{0..2}
-            tableStrategy:
-              standard:
-                shardingColumn: id
-                shardingAlgorithmName: stage_inline
+#        tables:
+#          stage:
+#            actualDataNodes: test1.stage_$->{0..2},test2.stage_$->{0..2}
+#            tableStrategy:
+#              standard:
+#                shardingColumn: id
+#                shardingAlgorithmName: stage_inline
         sharding-algorithms:
           stage_inline:
             type: INLINE

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jyx.feature.test.mybatis.plus.repository.repo1.mapper.ShardingTableRuleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.jyx.feature.test.mybatis.plus.domain.entity.MybatisPlusShardingTableRule">
+        <id column="id" property="id" />
+        <result column="logic_table" property="logicTable" />
+        <result column="actual_data_nodes" property="actualDataNodes" />
+        <result column="database_sharding_strategy_type" property="databaseShardingStrategyType" />
+        <result column="database_sharding_strategy_param" property="databaseShardingStrategyParam" />
+        <result column="table_sharding_strategy_type" property="tableShardingStrategyType" />
+        <result column="table_sharding_strategy_param" property="tableShardingStrategyParam" />
+        <result column="key_generate_strategy_param" property="keyGenerateStrategyParam" />
+        <result column="audit_strategy_param" property="auditStrategyParam" />
+        <result column="created_date" property="createdDate" />
+        <result column="last_modified_date" property="lastModifiedDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, logic_table, actual_data_nodes, database_sharding_strategy_type, database_sharding_strategy_param, table_sharding_strategy_type, table_sharding_strategy_param, key_generate_strategy_param, audit_strategy_param, created_date, last_modified_date
+    </sql>
+
+</mapper>

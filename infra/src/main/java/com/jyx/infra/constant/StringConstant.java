@@ -9,5 +9,7 @@ public interface StringConstant {
 
     String EMPTY = "";
 
+    String EMPTY_JSON_OBJECT = "{}";
+
     char SEPARATOR = '#';
 }
