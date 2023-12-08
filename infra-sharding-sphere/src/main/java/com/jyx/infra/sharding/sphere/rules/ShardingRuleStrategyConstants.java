@@ -1,7 +1,7 @@
 package com.jyx.infra.sharding.sphere.rules;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/7 11:19
  */
 public interface ShardingRuleStrategyConstants {

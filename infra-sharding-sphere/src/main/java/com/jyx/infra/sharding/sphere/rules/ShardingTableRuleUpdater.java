@@ -31,7 +31,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/6 16:37
  */
 @ConditionalOnBean(value = {ShardingTableRuleRepository.class},

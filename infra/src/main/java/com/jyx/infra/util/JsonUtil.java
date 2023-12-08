@@ -6,7 +6,7 @@ import com.jyx.infra.exception.JsonException;
 import java.util.Map;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/7 16:38
  */
 public class JsonUtil {

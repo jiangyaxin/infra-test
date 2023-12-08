@@ -3,7 +3,7 @@ package com.jyx.infra.sharding.sphere.rules;
 import java.util.List;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/6 16:40
  */
 public interface ShardingTableRuleRepository {

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/7 15:23
  */
 @ConditionalOnClass(ShardingTableRuleRepository.class)

@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 /**
- * @author Archforce
+ * @author jiangyaxin
  * @since 2023/12/7 15:59
  */
 @ConditionalOnBean(ShardingTableRuleUpdater.class)
